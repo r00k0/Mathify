@@ -1,0 +1,1071 @@
+<title>Mathify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one graph-paper work column. Kip the kangaroo speaks in yellow bubbles; problem cards are white sheets. */
+:root{
+  --paper:#F3F6FB; --grid:#E0E7F1; --card:#FFFFFF; --ink:#17213B; --muted:#5A6582; --line:#D2DBE8;
+  --accent:#E2570B; --accent-ink:#FFFFFF; --accent-soft:#FDE7D9;
+  --kip:#FFF1BC; --kip-ink:#463600; --fur:#C47A3F; --fur-in:#F3CDA3;
+  --good:#16865A; --good-soft:#DCF2E7; --bad:#C63838; --bad-soft:#FBE2E2; --blue:#2C5BD6; --blue-soft:#E2EAFD;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Lexend","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F131C; --grid:#18202E; --card:#161C29; --ink:#E7ECF5; --muted:#9AA6C0; --line:#2A3347;
+  --accent:#FF8A3D; --accent-ink:#1A0E05; --accent-soft:#3A2414; --kip:#3A3315; --kip-ink:#FBE9A6; --fur:#D99257; --fur-in:#6B4A2C;
+  --good:#46C98B; --good-soft:#153326; --bad:#FF7B7B; --bad-soft:#3A1C1C; --blue:#8DB0FF; --blue-soft:#1C2742; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0F131C; --grid:#18202E; --card:#161C29; --ink:#E7ECF5; --muted:#9AA6C0; --line:#2A3347;
+  --accent:#FF8A3D; --accent-ink:#1A0E05; --accent-soft:#3A2414; --kip:#3A3315; --kip-ink:#FBE9A6; --fur:#D99257; --fur-in:#6B4A2C;
+  --good:#46C98B; --good-soft:#153326; --bad:#FF7B7B; --bad-soft:#3A1C1C; --blue:#8DB0FF; --blue-soft:#1C2742; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:18px 64px}
+header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.brand{font-family:var(--display);font-weight:800;font-size:25px;display:flex;align-items:center;gap:8px}
+nav.tabs{display:flex;flex-wrap:wrap;gap:6px}
+nav.tabs button{font:500 14px var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px;border-radius:999px;cursor:pointer}
+nav.tabs button[aria-current="page"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button{font-family:var(--body)} button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0} h2{font-size:22px} h3{font-size:17px}
+p{margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.stack{display:flex;flex-direction:column;gap:14px} .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.muted{color:var(--muted)} .small{font-size:13.5px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.btn{border:none;border-radius:10px;padding:10px 16px;font:600 15px var(--body);cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)} .btn.dark{background:var(--ink);color:var(--paper)}
+.btn.soft{background:var(--kip);color:var(--kip-ink)} .btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.chip.good{background:var(--good-soft);color:var(--good)} .chip.bad{background:var(--bad-soft);color:var(--bad)} .chip.blue{background:var(--blue-soft);color:var(--blue)}
+.chip.plain{background:transparent;border:1px solid var(--line);color:var(--muted)}
+/* Kip */
+.kip{display:flex;gap:12px;align-items:flex-start}
+.kip svg.face{flex:0 0 auto;width:54px;height:54px}
+.bubble{background:var(--kip);color:var(--kip-ink);border-radius:14px;padding:12px 15px;position:relative;flex:1;min-width:0}
+.bubble:before{content:"";position:absolute;left:-8px;top:16px;border:8px solid transparent;border-right-color:var(--kip);border-left:0}
+.bubble .who{font-family:var(--display);font-weight:800;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.bubble p{margin-top:4px;font-size:16.5px}
+.mn{display:block;margin-top:8px;padding:8px 10px;border-radius:8px;border:2px dashed currentColor;font-weight:600}
+/* SPOT strip */
+.spot{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media (max-width:520px){.spot{grid-template-columns:repeat(2,1fr)}}
+.spot div{border:1px solid var(--line);border-radius:10px;padding:7px 9px;font-size:12.5px;color:var(--muted);background:var(--card)}
+.spot b{display:block;font-family:var(--display);font-size:15px;color:var(--ink)}
+.spot b span{color:var(--accent)}
+/* lists */
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;cursor:pointer;font:inherit;color:var(--ink);text-align:left;width:100%}
+.item:hover{border-color:var(--accent)} .item .l{min-width:0}
+.dots{display:flex;gap:6px;flex-wrap:wrap} .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--line)}
+.dot.clean{background:var(--good);border-color:var(--good)} .dot.helped{background:var(--kip);border-color:#C9A500} .dot.shown{background:var(--bad-soft);border-color:var(--bad)}
+/* problem */
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.timer{font-family:var(--mono);font-weight:700;font-size:20px;padding:4px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.timer.low{color:var(--accent);border-color:var(--accent)} .timer.over{color:var(--bad);border-color:var(--bad)}
+.ptext{font-size:19px;line-height:1.6} .book{font-size:18px}
+.book b{font-family:var(--display)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.optw{position:relative}
+.opt{width:100%;padding:12px 38px 12px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:500 16px var(--body);cursor:pointer;text-align:left}
+.opt .k{font-family:var(--mono);font-weight:700;margin-right:6px;color:var(--accent)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.x{opacity:.45;text-decoration:line-through} .opt.wrong{border-color:var(--bad);background:var(--bad-soft);text-decoration:line-through;opacity:.7} .opt.right{border-color:var(--good);background:var(--good-soft)}
+.xbtn{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--muted);font:700 14px var(--mono);cursor:pointer}
+.xbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+input.num{font:600 20px var(--mono);padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);width:180px;max-width:100%}
+.result{border-radius:12px;padding:16px} .result.good{background:var(--good-soft)} .result.bad{background:var(--bad-soft)}
+.why{border-left:3px solid var(--accent);padding-left:12px;display:flex;flex-direction:column;gap:6px}
+.shake{animation:shake .35s} @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .45s ease-out} @keyframes pop{0%{transform:scale(.96);opacity:.4}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.shake,.pop{animation:none}}
+.picks{display:flex;flex-wrap:wrap;gap:6px}
+.pick{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:500 14px var(--body);cursor:pointer}
+.pick[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+svg.fig{max-width:100%;height:auto;display:block;margin:6px 0}
+/* moves */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.move{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:6px}
+.badge{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:700 13px var(--mono);background:var(--accent-soft);color:var(--accent);flex:0 0 auto}
+.move .t{font-family:var(--display);font-weight:800;font-size:17px}
+.move .m{font-weight:600}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat .v{font-family:var(--display);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600} td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;min-width:80px} .bar i{display:block;height:100%;background:var(--good)}
+.alert{background:var(--bad-soft);border-radius:12px;padding:14px 16px}
+.qgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px} @media (max-width:480px){.qgrid{grid-template-columns:repeat(6,1fr)}}
+.qb{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 14px var(--mono);cursor:pointer;max-width:100%}
+.qb.ans{background:var(--accent-soft);border-color:var(--accent)} .qb.cur{outline:2px solid var(--ink)}
+.level{display:flex;gap:4px} .level i{width:22px;height:8px;border-radius:4px;background:var(--line)} .level i.on{background:var(--accent)}
+a{color:var(--blue)}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span id="logo"></span>Mathify</div>
+    <nav class="tabs" aria-label="Sections">
+      <button data-tab="today">Kangaroo</button>
+      <button data-tab="learn">Learn K–12</button>
+      <button data-tab="moves">Kip's moves</button>
+      <button data-tab="test">Tests</button>
+      <button data-tab="coach">Coach</button>
+    </nav>
+  </header>
+  <main id="app"></main>
+</div>
+
+<script>
+/* =================== Kip =================== */
+const KIP = `<svg class="face" viewBox="0 0 64 64" aria-hidden="true">
+<ellipse cx="19" cy="15" rx="7" ry="15" transform="rotate(-18 19 15)" fill="var(--fur)"/><ellipse cx="45" cy="15" rx="7" ry="15" transform="rotate(18 45 15)" fill="var(--fur)"/>
+<ellipse cx="19" cy="16" rx="3.4" ry="10" transform="rotate(-18 19 16)" fill="var(--fur-in)"/><ellipse cx="45" cy="16" rx="3.4" ry="10" transform="rotate(18 45 16)" fill="var(--fur-in)"/>
+<ellipse cx="32" cy="38" rx="20" ry="19" fill="var(--fur)"/><ellipse cx="32" cy="46" rx="11" ry="8.5" fill="var(--fur-in)"/>
+<circle cx="24.5" cy="34" r="3" fill="#17213B"/><circle cx="39.5" cy="34" r="3" fill="#17213B"/><circle cx="25.4" cy="33" r="1" fill="#FFFFFF"/><circle cx="40.4" cy="33" r="1" fill="#FFFFFF"/>
+<ellipse cx="32" cy="42" rx="3.4" ry="2.4" fill="#17213B"/><path d="M27 47 Q32 51 37 47" stroke="#17213B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="22" y="18" width="20" height="4" rx="2" fill="var(--accent)"/></svg>`;
+document.getElementById("logo").innerHTML = KIP.replace('class="face"','class="face" style="width:36px;height:36px"');
+function kipSay(who, html, extra=""){ return `<div class="kip pop">${KIP}<div class="bubble"><div class="who">${who}</div>${html}${extra}</div></div>` }
+
+/* =================== Thinking moves =================== */
+const MOVES = {
+ rewind:{n:"Rewind the movie",b:"RW",m:"End first. Undo every step: plus becomes minus, double becomes half.",
+   s:"When Kip finds his popcorn bowl empty after a movie, he plays the movie backwards: put back the 4 he gave Mia, then the 6 he dropped, then double it back from when his brother took half.",
+   q:"Did you think of starting at the END and walking backwards?"},
+ seesaw:{n:"Seesaw swap",b:"SS",m:"Take the same thing off both sides and the seesaw stays level.",
+   s:"Two kids balance on a seesaw, each holding the same backpack. Both drop their backpacks and it is still level. Scales, prices and weights work the same way.",
+   q:"Did you think of putting two facts side by side and taking away what they share?"},
+ portions:{n:"Pizza slices",b:"PZ",m:"Count the slices, not the pizzas. Birthdays come for everyone.",
+   s:"Kip doesn't ask how many pizzas. He asks how many slices: 3 pizzas of 8 slices for 6 kids is 24 ÷ 6. Food for cats, seats on a bus, ages: count in one-for-one pieces. And every birthday, every person gets one year older.",
+   q:"Did you think of counting in small single pieces, like 'one cat for one day'?"},
+ odd:{n:"Odd socks",b:"OS",m:"Two odd socks make a pair: odd + odd = even. Odd + even stays odd.",
+   s:"Kip's sock drawer: one odd sock and another odd sock make a pair. Lots of puzzles only care about odd or even, never the exact number. Bonus trick: add the digits, and if 3 divides the sum, 3 divides the number.",
+   q:"Did you think of forgetting the exact numbers and only asking: odd or even? Or what's left over?"},
+ columns:{n:"Ones first",b:"1s",m:"Ones first, then carry the extra bag upstairs.",
+   s:"Kip carries grocery bags up the stairs one floor at a time. The ones floor first; anything extra gets carried up to the tens floor, then the hundreds.",
+   q:"Did you think of lining the digits up in columns and starting with the ones?"},
+ unlucky:{n:"Unlucky Ulysses",b:"UU",m:"Be unlucky first, then add one.",
+   s:"Kip's cousin Ulysses is the unluckiest kangaroo alive. In the dark he grabs every wrong sock first. To be SURE, imagine Ulysses grabbing, and add one more.",
+   q:"Did you think of the unluckiest thing that could happen first?"},
+ squeeze:{n:"Squeeze the couch",b:"SQ",m:"To make one big, squeeze the others small. Then try to beat it.",
+   s:"Four friends share a couch. For Kip to stretch out, everyone else squeezes as tight as they can. Then he checks: can I stretch even one more?",
+   q:"Did you think of pushing everything else to its limit, then trying to do one better?"},
+ pretend:{n:"Detective pretend",b:"DP",m:"Pretend it's true. Follow the trail. If the trail breaks, it was false.",
+   s:"Detective Kip says, 'Suppose the butler did it.' Then he checks every clue. One clue doesn't fit? Then the butler didn't do it. Next suspect.",
+   q:"Did you think of pretending one answer is true and checking every clue?"},
+ lineup:{n:"Class photo",b:"CP",m:"Line them up in order: nobody hidden, nobody twice.",
+   s:"For the class photo Kip lines kids up by height, so he counts everyone exactly once. Messy counting misses people or counts them twice.",
+   q:"Did you think of making a neat, ordered list?"},
+ rhythm:{n:"Find the beat",b:"FB",m:"Find the part that repeats, then count the beats.",
+   s:"Songs repeat their chorus. Kip claps: 1, 2, 3, 4, 1, 2, 3, 4. Find the repeating chunk, then you can jump far ahead without writing everything.",
+   q:"Did you think of making a table of the first few cases to see what repeats or grows?"},
+ slide:{n:"Slide the stairs",b:"SL",m:"Slide the steps to the edge; the fence stays the same length. For area: cut it up, or cut it out.",
+   s:"Kip walks a fence around a staircase-shaped garden. Every little step he takes sideways or up matches a piece of the big outside rectangle. Same length!",
+   q:"Did you think of writing every length on the picture and sliding pieces around?"},
+ flip:{n:"Fold it in your head",b:"FO",m:"Countdown 3-2-1-0: corners show 3 faces, edges 2, middles 1, inside 0. A mirror swaps left and right, never up and down.",
+   s:"Kip flattens a cereal box and folds it back up. Nets, cubes, mirrors and folded paper all get easier when you move them slowly in your head, or with real paper.",
+   q:"Did you think of folding, turning or unfolding it in your head, step by step?"},
+ stack:{n:"Add it all up",b:"AA",m:"Add every total, then ask: who got counted twice?",
+   s:"At Kip's party every kid counts their own handshakes. Adding them all up counts every handshake twice. Adding everything, then fixing the double counts, cracks many puzzles.",
+   q:"Did you think of adding all the totals together and seeing what got counted more than once?"},
+ tryit:{n:"Try it!",b:"TR",m:"Stuck? Try a small number, or test the answer choices.",
+   s:"Kip doesn't know which key opens the door, so he tries them, smartly, most likely first. Plugging in a choice or a small example often shows the answer.",
+   q:"Did you think of testing the answer choices, or trying it with a small number?"}
+};
+const MOVE_IDS = Object.keys(MOVES);
+function moveCard(id, extra){ const M=MOVES[id]; return `<p><b>${M.q}</b></p><p>${M.s}</p><span class="mn">Remember: ${M.m}</span>${extra?`<p style="margin-top:8px">${extra}</p>`:""}` }
+
+/* =================== Problem bank =================== */
+const STAIR = `<svg class="fig" viewBox="-40 -14 230 168" width="300" role="img" aria-label="Staircase shape, bottom 8 cm, left side 6 cm, steps 2 cm">
+<polygon points="0,120 160,120 160,80 120,80 120,40 80,40 80,0 0,0" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2.5"/>
+<g font-family="Lexend, sans-serif" font-size="12" fill="var(--muted)"><text x="80" y="140" text-anchor="middle" font-size="13" fill="var(--ink)">8 cm</text>
+<text x="-8" y="64" text-anchor="end" font-size="13" fill="var(--ink)">6 cm</text><text x="168" y="104">2</text><text x="140" y="74" text-anchor="middle">2</text>
+<text x="128" y="64">2</text><text x="100" y="34" text-anchor="middle">2</text><text x="88" y="24">2</text></g></svg>`;
+
+/* Kip's own practice problems: [id, move, level(1-3), type, text, options|null, answer, [h1,h2,h3], [why...]] */
+const OWN = [
+ ["o1","rewind",1,"num","Maya thinks of a number. She adds 7, then doubles the result, and gets 30. What number did she think of?",null,"8",["Which number do you actually know: the one at the start or the one at the end?","The last thing Maya did was double. What number doubles to make 30?","Before doubling it was 15. What number plus 7 makes 15?"],["Undo each step from the end: 30 halved is 15, and 15 − 7 = 8.","Check forwards: 8 + 7 = 15, 15 × 2 = 30."]],
+ ["o2","rewind",2,"num","Leo had some stickers. He gave half of them to his sister. Then he gave 4 to his friend. Now he has 10 left. How many stickers did Leo have at the start?",null,"28",["Draw the chain: start → give half → give 4 → 10. Which end do you know?","Just before he gave his friend 4, how many did he have?","He had 14 before giving 4 away. If 14 is half, what did he start with?"],["Undo from the end: 10 + 4 = 14, and 14 is half, so 28.","Check: half of 28 is 14, minus 4 is 10."]],
+ ["o3","rewind",3,"num","A magic purse doubles the coins inside it every time Tom opens it. But each time he opens it, he must then pay 8 coins to a troll. Tom opens it 3 times, and now the purse is empty. How many coins were in it at the start?",null,"7",["One opening is two steps: double, then pay 8. What is in the purse at the very end?","Undo the last opening: before paying there were 8 coins, so before doubling there were how many?","Before the last opening there were 4. Undo again: add 8, then halve. Once more."],["Undo 'double, then pay 8' as 'add 8, then halve'.","0 → 8 → 4, then 4 → 12 → 6, then 6 → 14 → 7.","Check: 7 → 14 → 6 → 12 → 4 → 8 → 0."]],
+ ["o4","seesaw",1,"num","3 apples and 1 melon weigh 1100 g. 1 apple and 1 melon weigh 700 g. How much does one apple weigh, in grams?",null,"200",["Put the two groups side by side. What is the same in both?","Both have one melon. Take it off both sides. What makes the difference now?","The difference is 2 apples, weighing 1100 − 700. So one apple weighs?"],["Take the melon off both: 2 apples = 400 g.","One apple = 200 g."]],
+ ["o5","seesaw",2,"mc","A ball and a bat cost $11 together. Two balls and a bat cost $14. How much does the bat cost?",["$3","$5","$7","$8","$11"],"D",["What is different between the two groups?","The second group has one extra ball and costs $3 more. What does a ball cost?","A ball is $3 and ball + bat is $11. What's left for the bat?"],["The extra ball costs 14 − 11 = $3.","The bat costs 11 − 3 = $8."]],
+ ["o6","seesaw",3,"num","On a balance, 2 cubes weigh the same as 3 balls. Also, 1 cube and 1 ball together weigh 50 g. How much does one ball weigh, in grams?",null,"20",["Can you make the second fact talk about 2 cubes as well?","Double it: 2 cubes and 2 balls weigh 100 g. Now what can you swap?","Swap the 2 cubes for 3 balls. How many balls weigh 100 g?"],["Doubled: 2 cubes + 2 balls = 100 g.","Swap 2 cubes for 3 balls: 5 balls = 100 g, so a ball is 20 g."]],
+ ["o7","portions",1,"mc","Grandpa has enough birdseed to feed 6 birds for 10 days. Then 4 more birds join. Every bird eats the same amount each day. How many days will the seed last now?",["4","5","6","8","10"],"C",["Measure the seed in 'one bird for one day' meals. How many meals?","6 birds × 10 days = 60 meals. How many birds are eating now?","60 meals, 10 birds a day. How many days?"],["The seed is 60 bird-meals.","10 birds eat 10 a day, so 6 days."]],
+ ["o8","portions",2,"num","Right now the ages of three sisters add up to 20. In how many years will their ages add up to 41?",null,"7",["After one year, how much bigger is the total?","Each year the total grows by 3. How much must it grow?","It must grow by 21. How many years of +3?"],["Every year each sister gains 1, so the total gains 3.","41 − 20 = 21, and 21 ÷ 3 = 7."]],
+ ["o9","portions",3,"num","Mom is 34. Her two children are 5 and 3. In how many years will Mom's age equal her children's ages added together?",null,"26",["How far apart are Mom's age and the children's total right now?","Each year Mom gains 1. How much do the two children gain together? So how does the gap change?","The gap is 26 and shrinks by 1 a year."],["Now: 34 against 5 + 3 = 8, a gap of 26.","Mom +1, children +2, so the gap shrinks by 1 a year: 26 years (60 = 31 + 29)."]],
+ ["o10","odd",1,"mc","Sam adds three odd numbers. Which of these could be his answer?",["20","28","33","40","50"],"C",["Try 1 + 3 + 5. Odd or even?","Odd + odd is even. Even + odd is?","Three odd numbers always make an odd number."],["Odd + odd = even, even + odd = odd.","Only 33 is odd."]],
+ ["o11","odd",2,"num","Ana writes the numbers 1 to 20. She circles every even number and also every multiple of 3. How many numbers are circled?",null,"13",["How many even numbers? How many multiples of 3?","Some numbers are in both groups. Did you count them twice?","10 even, 6 multiples of 3, and 6, 12, 18 are in both."],["10 + 6 counts 6, 12 and 18 twice.","10 + 6 − 3 = 13."]],
+ ["o12","odd",3,"num","In a row of 6 boxes, every box after the second holds the sum of the two boxes before it (like 1, 2, 3, 5, 8, 13). The first two numbers are both odd. How many of the 6 numbers are odd?",null,"4",["Do you need the real numbers? Write O for odd and E for even.","O + O is what?","O, O, E, ... keep going and count the O's."],["O O → E, then O, O, E.","O O E O O E: 4 odd numbers, always."]],
+ ["o13","columns",1,"num","In the sum  ▢6 + 4▢ = 93,  each box hides a digit. What is the sum of the two hidden digits?",null,"11",["What do they want: the digits, or the digits added?","Ones column: 6 + ▢ must end in 3. Which digit?","It's 7, carry 1. Tens: ▢ + 4 + 1 = 9."],["Ones: 6 + 7 = 13, carry 1. Tens: 4 + 4 + 1 = 9.","46 + 47 = 93, and 4 + 7 = 11."]],
+ ["o14","columns",2,"mc","Each letter is a digit, and different letters are different digits. A + A + A = BA, where BA is a two-digit number with tens digit B and ones digit A. What is A?",["0","2","4","5","8"],"D",["Try the choices: what is A + A + A for each?","The answer must end in A. Which digit times 3 ends in itself?","Try 5: 5 + 5 + 5 = 15."],["3 × A must end in A: only 0 or 5.","0 gives no two-digit number; 5 gives 15, so A = 5."]],
+ ["o15","columns",3,"num","In the subtraction  ▢3▢ − 1▢7 = 285,  three digits are hidden. What is the sum of the three hidden digits?",null,"10",["Turn it around: ▢3▢ = 285 + 1▢7. Is adding easier?","Ones: 5 + 7. What digit, and what do you carry?","Tens: 8 + ▢ + 1 must end in 3. Then the hundreds."],["285 + 147 = 432: ones 12 (carry), tens 13 (carry), hundreds 4.","Hidden digits 4, 4, 2: sum 10."]],
+ ["o16","unlucky",1,"mc","A drawer has 5 red socks and 5 blue socks. It is dark. How many socks must you take to be sure you have two of the same colour?",["2","3","5","6","10"],"B",["Be Ulysses: after 2 socks, could they be different?","One red, one blue. What colour can the third be?","The third always matches one."],["Unluckiest: red, blue.","The third sock must match: 3."]],
+ ["o17","unlucky",2,"num","A bag has 4 red, 6 green and 9 yellow marbles. Without looking, how many must you take out to be sure of getting at least one green?",null,"14",["Which marbles would unlucky Ulysses keep pulling out?","He could pull every non-green marble first. How many?","4 red + 9 yellow = 13. Then?"],["All 13 non-green could come first.","The 14th must be green."]],
+ ["o18","unlucky",3,"num","A class has 25 students. At least how many of them must share the same birth month?",null,"3",["Spread the birthdays out as much as possible. How many months?","1 student per month, then 1 more per month. How many placed?","24 placed with 2 per month. Where does number 25 go?"],["2 per month covers 24 students.","The 25th makes some month have 3."]],
+ ["o19","squeeze",1,"num","Four friends each caught a different number of fish, 22 in total. Ben caught the most. What is the smallest number Ben could have caught?",null,"7",["To keep Ben small, should the others be big or small?","Try Ben = 6. The others are different and below 6. Most they can catch?","5 + 4 + 3 = 12, total 18. Too few. Try 7."],["Ben 6 gives at most 18.","Ben 7: 6 + 5 + 4 + 7 = 22. So 7."]],
+ ["o20","squeeze",2,"mc","Use each of the digits 2, 5, 7 and 9 once to make two 2-digit numbers. What is the smallest possible sum?",["86","95","104","113","129"],"A",["Which place matters more: tens or ones?","Smallest digits where they count most. Which go in the tens?","Tens 2 and 5, ones 7 and 9: 27 + 59."],["Tens count 10 times, so 2 and 5 go there.","27 + 59 = 86."]],
+ ["o21","squeeze",3,"num","Nine baskets stand in a row. Each has at least 1 apple. Any two neighbouring baskets hold at most 7 apples together. What is the largest number of apples there can be?",null,"34",["If one basket is very full, what about its neighbours?","A basket of 6 forces neighbours of 1. Try 6, 1, 6, 1, ...","With 9 baskets, put the 6s at both ends. Count."],["Alternate big and small: 6, 1, 6, 1, 6, 1, 6, 1, 6.","5 × 6 + 4 × 1 = 34."]],
+ ["o22","pretend",1,"mc","One of Amy, Ben and Cal ate the last cookie. Exactly one of them tells the truth. Amy: “Ben ate it.” Ben: “I did not eat it.” Cal: “I did not eat it.” Who ate it?",["Amy","Ben","Cal","Nobody","Can't tell"],"C",["Pretend each person ate it. Count the true sentences.","If Amy ate it, whose sentences are true?","Exactly one true sentence. Try Cal."],["Amy or Ben as eater gives two true sentences.","Cal as eater: only Ben is truthful. It fits."]],
+ ["o23","pretend",2,"mc","Knights always tell the truth; knaves always lie. P says: “We are both knaves.” What are P and Q?",["Both knights","Both knaves","P knight, Q knave","P knave, Q knight","Can't tell"],"D",["Could a knight say 'I am a knave'?","So P is a knave and the sentence is a lie. What is NOT true?","They are not both knaves, but P is. So Q is?"],["A knight never says he's a knave, so P is a knave.","The lie means not both knaves: Q is a knight."]],
+ ["o24","pretend",3,"num","Five sentences are on a board, and exactly one is true. (1) Exactly one sentence here is false. (2) Exactly two are false. (3) Exactly three are false. (4) Exactly four are false. (5) All five are false. Which sentence is true? Type its number.",null,"4",["The question already tells you how many are true. So how many are false?","Exactly one true means exactly how many false?","Four false. Which sentence says that?"],["One true means four false.","Sentence 4 says exactly that."]],
+ ["o25","lineup",1,"num","How many two-digit numbers have digits that add up to 5?",null,"5",["Make a list in order, smallest tens digit first.","Tens digit 1: 14. Tens 2: ?","14, 23, 32, 41, and a ones digit of 0?"],["14, 23, 32, 41, 50.","5 numbers."]],
+ ["o26","lineup",2,"mc","Lily has 3 shirts and 4 pairs of shorts. An outfit is one shirt and one pair of shorts. How many different outfits?",["7","10","12","16","24"],"C",["Pick one shirt. How many outfits with just that shirt?","Each shirt goes with 4 shorts. How many shirts?","3 shirts × 4 each."],["Every shirt with every pair of shorts.","3 × 4 = 12."]],
+ ["o27","stack",3,"num","Six friends meet, and every friend shakes hands once with every other friend. How many handshakes are there?",null,"15",["How many hands does each friend shake?","6 × 5 = 30. But one handshake between Ana and Bo: how many times did you count it?","Each handshake was counted twice."],["Each friend shakes 5 hands: 30 counts.","Each handshake counted twice: 15."]],
+ ["o28","rhythm",1,"num","Toothpick squares in a row: 1 square uses 4 toothpicks, 2 squares use 7, 3 squares use 10. How many toothpicks for 10 squares in a row?",null,"31",["Make a table: squares and toothpicks.","How many does each new square add?","4 for the first, then +3 nine times."],["Each new square shares a side: +3.","4 + 9 × 3 = 31."]],
+ ["o29","rhythm",2,"mc","Today is Monday. What day of the week will it be 100 days from today?",["Monday","Tuesday","Wednesday","Thursday","Saturday"],"C",["After 7 days, what day is it?","How many full weeks fit in 100 days, and how many days are left?","14 weeks and 2 days. 2 days after Monday?"],["Every 7 days is Monday again; 98 days is 14 weeks.","2 more days: Wednesday."]],
+ ["o30","rhythm",3,"num","Kai writes 1, 2, 3, 2, 1, 2, 3, 2, 1, ... and keeps going. What is the sum of the first 50 numbers?",null,"99",["Find the repeating part. How long is it and what's its sum?","1, 2, 3, 2 repeats: 4 numbers, sum 8. How many full blocks in 50?","12 blocks use 48 numbers. The 49th and 50th are?"],["12 blocks: 96.","Then 1 + 2: 99."]],
+ ["o31","slide",1,"mc","A rectangle has area 24 cm² and whole-number sides. Which can NOT be its perimeter?",["20 cm","22 cm","28 cm","50 cm","24 cm"],"E",["Circle NOT. List every rectangle with area 24.","1×24, 2×12, 3×8, 4×6. Perimeter of each?","Perimeter = 2 × (length + width). Which choice never shows up?"],["Perimeters: 50, 28, 22, 20.","24 never appears."]],
+ ["o32","slide",2,"num","A 10 cm square is cut into two rectangles with one straight cut. One rectangle has perimeter 26 cm. What is the perimeter of the other, in cm?",null,"34",["Draw it. Both pieces are 10 cm long. What differs?","2 × (10 + width) = 26. Width?","3 cm wide, so the other is 7 cm wide."],["First piece 10 × 3.","Other piece 10 × 7: perimeter 34."]],
+ ["o33","slide",3,"num","This staircase shape has a bottom of 8 cm and a left side of 6 cm. Every step is 2 cm tall and the small steps are 2 cm wide. What is its perimeter, in cm?",null,"28",["Must you measure every step, or is there a shortcut?","Slide each little step out to the edges. What shape appears?","It becomes an 8 × 6 rectangle with the same fence."],["Sliding the steps gives an 8 by 6 rectangle.","2 × (8 + 6) = 28."],STAIR],
+ ["o34","flip",1,"num","A big cube is painted red, then cut into 27 small cubes (3 × 3 × 3). How many small cubes have exactly 2 red faces?",null,"12",["Where does a small cube show 2 faces: corner, edge or middle?","Corners show 3, edge middles show 2. How many edges does a cube have?","12 edges, 1 middle cube on each."],["Countdown: corners 3, edges 2.","12 edges: 12 cubes."]],
+ ["o35","flip",2,"mc","A painted 4 × 4 × 4 cube is cut into 64 small cubes. How many have exactly one painted face?",["8","16","24","32","36"],"C",["Exactly one face: corners, edges or middles?","On one 4 × 4 face, which squares are away from the border?","A 2 × 2 middle on each of 6 faces."],["Middles of faces show exactly 1.","4 per face × 6 = 24."]],
+ ["o36","flip",3,"num","On a die, opposite faces add to 7. Three dice are stacked in a tower on a table, and the top shows 3. What is the total of dots on all faces you can't see (faces touching each other and the face on the table)?",null,"18",["Which faces are hidden on each die?","Top die: its bottom, opposite the 3. Middle die: top and bottom. Opposite faces add to?","4, then 7, then 7."],["Top die hides 4.","Middle and bottom dice each hide an opposite pair: 7 + 7. Total 18."]]
+].map(a=>({id:a[0],move:a[1],lvl:a[2],pts:2+a[2],type:a[3],text:a[4],opts:a[5],ans:a[6],hints:a[7],why:a[8],fig:a[9]||"",src:"own"}));
+
+/* Book problems: the child reads them from the printed books. [year, number, answer, move, nudge1, nudge2] */
+const BOOK_RAW = [
+[2012,1,"C","lineup","Which letters repeat in VIVAT KANGAROO?","Count each different letter once: V, I, A, T, K, N, G, R, O."],
+[2012,2,"C","portions","The whole board is 6 m and the middle part is 3 m. What's left for the two sides?","3 m shared by two equal sides."],
+[2012,3,"A","flip","How many coins sit along one side? How long is one match compared with a coin?","One match spans two coins and each side has 4 coins: 2 matches per side."],
+[2012,4,"C","portions","Is there really a row 13 on that plane?","24 rows: one with 4 seats and 23 with 6."],
+[2012,5,"E","portions","How many hours is Madrid ahead of San Francisco?","Madrid is 9 hours ahead. Add 9 hours to 9 p.m. yesterday."],
+[2012,6,"C","flip","Join the centres of three neighbouring hexagons. What shape appears?","The centres make small triangles inside one big triangle with a straight left side."],
+[2012,7,"D","tryit","Write the steps in order: first, second, third.","First 6 + 3, then times 2, then add 1."],
+[2012,8,"A","flip","Roll the top coin around the bottom one in your head. Where does its head end up?","Half way round, the kangaroo is upside down with its arms in front."],
+[2012,9,"B","seesaw","Adding one balloon lets it lift how many more kilograms?","One balloon lifts 100 kg, and with one balloon it lifts the basket plus 80 kg."],
+[2012,10,"B","portions","How many pieces did they eat on the way? How many came home?","They ate 9 and brought 16 home: half are pears. Add the pears they ate."],
+[2012,11,"D","flip","Which piece can sit in the middle? It needs the right tabs and holes.","Only piece 2 fits the centre. Then find the piece beside it and the corner above."],
+[2012,12,"B","flip","Which dice does the hidden die touch? Which letters do those show?","It touches dice with A, C and D, so it can't be any of them."],
+[2012,13,"D","lineup","If every pair of 5 cities had a road, how many roads?","5 cities make 10 pairs. Count the visible roads."],
+[2012,14,"C","odd","Each colour is a leftover after dividing by 3. What leftover does red + blue give?","Leftover 1 + leftover 2 = leftover 3, which is no leftover: green."],
+[2012,15,"D","slide","How many equal segments make the outline? How long is one?","14 segments make 42 cm, so each is 3 cm. Then count the 3 × 3 squares."],
+[2012,16,"D","slide","Which curved parts are the same in both shapes?","The curves match, so compare only the straight parts."],
+[2012,17,"C","stack","Add all five line sums. How many times does the top number get counted?","The top counts 3 times, the rest twice: 56 + top must divide by 5."],
+[2012,18,"D","rhythm","Each bounce reaches 4/5 of the last height. List the heights.","Heights 10, 8, 6.4, 5.12, 4.096 m. Count every time the ball passes between 5 m and 6 m."],
+[2012,19,"A","rhythm","When the first gear moves one tooth, how far does the last gear move?","Every gear moves the same number of teeth: 30 teeth on a 10-tooth gear."],
+[2012,20,"C","flip","Unfold the paper one fold at a time. Where does the cut go?","Mirror the cut across each fold line, last fold first."],
+[2012,21,"B","tryit","Call the wine 1 whole. How much vinegar and water is there?","Vinegar is 1/2 and water 1/3. Together 5/6."],
+[2012,22,"D","flip","Follow each move square by square on the grid.","Draw every step carefully, counting across and up."],
+[2012,23,"D","portions","8 is the most common age and four children are 6. How many 8-year-olds at least?","At least 5 eight-year-olds, and one each of 7, 9 and 10. Then find the average."],
+[2012,24,"B","slide","The big outline is made of sides of which small rectangles?","The two rectangles at opposite corners cover the whole outline: 11 + 19."],
+[2012,25,"D","pretend","Who can sit next to 12?","12 sits between 11 and 10. Keep going down both sides."],
+[2012,26,"B","squeeze","What is the biggest square that fits? Can 4 squares ever cover a non-square?","4 corner squares can only cover a square, and a 6 × 6 needs 7. Try 5."],
+[2012,27,"D","pretend","Count red cells by rows, then by columns. Must the totals match?","Check each option: the row total must equal the column total, and the rows must allow the columns."],
+[2012,28,"D","slide","Where are the folding lines compared with the diagonal?","Each shaded rectangle is 1/8 of the square."],
+[2012,29,"C","columns","Write the house numbers as abc, bc and c. Add them by place value.","100a + 20b + 3c = 912. Which c makes that work?"],
+[2012,30,"B","pretend","If someone had the number 1, what would they know right away?","Ann didn't have 1. Then Bill didn't have 1 or 2. So what must Ann have?"],
+[2013,2,"C","flip","Look at the cube layer by layer, front to back. How many cubes are missing in each?","The middle layer misses 2, the front layer misses 5."],
+[2013,3,"C","portions","100 m is what fraction of the whole way?","100 m is one eighth of the way."],
+[2013,4,"B","flip","Trace a route from A to B turning only right. How few turns?","You need at least 4 right turns."],
+[2013,5,"E","portions","In 3 years, how much older is each person?","Each gains 3, three people gain 9."],
+[2013,6,"B","tryit","Write 176 as a two-digit number times a one-digit number.","88 × 2, 44 × 4, 22 × 8: which uses the same digit everywhere?"],
+[2013,7,"B","rhythm","How many minutes between pills? List the times.","Every 15 minutes: 11:05, 11:20, 11:35, ..."],
+[2013,8,"E","flip","Each corner that sticks out makes a region. Plus what?","8 corners poke out, plus the overlap in the middle."],
+[2013,9,"C","lineup","Check each number from 21 to 29: can it be divided by its ones digit?","21, 22, 24 and 25 work."],
+[2013,10,"C","squeeze","Can 5 pieces of 4 squares fill all 20 squares? Start with a corner.","Covering the corners forces the pieces, and the fifth never fits."],
+[2013,11,"C","odd","Colour the table like a checkerboard. Where do the dots sit?","Dots one step apart alternate colour. Which piece can cover 5 dots of the same colour?"],
+[2013,12,"C","slide","Do the inside lines match the missing parts of the outline?","A shape keeps the same perimeter when its inside lines match the edges it lost."],
+[2013,13,"D","portions","How long is the whole ride? What is one third of that?","The ride is 2 hours, a third is 40 minutes after 1:30."],
+[2013,14,"B","seesaw","3 times the fish minus 1 times the fish is 12. What is 2 times the fish?","2 × fish = 12."],
+[2013,15,"E","flip","From the front you see the tallest tower in each column.","Read the tallest number in each column: 4, 3, 3, 2."],
+[2013,16,"B","squeeze","Take away the winner's and last place's votes. What's left for the middle three?","20 votes for three; the 4th place got 5, the other two share 15."],
+[2013,17,"D","flip","Cut a small cube from a corner. How many new faces appear?","Each corner adds 3 faces: 6 + 8 × 3."],
+[2013,18,"A","lineup","The bigger number is at least how much bigger than the smaller?","Pairs from 10 & 60 up to 49 & 99."],
+[2013,19,"C","pretend","What could the half-time score be if the guests led after 6 goals?","Only 2 : 4 lets the home team win with 3 more goals."],
+[2013,20,"D","rhythm","Neighbours differ by 1. What's the biggest number each colour can hold?","Walking from 3 to 9 step by step forces every colour."],
+[2013,21,"A","pretend","Everyone lies. What does each lie tell you about two stones?","The lies say Aron and Bern differ, Bern and Carl differ, and the matching pair isn't red."],
+[2013,22,"D","squeeze","If no cat had both stripes and a black ear, how many cats would there be?","27 + 32 = 59 but only 45 cats remain. How many must have both?"],
+[2013,23,"B","tryit","Press one button. Then two. Write the faces each time.","No single press or double press works. Try three different buttons."],
+[2013,24,"A","rhythm","Walk around the circle: a chain of girls ends with a boy on each side.","Each chain has one boy giving his left hand and one his right."],
+[2013,25,"D","lineup","4 black and 4 white small cubes. Sort the cubes by their bottom layer.","List carefully, turning cubes so you don't count the same one twice."],
+[2013,26,"D","columns","Write abc − cba by place value. What is left?","It is 99 × (a − c) = 297, so a − c = 3. Count choices for a and b."],
+[2013,27,"B","flip","How many track pieces make half a circle?","Split the circle into two halves and add joining pieces."],
+[2013,28,"B","rewind","Start from the last islander. Is his sentence true?","Working backwards, knights and liars take turns."],
+[2013,29,"D","rhythm","Do the change-sum a few times. Watch the differences.","The differences only flip their sign, so the biggest difference never changes."],
+[2013,30,"B","squeeze","To keep big numbers outside, which faces should be glued inside?","Glue the small numbers inside; check which pairs can touch."],
+[2014,1,"C","lineup","How many quarter-turns does each card need?","K 2, A 1, N 1, second A 2."],
+[2014,2,"D","seesaw","The biggest piece weighs as much as the other three. What fraction is it?","It is half of the cake."],
+[2014,3,"D","flip","Seen from the back, what swaps?","From behind, left and right swap: the white ring is on the right."],
+[2014,4,"A","columns","Add the visible digits column by column. Any carrying?","The columns already make 309, so the stars add nothing."],
+[2014,5,"A","tryit","Smallest 5-digit number? Largest 4-digit number?","10000 − 9999."],
+[2014,6,"D","slide","How long is a side of the square? Then the rectangle's sides?","Side 12, so the rectangle is 24 by 6."],
+[2014,7,"B","portions","How many matches did the triangle use? How many are left?","18 for the triangle, 20 left for 4 sides."],
+[2014,8,"B","squeeze","Take pearls from both ends. Which way gets grey pearls fastest?","Mixing both ends needs only 3 white pearls."],
+[2014,9,"B","lineup","Work out each lap's time from the table.","Subtract start from end for each lap."],
+[2014,10,"C","pretend","Which digits could the broken display show? Which pair is one minute apart?","12:43 then 12:44."],
+[2014,11,"E","slide","Count light and dark areas in whole and half squares.","Light 5 and dark 3: can 1 more dark square ever catch up?"],
+[2014,12,"B","flip","Draw both walks on squared paper.","John ends 1 km south of Henry."],
+[2014,13,"D","portions","Who ate ice cream yesterday? How many every-other-day kids?","13 − 7 = 6 every-other-day kids ate yesterday. The other 3 eat today."],
+[2014,15,"B","slide","Each piece is a square with bumps added or bites taken. Which four make exactly 4 squares?","Leave out the piece that keeps the bumps and bites from cancelling."],
+[2014,16,"D","columns","Break 135 into prime factors.","135 = 3 × 3 × 3 × 5 = 3 × 5 × 9."],
+[2014,17,"A","seesaw","How many people do the 6-chair tables seat?","6 tables of 6 seat 36. The other 10 tables seat 36 with 3 or 4 chairs each."],
+[2014,18,"D","slide","Draw the line and work from F back to A.","Find each gap: 8, 4, 7, 5, 11."],
+[2014,19,"E","odd","Without the 2 extra stones, the count divides by 3 and by 5.","The total is 2 more than a multiple of 15."],
+[2014,20,"A","flip","Which faces share an edge? Faces that touch can't be opposite.","Three faces meeting at a corner aren't opposite each other. Find the one left over for 4."],
+[2014,21,"D","flip","Which small cubes block the view from the right, front and top?","Count the cubes in the crossed rows that must go."],
+[2014,22,"A","rhythm","How long does one loop of all the songs take?","One loop is 13 minutes. After 60 minutes you're 8 minutes past a loop start."],
+[2014,23,"E","squeeze","Where can 5 go so its neighbours add to 9?","5 must sit between 1 and 2 with 6 in the centre."],
+[2014,24,"C","lineup","Half the trees are maples. Which trees are lindens?","Every 6th tree is a linden."],
+[2014,25,"E","flip","A see-through cube shows the ribbon on the front and back together.","Check each picture against the six views."],
+[2014,26,"D","portions","When does each messenger get back to the castle?","They arrive at 1.5 h, 3 h and 4.5 h."],
+[2014,27,"B","tryit","The product of the three digits is 36 and one is 3. The other two multiply to?","12 = 2 × 6 or 3 × 4. The digits add to 15."],
+[2014,28,"C","pretend","Try 0, 1, 2 or 3 days of eating only 9 carrots.","Only 2 days works with 30 carrots."],
+[2014,29,"C","rhythm","After a sunny day, what must the next two days be?","You can be sure for a few days, then it could go either way."],
+[2014,30,"E","squeeze","To make Alice young, how old should the others be?","Try Alice = 22: the biggest total is 175. Too small."],
+[2015,1,"B","tryit","What fraction is shaded in each figure?","Only one figure is exactly half shaded."],
+[2015,2,"C","flip","Turn the umbrella in your head. Which word is backwards?","One choice has a mirrored letter."],
+[2015,3,"A","pretend","Find same-colour neighbours. Can one repaint fix all of them?","Two separate pairs touch, so one repaint isn't enough."],
+[2015,4,"A","portions","How many eggs in 10 days from daily layers? From every-other-day layers?","50 + 25."],
+[2015,5,"B","slide","How long is a side of a small square, from its area?","Each side is 2 cm. Count the sides on the thick line."],
+[2015,6,"E","tryit","Compare each fraction with 2.","Only one fraction is less than 2."],
+[2015,7,"D","seesaw","Swap the watermelon for a pumpkin. What changes?","2 pumpkins weigh 10 kg."],
+[2015,8,"A","seesaw","Which plants have flowers?","6 flowering plants with 12 leaves; the other 20 leaves are on 5-leaf plants."],
+[2015,9,"A","slide","Overlap = two strips − the glued length.","The two strips together are 60 cm."],
+[2015,10,"D","slide","Count every vertical and horizontal piece of the outline.","6 + 1 + 3 + 1 + 1."],
+[2015,12,"C","slide","How do the short and long sides of the small rectangles compare?","Each short side is half a long side."],
+[2015,14,"C","portions","After a birthday this year, what is age + birth year?","Both add to 2015."],
+[2015,15,"C","odd","Double 'a number with leftover 7 when divided by 9'. What leftover?","14 = 9 + 5."],
+[2015,17,"C","pretend","Each triangle has 3 different colours. Start where two sides are known.","Fill triangle by triangle until you reach x."],
+[2015,18,"E","unlucky","Unlucky Ulysses takes out everything that doesn't match. How many?","12 pieces can all mismatch. Then?"],
+[2015,19,"B","flip","Where can the kangaroo get in one move? In two?","Check the target isn't reachable in 2."],
+[2015,20,"E","columns","X + X + YY is at most 115. So what is Z?","Z = 1 and YY must be 99."],
+[2015,21,"C","tryit","Write 80 as two whole numbers multiplied.","5 × 16 and 8 × 10 add to 39."],
+[2015,22,"C","rewind","Work from the last book back to the start.","After the second book she had $6 + ... Undo each 'half plus'."],
+[2015,23,"D","squeeze","Each house has at least 1 person and neighbours have at most 6.","Big next to small: 5, 1, 5, 1, ..."],
+[2015,25,"B","squeeze","bd − ac = 10 × (b − a) + (d − c). Make b − a as big as you can.","Digits 1, 7, 8, 9: 79 − 18."],
+[2015,26,"C","pretend","Corners on the same edge share two faces.","The difference between two corners on an edge stays the same."],
+[2015,27,"B","rhythm","Call compartments per car n. Where does number 50 fall?","50 is in the 7th car: 6n < 50 and 50 is at most 7n."],
+[2015,28,"E","lineup","List every arrangement in order.","Be systematic so none is missed or doubled."],
+[2015,29,"E","slide","Gaps AB, BC and CD are each less than 11. Which are 2 and 3?","2 + 3 + k = 14."],
+[2015,30,"D","flip","Each corner of the big cube needs two colours. Look at the edges.","8 corners plus 2 cubes on each two-colour edge."],
+[2016,1,"C","flip","Fold each sign in your head along a line.","Find the one that folds both ways."],
+[2016,2,"E","portions","4 quarters, each cut into 3. How many pieces?","12 pieces."],
+[2016,3,"A","tryit","The folded thread has 10 pieces. How long is each?","Each piece is 1 cm. Count pieces in each part."],
+[2016,4,"C","squeeze","Which magnets must stay? Which cards overlap?","The two flower cards need their own magnets."],
+[2016,5,"E","slide","Split the big square into 4 small squares.","The green square is half of each small square."],
+[2016,6,"B","lineup","Which utensils need to swap?","Two swaps fix it."],
+[2016,7,"D","portions","How many feet already have shoes?","25 pairs cover 50 feet."],
+[2016,8,"C","portions","How many cubes are in Tom's box?","24 cubes, and John's level holds 6."],
+[2016,9,"C","flip","Which way does each girl face? Is she on her right side?","Look at each pair separately."],
+[2016,10,"B","flip","Fold face A up first, then the rest.","Every face ends up next to one face. That is the bottom."],
+[2016,11,"A","flip","Which shape can't come from two equal squares?","Check whether the top triangle fits a square of the same size."],
+[2016,12,"C","portions","On Ann's day off, who works?","Mary and Nata, then Ann pairs with each."],
+[2016,13,"C","lineup","Move all the squirrels one step at a time.","Track each nut as it is picked."],
+[2016,15,"B","squeeze","There is one 4-digit piece. Make it as small as you can.","Start the 4-digit piece with 1."],
+[2016,16,"E","flip","A mirror swaps left and right. What is the real time?","Mirror the clock to find the real time, then go back 10 minutes."],
+[2016,18,"D","odd","For divisibility by 3, add the digits.","28 + N must divide by 3, and N is odd."],
+[2016,19,"A","odd","Carl's age + 3 = four times the triplets' age when?","Total + 3 must divide by 4."],
+[2016,21,"D","flip","Unfold the paper one fold at a time.","Mirror the cut across each fold line."],
+[2016,22,"B","squeeze","Start with 11111 and shorten it.","Make each new number shorter but still allowed."],
+[2016,23,"D","squeeze","How many 4-square shapes can fit in 25 squares?","7 shapes need 28 squares."],
+[2016,24,"B","seesaw","Move chairs around to make double tables.","Count how many double tables need 6 chairs each."],
+[2016,27,"D","stack","Two sides that share a circle must have equal sums.","Compare sums side by side."],
+[2016,28,"E","columns","Use letters for shapes. S + T = S means T is?","T = 0, so 2C = 9S."],
+[2016,29,"C","odd","60 operations: which pairs cancel each other?","Some values need an odd number of extra steps."],
+[2016,30,"E","squeeze","Make each 3-digit number as small as possible.","Try the second number starting with 2, then with 4."],
+[2017,1,"B","pretend","One swap moves exactly two cards. How many moved here?","Count cards out of place."],
+[2017,2,"C","seesaw","Count legs on each side.","34 legs against 18 legs: the difference is cats."],
+[2017,3,"E","flip","Try covering each shape with the pieces.","One shape has a cell that can't be covered."],
+[2017,4,"D","columns","1111 × 2222 = 1111 × 1111 × 2.","1111 × 1111 = 1234321."],
+[2017,5,"B","squeeze","How many separate paths join A and B?","Each separate path needs one closed bridge."],
+[2017,6,"A","seesaw","Who is heavier than whom?","Kate is lightest; Lynn is heaviest."],
+[2017,7,"E","stack","Opposite pairs have equal sums. Which number is the odd one out?","Pair smallest with largest."],
+[2017,8,"C","portions","What fraction is red?","1 − 1/3 − 1/2 = 1/6 of 18 squares."],
+[2017,9,"B","portions","Split 30 in the ratio 2 : 3.","12 and 18."],
+[2017,10,"D","flip","Which fold lines make the holes land on top of each other?","Folds must be across the line of holes."],
+[2017,11,"D","seesaw","What is the difference between the sofa and the loveseat?","One white piece is 60 cm. Find the armrests."],
+[2017,13,"C","squeeze","Start the biggest number with 9. Which 9?","Keep the biggest digits early while leaving enough digits."],
+[2017,15,"D","seesaw","Write the equations. Compare them pair by pair.","a + b = 2 and b + d = 4, so d is 2 more than a."],
+[2017,16,"E","portions","Wednesday is the middle day.","5 days total 5 × Wednesday."],
+[2017,17,"E","flip","Reflect the triangle step by step.","Draw each reflection."],
+[2017,18,"D","tryit","Test each order with a starting amount.","Only one order doubles and adds 1."],
+[2017,19,"B","slide","Add the three squares, then subtract the overlaps.","4 + 16 + 36 − 1 − 4."],
+[2017,21,"A","flip","Each bar has one white end. Look at one corner.","Find a cube that can't belong to any bar."],
+[2017,22,"D","lineup","Where can 1 go? Where can 5 go?","1 in the corner, 5 at an end. List the rest."],
+[2017,23,"D","rhythm","Track each left-facing kangaroo as it jumps.","3 + 5 + 5 jumps."],
+[2017,24,"C","squeeze","Multiply each by 2 or 3 to make results match.","Try to make as many products equal as you can."],
+[2017,25,"C","flip","What should each edge look like?","Count grey and white triangles along each edge."],
+[2017,27,"D","pretend","Who took 45? Who took 20?","Beata before Celina, Celina before Ala."],
+[2017,29,"E","lineup","Which countries don't touch?","4 × 3 × 2 × 2."],
+[2017,30,"C","squeeze","Can a row with no lit lamp ever light up?","Each row and column needs a lit lamp to start."],
+[2018,1,"A","flip","Extend each arrow's path across the picture.","Count the balloons no arrow touches."],
+[2018,2,"C","flip","Look straight down from above.","A long rectangle, a circle on one side, a square on the other."],
+[2018,3,"B","seesaw","Two middle-ring hits make 14. What is one?","Then centre + middle = 16."],
+[2018,4,"B","portions","Together the snails cover how many metres per hour?","3 m an hour around a 24 m path."],
+[2018,5,"D","columns","Turn the subtraction into an addition.","25 + 2▢ ends in 3."],
+[2018,6,"E","slide","Each square side becomes two triangle sides.","The star's outline is twice the square's."],
+[2018,7,"D","rhythm","The same weekday comes every 7 days.","The 3rd is a Friday, so is the 24th."],
+[2018,8,"C","unlucky","Unlucky rolls: how many different results first?","6 different, then the 7th repeats."],
+[2018,9,"C","slide","Write every length on the picture.","The big square's side is twice the small one's."],
+[2018,10,"A","tryit","Touch one bulb. Does it light everything?","Each bulb has 2 or 3 neighbours."],
+[2018,11,"E","slide","Compare black to white in each square.","Each is 1 black to 3 white."],
+[2018,12,"B","flip","Which cars could move to make the picture?","Follow each car's path."],
+[2018,13,"E","tryit","green + pink is at least 9.","Only 4 + 5 works with the second equation."],
+[2018,14,"A","pretend","Which sign is surely true?","'Two and three is five' is true, so the others are false."],
+[2018,16,"C","pretend","Neighbouring cells add to 5.","Fill from the 2 and 3 you know."],
+[2018,17,"C","rhythm","Each day the new people double. Add up day by day.","5, 10, 20, 40, 80."],
+[2018,20,"A","pretend","The sleeping ladybug never moves.","Find the cell occupied at every whistle."],
+[2018,21,"C","squeeze","Can either girl skip the number 1?","Both must pick 1. Then check the pairs."],
+[2018,22,"C","seesaw","The third scale balances all five balls.","80 + 50 = 50 + 50 + 30."],
+[2018,23,"D","pretend","For the biggest number, equal digits sit together.","Test each pattern with digits 1, 2, 3."],
+[2018,24,"C","seesaw","Subtract the two sums. What's left?","Granny's age − Kate's age."],
+[2018,25,"B","squeeze","The common sum must divide 54 and be at least 10.","18 with three groups."],
+[2018,27,"B","squeeze","Each 2 × 2 green square needs a 0.","At least four 0s."],
+[2018,28,"C","pretend","A truth-teller sits between two liars.","Pairs of liars with a truth-teller between."],
+[2018,30,"E","stack","Add the three line sums. The centre is counted how many times?","42 + 2 × centre must divide by 3."],
+[2019,1,"B","flip","Compare each picture with the start drawing.","Check nose, ears and eyes."],
+[2019,2,"C","tryit","A bar is 5 and a dot is 1. Build 17.","3 bars and 2 dots."],
+[2019,3,"C","pretend","Which displays are real times after 20:19?","Minutes go up to 59 only."],
+[2019,4,"E","unlucky","Could all 12 boys go on the walk?","13 go, so at least 1 girl."],
+[2019,5,"E","flip","On a real die, opposite faces add to 7. Can two faces you see side by side add to 7?","Faces next to each other on a real die never add to 7. Check each picture."],
+[2019,6,"D","flip","Find each shape in the design.","Look for the 8-sided one."],
+[2019,7,"D","lineup","Count the 2 × 2 squares at the corners, then in the middle.","4 corners + 4 in the middle 3 × 3."],
+[2019,8,"C","odd","Three odd numbers add to odd or even?","Always odd."],
+[2019,9,"B","portions","How much does the age total grow in one year?","24 in two years, so 12 a year."],
+[2019,10,"A","flip","Count the outside unit squares of each solid.","One solid has hidden inside squares to paint."],
+[2019,12,"C","seesaw","If every day was normal, how many spiders in 9 days?","45, but she ate 60. Each hungry day adds 5."],
+[2019,13,"C","pretend","Where can the yardstick start and end?","Points where 3 parts meet must be ends."],
+[2019,15,"A","slide","Find equal sides using equilateral triangles.","The bottom side is 1 + 2 + 2."],
+[2019,16,"C","rewind","Start at the end: 10 dogs, 10 cats, 10 mice. Undo the steps.","Undo 5 cats → mice, then 6 dogs → cats."],
+[2019,18,"C","flip","Fold the square twice. Where do the cuts go?","Unfold and mirror the cuts."],
+[2019,19,"A","pretend","Bob has no hat. What do the rules force?","Carl must wear a hat, and so must Alex."],
+[2019,20,"D","flip","Label matching edges on each net.","The line's ends must meet on one edge."],
+[2019,21,"C","squeeze","Opposite faces have equal products. Smallest product?","Products are a multiple of 5, 10, 15: try 30."],
+[2019,22,"E","seesaw","Remove one black bead from each side.","Compare scales: 3 white beads weigh 24 g."],
+[2019,23,"D","pretend","Two statements can't both be true. Which two?","Ann's and Basil's brothers clash."],
+[2019,25,"B","flip","Which faces can show together?","Two white squares never make a face."],
+[2019,26,"B","lineup","8 cousins in at least 2 photos each, 5 per photo.","16 spots ÷ 5 per photo."],
+[2019,27,"D","seesaw","Compare the two pyramids. Which cans are missing?","Jette's missing cans add to 25."],
+[2019,28,"A","pretend","Which digit can the first place be on a 24-hour clock?","Find 23:47, then add 3 h 45 min."],
+[2019,30,"C","tryit","He starts with only white tokens. What must the first exchanges be?","After 4 white-to-red exchanges, track the totals."],
+[2020,1,"E","flip","What does the missing piece need at its corners?","One quarter circle and two narrow spikes."],
+[2020,2,"E","tryit","Add the two numbers on each signpost.","All but one add to 11."],
+[2020,3,"D","flip","Switch every colour, row by row.","Write each row in letters, then swap."],
+[2020,4,"B","portions","A pair of eggs makes 6 muffins.","One box makes 18 muffins."],
+[2020,5,"E","flip","Reflect F across each line.","Mirror the left-right picture and the up-down picture."],
+[2020,6,"C","tryit","Which lengths can you make from 5s and 7s?","Try each choice: 10, 12, 13, 14, 15."],
+[2020,7,"A","tryit","Each cut sheet becomes 5 pieces. How many does one cut add?","Each cut adds 4 pieces."],
+[2020,8,"B","pretend","Where three regions meet, all three colours differ.","Fill outward from the blue."],
+[2020,9,"C","squeeze","How many apples per basket at the end?","Move from full baskets to the emptiest."],
+[2020,10,"E","portions","The dog walks 3 times as fast as the cat.","Split the path in the ratio 3 : 1."],
+[2020,11,"A","stack","Use the opposite-circle rule.","Opposite pairs follow the same pattern."],
+[2020,12,"E","flip","Turn the clock upside down. What did it really show?","Then count the time between."],
+[2020,14,"B","lineup","Count visible cubes of each colour.","Compare with Mary's cubes."],
+[2020,17,"E","slide","The shape has 4 short segments and 1 double. Can two pieces make each option?","Two pieces need at least 2 double segments."],
+[2020,18,"D","flip","Where does the ladybug's head point in each view?","The dog is opposite the mouse."],
+[2020,20,"A","flip","Same amount of liquid in each. Longer vessel, lower level.","Order the lengths opposite to the levels."],
+[2020,21,"B","flip","Find the one special face first.","Then go round the frame."],
+[2020,22,"E","slide","Find the side of each small square from the big one.","28 − 22 and 28 − 15."],
+[2020,24,"C","seesaw","Add the two balanced scales together.","Then take the same off both sides."],
+[2020,25,"D","lineup","Vanilla has 4 scoops and 4 toppings. Match them first.","Go flavour by flavour."],
+[2020,26,"D","squeeze","Which number can't be 'nice' in a row?","Numbers ending in 9 break the chain."],
+[2020,27,"B","portions","1/2 + 1/3 + 1/6 = ?","Find games played so far."],
+[2020,28,"A","flip","After the first fold, what is on top?","Follow each column."],
+[2020,29,"E","lineup","Count contact points layer by layer.","Base, middle, and between layers."],
+[2020,30,"B","pretend","Find islands with only two bridges.","Those paths are forced."],
+[2021,1,"D","lineup","How many grey and white bricks are there?","4 grey, 2 white."],
+[2021,2,"A","flip","Who faces you and who faces away?","Left hands meet only where the facing changes."],
+[2021,3,"E","squeeze","Big digits first make the biggest number.","Both best lines start 98. Compare the next digit."],
+[2021,4,"D","pretend","Which box gives only one choice?","Box 3 has only N. Then follow the forced picks."],
+[2021,5,"B","flip","Match tabs with holes.","Only one order fits."],
+[2021,6,"C","rhythm","How much do the numbers go up per level?","Each level adds 21."],
+[2021,7,"B","flip","How wide can a figure be to fit through G?","At most 3 blocks wide in every row."],
+[2021,8,"E","portions","Simplify each mix to green : white.","Every mix is 1 : 3."],
+[2021,9,"E","flip","Fold each shape in half twice in your head.","Try P, Q and R one at a time."],
+[2021,10,"D","slide","Midpoints split the square into halves and quarters.","Find a piece that is half of a quarter."],
+[2021,11,"B","squeeze","10 digits into 3 numbers. How long should each be?","One 4-digit number starting with 1, two 3-digit."],
+[2021,12,"B","stack","Add all three tours from A, B and C.","Outer path + inner path. Subtract the inner one."],
+[2021,13,"D","flip","Which piece connects the two lines in the centre?","Pieces can rotate. Find the one that never connects."],
+[2021,14,"B","stack","Each hexagon adds to 30. Find the unknown pairs.","Left gives A + B = 18, right gives C + D = 7."],
+[2021,15,"C","slide","Areas and widths give the shared height.","(12 + 18) ÷ 6 = height."],
+[2021,16,"A","pretend","Which letter appears on the top ball in every view?","The second A must be hidden."],
+[2021,17,"E","pretend","Ronja starts. Who places the last token?","Wanja ends, so a grey token is on top."],
+[2021,18,"C","tryit","How much was the first wheel turned?","Turn every wheel the same amount and check."],
+[2021,19,"D","seesaw","Carl's apples + Luca's apples = 20. Carl's apples + Carl's pears = 20.","Compare the two sentences."],
+[2021,20,"B","portions","How long does each train take per segment?","30 minutes and 10 minutes."],
+[2021,21,"A","pretend","Bob is not next to Ann or Dan. So his neighbours are?","Carina and Ed sit next to Bob."],
+[2021,22,"B","portions","How many pancakes from each ingredient alone?","The smallest number wins."],
+[2021,23,"A","flip","How many teeth does the small gear turn?","Every gear moves the same number of teeth."],
+[2021,24,"C","seesaw","Add the first scale to the others.","Remove what's on both sides."],
+[2021,25,"E","flip","Four lines of symmetry: across, up, and both diagonals.","Mirror the shape every way."],
+[2021,26,"C","pretend","Two pirates agree on coins. Can both lie about coins?","Then their diamond answers would both be true, but they differ."],
+[2021,27,"D","seesaw","Write each shelf as an equation.","Halve one shelf and compare."],
+[2021,28,"B","flip","Each diagonal marks how many small cubes? Corners count for 3 faces.","13 per face, then fix the corners."],
+[2021,29,"B","squeeze","The real total is 55. How much must trolls lower it?","Big lies: say 1 with a 10."],
+[2021,30,"E","pretend","Which shapes always share a row on a card?","Circle and triangle stay in one row."]
+];
+const BOOK = BOOK_RAW.map(([y,n,a,mv,h1,h3])=>({id:`b${y}-${n}`,year:y,n,move:mv,pts:n<=10?3:n<=20?4:5,type:"mc",opts:["A","B","C","D","E"],ans:a,
+  hints:[h1,null,h3],why:[h3],src:"book",text:`Open the ${y%2?"Odd":"Even"} Years problems book to Year ${y}, problem ${n}.`}));
+
+/* Team sample test (answers matched to original problems) */
+const SAMP = [
+ ["D","portions","Is there any pair of two boys?","Each boy comes with 2 girls, so groups of 3."],
+ ["C","columns","Start with the ones column. What do you carry?","Ones carry 1. Tens must end in 2, hundreds make 8."],
+ ["C","flip","Count the shape in three directions.","3 high, 4 deep, 5 wide."],
+ ["E","squeeze","Biggest month digit sum? Biggest day?","09 and 29: September 29 exists."],
+ ["A","portions","Count the food in cat-days.","48 cat-days for 6 cats."],
+ ["C","flip","Fold each triangle up from the square.","One net puts two triangles on the same side."],
+ ["B","pretend","If one doesn't move, the other four swap in pairs.","Find who stays to get A E B D C."],
+ ["C","pretend","Which lock has a repeated letter?","DAD = 414, HAB = 812."],
+ ["A","pretend","Could the truthful elf and the lying troll both say it?","'I am telling the truth' works for both."],
+ ["A","tryit","Act out the throws in order.","Either way the 4th throw returns to Adam."],
+ ["B","slide","Compare black area as a fraction.","5/9 is more than 1/2."],
+ ["E","flip","Which squares end up opposite?","The two squares that stick out are opposite."],
+ ["A","columns","The sum of two 3-digit numbers is 4 equal digits. Which ones?","1111. Then B + B + 1 can't carry."],
+ ["C","squeeze","To make Mike big, the others must be small.","With Mike = 5, the others need 21."],
+ ["C","slide","Cross out what every path shares.","Fewest big arcs wins."],
+ ["B","lineup","List rectangles with area 12.","1 × 12, 2 × 6, 3 × 4."],
+ ["C","portions","Each year the gap changes by how much?","13 shrinks by 2 a year."],
+ ["B","rhythm","Make a table of blocks and heights.","The 28-block tower is the 6th."],
+ ["D","flip","Each black cube shows 3 black squares.","Total black squares must divide by 3."],
+ ["C","tryit","Try starting with 1, then with 2.","Three numbers in a row hold one multiple of 3."],
+ ["3","pretend","Who has only 2 friends?","Beatrice's friends have 4 lines each."],
+ ["67","lineup","List the four possible results after adding.","Only 201 divides evenly."],
+ ["9","rhythm","Full triangles use 1, 4, 9, 16 tiles.","Her shape fits only the 16-tile one."],
+ ["40","slide","Which pieces of each rectangle are missing?","Half of 20 is hidden."],
+ ["9","unlucky","Turn 'any 5 has a red' around.","At most 4 green and 5 red."],
+ ["200","slide","Every piece is 8 cm wide.","8 + 4 × 16 + 4 × 32."],
+ ["7","odd","Write O and E only.","Try bottom row O E O O."],
+ ["2","tryit","Can one turn do it?","Flip 2 black + 1 white, then 3 black."],
+ ["3/4","flip","Which cubes show the most faces?","Corners and edges: 8 + 24 = 32."],
+ ["3","stack","Same dots in every row: how does the total relate to 4?","37 visible: next multiple of 4."]
+];
+const SAMPLE = SAMP.map((s,i)=>{const n=i+1; return {id:"s"+n,n,move:s[1],pts:n<=20?3:5,type:n<=20?"mc":"num",opts:n<=20?["A","B","C","D","E"]:null,ans:s[0],hints:[s[2],null,s[3]],why:[s[3]],src:"sample",
+  text:`Look at question ${n} of your printed Team Level 5–6 sample test.`}});
+
+const ALL = [...OWN, ...BOOK, ...SAMPLE];
+const byId = Object.fromEntries(ALL.map(p=>[p.id,p]));
+const POOL = [...OWN, ...BOOK];
+
+/* =================== Adaptive settings =================== */
+const LEVELS = [{n:4,f:1.0,mix:[.6,.3,.1]},{n:5,f:.9,mix:[.45,.4,.15]},{n:6,f:.8,mix:[.3,.45,.25]},{n:7,f:.72,mix:[.2,.4,.4]},{n:8,f:.65,mix:[.15,.35,.5]}];
+const BASE = {3:120,4:180,5:240};
+const limitFor = (p,lvl)=> Math.round(BASE[p.pts]*LEVELS[lvl-1].f/5)*5;
+
+/* =================== Storage =================== */
+let attempts=[], tests=[], state={level:1, history:[], plans:{}}, db=null, saveNote="Saved on this device";
+const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+attempts=lsGet("kmg_attempts",[]); tests=lsGet("kmg_tests",[]); state=lsGet("kmg_state",state);
+/* On the app's own website, progress is saved through its server API (Cloudflare Worker + D1). */
+function deviceId(){ let d=lsGet("kmg_device",null); if(!d){ d=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()).replace(/[^a-zA-Z0-9-]/g,""); lsSet("kmg_device",d) } return d }
+function makeApiDb(dev){
+  const q="?d="+encodeURIComponent(dev);
+  const doc=(col,id)=>({id,
+    async get(){ const r=await fetch(`/api/d/${col}/${id}${q}`); if(r.status===404) return {exists:false,id,data:()=>undefined}; if(!r.ok) throw new Error("load"); const j=await r.json(); return {exists:true,id,data:()=>j} },
+    async set(b){ const r=await fetch(`/api/d/${col}/${id}${q}`,{method:"PUT",headers:{"content-type":"application/json"},body:JSON.stringify(b)}); if(!r.ok) throw new Error("save") }});
+  return { doc:p=>{const[c,i]=p.split("/"); return doc(c,i)},
+    collection:c=>({ doc:id=>doc(c,id||(crypto.randomUUID?crypto.randomUUID():String(Date.now()))),
+      async get(){ const r=await fetch(`/api/c/${c}${q}`); if(!r.ok) throw new Error("load"); const j=await r.json(); return {docs:j.map(x=>({id:x.id,data:()=>x.data}))} } }) };
+}
+async function initDb(){
+  try{ db = window.claude && window.claude.use ? await window.claude.use("db") : null }catch(e){ db=null }
+  if(!db && /^https?:$/.test(location.protocol)){ try{ const h=await fetch("/api/health"); if(h.ok) db=makeApiDb(deviceId()) }catch(e){} }
+  if(!db) return;
+  try{
+    const [a,t,s,ln]=await Promise.all([db.collection("attempts").get(),db.collection("tests").get(),db.doc("app/state").get(),db.doc("app/learner").get()]);
+    if(ln.exists){ const rl=ln.data(); if(!learner || (rl.updated||"")>=(learner.updated||"")) learner=rl; else await db.doc("app/learner").set(learner) } else if(learner) await db.doc("app/learner").set(learner);
+    lsSet("kmg_learner",learner);
+    const remote=a.docs.map(d=>({...d.data(),_id:d.id})); const keys=new Set(remote.map(r=>r.key));
+    const pending=attempts.filter(x=>!keys.has(x.key));
+    attempts=[...remote,...pending].sort((x,y)=>x.at.localeCompare(y.at));
+    const rt=t.docs.map(d=>({...d.data(),_id:d.id})); const tk=new Set(rt.map(r=>r.key)); const tp=tests.filter(x=>!tk.has(x.key));
+    tests=[...rt,...tp].sort((x,y)=>x.at.localeCompare(y.at));
+    if(s.exists){ const rs=s.data(); if(!state.updated || (rs.updated||"")>=state.updated) state=rs; else await db.doc("app/state").set(state) } else await db.doc("app/state").set(state);
+    saveNote="Saved to this page";
+    for(const p of pending) await pushAttempt(p);
+    for(const t of tp) await pushTest(t);
+    lsSet("kmg_attempts",attempts); lsSet("kmg_tests",tests); lsSet("kmg_state",state);
+    if(!view.pid && !view.run) render();
+  }catch(e){ db=null }
+}
+async function pushAttempt(a){ if(!db) return; try{ const {_id,...b}=a; const ref=_id?db.doc("attempts/"+_id):db.collection("attempts").doc(); await ref.set(b); a._id=ref.id }catch(e){} }
+async function pushTest(t){ if(!db) return; try{ const {_id,...b}=t; const ref=_id?db.doc("tests/"+_id):db.collection("tests").doc(); await ref.set(b); t._id=ref.id }catch(e){} }
+async function saveAttempt(a){ if(!attempts.includes(a)) attempts.push(a); lsSet("kmg_attempts",attempts); await pushAttempt(a); lsSet("kmg_attempts",attempts) }
+async function saveState(){ state.updated=new Date().toISOString(); lsSet("kmg_state",state); if(db){ try{ await db.doc("app/state").set(state) }catch(e){} } }
+async function saveTest(t){ tests.push(t); lsSet("kmg_tests",tests); await pushTest(t); lsSet("kmg_tests",tests) }
+
+/* =================== Helpers =================== */
+const today=()=>{const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const addDays=(iso,n)=>{const d=new Date(iso); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10)};
+const fmt=s=>{const neg=s<0; s=Math.abs(Math.round(s)); return (neg?"+":"")+Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm=v=>String(v).trim().toLowerCase().replace(/[\s$,]/g,"").replace(/(cm²|m²|cm|kg|km\/h|km|mg|g|m|days?|years?|weeks?|gb|litres?|l|cents?|°)$/,"");
+function numVal(v){ v=norm(v); if(/^-?\d+(\.\d+)?\/\d+(\.\d+)?$/.test(v)){const[a,b]=v.split("/").map(Number);return b?a/b:NaN} return v===""?NaN:Number(v) }
+const normT=v=>String(v).toLowerCase().replace(/\s|p\.?m\.?|a\.?m\.?/g,"");
+function isRight(p,v){ if(p.type==="mc") return v===p.ans; if(p.type==="text") return normT(v)===normT(p.ans); const a=numVal(v),b=numVal(p.ans); return !isNaN(a)&&Math.abs(a-b)<=(p.tol||1e-9) }
+const practice=()=>attempts.filter(a=>a.mode!=="test");
+const latest=pid=>{const xs=practice().filter(a=>a.pid===pid); return xs[xs.length-1]};
+const isClean=a=>a&&a.correct&&a.hints===0&&!a.over;
+function dueOn(a){ if(!a) return null; if(a.revealed) return addDays(a.at.slice(0,10),1); if(a.hints>=1||a.over) return addDays(a.at.slice(0,10),3); return null }
+function srcLabel(p){ return p.src==="learn"?`${p.g===0?"Kindergarten":"Grade "+p.g} · ${p.title} · Real life: ${p.life}`:p.src==="book"?`${p.year} · problem ${p.n}`:p.src==="sample"?`Sample test · question ${p.n}`:`Kip's puzzle · ${MOVES[p.move].n}` }
+function rng(seed){ let h=2166136261; for(const c of seed){h^=c.charCodeAt(0);h=Math.imul(h,16777619)} return ()=>{h+=0x6D2B79F5; let t=h; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296} }
+
+/* =================== Daily plan =================== */
+function buildPlan(){
+  const d=today(); if(state.plans[d]) return state.plans[d];
+  const L=LEVELS[state.level-1], R=rng(d+state.level);
+  const due=POOL.filter(p=>{const a=latest(p.id); const dd=dueOn(a); return dd && dd<=d}).slice(0,2);
+  const seen=new Set(practice().map(a=>a.pid));
+  const moveCount={}; practice().forEach(a=>{const p=byId[a.pid]; if(p) moveCount[p.move]=(moveCount[p.move]||0)+1});
+  const chosen=[...due];
+  while(chosen.length<L.n){
+    const r=R(); const pts = r<L.mix[0]?3: r<L.mix[0]+L.mix[1]?4:5;
+    const used=new Set(chosen.map(p=>p.move));
+    let cands=POOL.filter(p=>!seen.has(p.id)&&!chosen.includes(p)&&p.pts===pts);
+    if(!cands.length) cands=POOL.filter(p=>!seen.has(p.id)&&!chosen.includes(p));
+    if(!cands.length) cands=POOL.filter(p=>!chosen.includes(p));
+    const fresh=cands.filter(p=>!used.has(p.move)); const pick=(fresh.length?fresh:cands);
+    // prefer moves practised least, then Kip's own puzzles early on
+    pick.sort((a,b)=>((moveCount[a.move]||0)-(moveCount[b.move]||0)) || ((a.src==="own"?0:1)-(b.src==="own"?0:1)) || (R()-.5));
+    chosen.push(pick[0]);
+  }
+  // interleave: no two same moves in a row
+  for(let i=1;i<chosen.length;i++){ if(chosen[i].move===chosen[i-1].move){ const j=chosen.findIndex((p,k)=>k>i&&p.move!==chosen[i-1].move); if(j>0)[chosen[i],chosen[j]]=[chosen[j],chosen[i]] } }
+  state.plans[d]={ids:chosen.map(p=>p.id), level:state.level};
+  const keys=Object.keys(state.plans).sort(); while(keys.length>60) delete state.plans[keys.shift()];
+  saveState(); return state.plans[d];
+}
+function planResults(d){ const plan=state.plans[d]; if(!plan) return null;
+  const res=plan.ids.map(id=>{const xs=practice().filter(a=>a.pid===id&&a.at.slice(0,10)===d); return xs[0]||null});
+  return {plan,res,done:res.every(Boolean),clean:res.filter(isClean).length,shown:res.filter(a=>a&&a.revealed).length} }
+async function closeDay(){
+  const d=today(); const pr=planResults(d); if(!pr||!pr.done) return null;
+  if(state.history.some(h=>h.date===d)) return state.history.find(h=>h.date===d);
+  const rate=pr.clean/pr.plan.ids.length; let lvl=state.level, change=0;
+  if(rate>=0.75 && pr.shown===0 && lvl<5){lvl++;change=1} else if(rate<0.4 && lvl>1){lvl--;change=-1}
+  const h={date:d,level:state.level,next:lvl,clean:pr.clean,total:pr.plan.ids.length,shown:pr.shown,change};
+  state.history.push(h); state.level=lvl; await saveState(); return h;
+}
+
+/* =================== Views =================== */
+const app=document.getElementById("app"); let view={tab:"today"}, timerId=null;
+function go(v){ clearInterval(timerId); view=v; render(); window.scrollTo(0,0) }
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>go({tab:b.dataset.tab}));
+function render(){
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===view.tab&&!view.pid&&!view.run?"page":"false"));
+  if(view.pid) return renderProblem(); if(view.run) return renderTest();
+  if(view.place) return renderPlacement();
+  ({today:renderToday,learn:renderLearn,moves:renderMoves,test:renderTests,coach:renderCoach})[view.tab]();
+}
+const levelBar=l=>`<span class="level" aria-label="Level ${l} of 5">${[1,2,3,4,5].map(i=>`<i class="${i<=l?"on":""}"></i>`).join("")}</span>`;
+
+function renderToday(){
+  const first=practice().length===0;
+  const plan=buildPlan(); const pr=planResults(today());
+  const L=LEVELS[plan.level-1];
+  const dots=plan.ids.map((id,i)=>{const a=pr.res[i]; return `<span class="dot ${!a?"":a.revealed?"shown":isClean(a)?"clean":"helped"}" title="Problem ${i+1}"></span>`}).join("");
+  const nextIdx=pr.res.findIndex(a=>!a);
+  const avg=Math.round(plan.ids.reduce((s,id)=>s+limitFor(byId[id],plan.level),0)/plan.ids.length);
+  let body;
+  if(first){
+    body = kipSay("Hi, I'm Kip!", `<p>I'm a kangaroo who loves puzzles. Every day we'll do a few together. Here's my secret: before solving, I <b>SPOT</b> the problem.</p>
+      <p style="margin-top:6px"><b>S</b>ay what they want. <b>P</b>redict: guess, and cross out what can't be. <b>O</b>ne move: pick a trick from my moves. <b>T</b>est: does your answer fit every sentence?</p>`,
+      `<span class="mn">Remember: Let's SPOT it!</span>`);
+  } else if(pr.done){
+    const h=state.history.find(x=>x.date===today());
+    const msg = h? (h.change>0?`Amazing! ${h.clean} of ${h.total} solved on your own and in time. Tomorrow you go up to level ${h.next}: one more problem, a bit less time.`:
+      h.change<0?`Today was hard, and hard is how brains grow. Tomorrow we'll slow down a little, and your coach will look at the tricky ones with you.`:
+      `${h.clean} of ${h.total} solved on your own and in time. Same level tomorrow, and the tricky ones come back for another try.`):"Done for today!";
+    body = kipSay("Today is done", `<p>${msg}</p>`);
+  } else {
+    body = kipSay(nextIdx===0?"Ready?":"Keep going!", `<p>${nextIdx===0?`Today: <b>${plan.ids.length} problems</b>, about <b>${fmt(avg)}</b> each. Guess first, cross out what can't be, then solve on paper.`:`You've done ${nextIdx} of ${plan.ids.length}. Next one coming up.`}</p>`);
+  }
+  app.innerHTML=`<div class="stack">
+    ${body}
+    <div class="card stack">
+      <div class="row" style="justify-content:space-between"><div><div class="eyebrow">Today's set</div><div class="dots" style="margin-top:6px">${dots}</div></div><div style="text-align:right"><div class="eyebrow">Level ${plan.level}</div>${levelBar(plan.level)}</div></div>
+      ${pr.done?`<div class="row"><button class="btn ghost" id="review">See today's problems</button><button class="btn soft" id="extra">One bonus Kip puzzle</button></div>`:`<div><button class="btn" id="go">${nextIdx===0?"Start":"Continue"} →</button></div>`}
+    </div>
+    <div class="spot"><div><b><span>S</span>ay</b>What do they want?</div><div><b><span>P</span>redict</b>Guess. Cross out the impossible.</div><div><b><span>O</span>ne move</b>Which trick fits?</div><div><b><span>T</span>est</b>Fits every sentence?</div></div>
+  </div>`;
+  const go1=app.querySelector("#go"); if(go1) go1.onclick=()=>go({tab:"today",pid:plan.ids[nextIdx],list:plan.ids,daily:true});
+  const rv=app.querySelector("#review"); if(rv) rv.onclick=()=>{ app.querySelector(".card").insertAdjacentHTML("afterend",`<div class="list">${plan.ids.map(id=>item(byId[id])).join("")}</div>`); bindOpen(plan.ids); rv.remove() };
+  const ex=app.querySelector("#extra"); if(ex) ex.onclick=()=>{ const p=OWN.find(q=>!latest(q.id))||POOL.find(q=>!latest(q.id)); if(p) go({tab:"today",pid:p.id,list:[p.id]}) };
+}
+function item(p){ const a=latest(p.id);
+  const chip=!a?'<span class="chip plain">New</span>':a.revealed?'<span class="chip bad">Try again soon</span>':isClean(a)?'<span class="chip good">Solved alone</span>':'<span class="chip">Solved with help</span>';
+  return `<button class="item" data-open="${p.id}"><span class="l"><span class="small muted">${srcLabel(p)}</span><br>${p.src==="own"?esc(p.text.slice(0,64))+"…":MOVES[p.move].n}</span>${chip}</button>` }
+function bindOpen(list){ app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>go({tab:view.tab,pid:b.dataset.open,list})) }
+
+function renderMoves(){
+  const cnt={}; practice().forEach(a=>{const p=byId[a.pid]; if(!p) return; cnt[p.move]=cnt[p.move]||{t:0,c:0}; cnt[p.move].t++; if(isClean(a)) cnt[p.move].c++});
+  app.innerHTML=`<div class="stack">${kipSay("My 14 moves", `<p>Every hard puzzle gets easier with the right move. Read the stories, they help you remember. When you're stuck, ask: <b>which move would make this easy?</b></p>`)}
+  <div class="mgrid">${MOVE_IDS.map(id=>{const M=MOVES[id]; const c=cnt[id];
+   return `<div class="move"><div class="row"><span class="badge">${M.b}</span><span class="t">${M.n}</span></div><p class="m">${M.m}</p><p class="small muted">${M.s}</p>${c?`<span class="small muted">Solved alone ${c.c} of ${c.t}</span>`:""}<div><button class="btn ghost" data-try="${id}" style="padding:6px 12px;font-size:14px">Practise this move</button></div></div>`}).join("")}</div></div>`;
+  app.querySelectorAll("[data-try]").forEach(b=>b.onclick=()=>{ const ps=POOL.filter(p=>p.move===b.dataset.try).sort((x,y)=>(!!latest(x.id))-(!!latest(y.id))||x.pts-y.pts).slice(0,4); go({tab:"moves",pid:ps[0].id,list:ps.map(p=>p.id)}) });
+}
+
+/* ---------- problem screen ---------- */
+function renderProblem(){
+  const p=byId[view.pid]; const lvl=state.plans[today()]?.level||state.level; const limit=limitFor(p,lvl);
+  const st={start:Date.now(),paused:0,pauseAt:null,guess:null,tries:0,hints:0,crossed:[],wrong:[],done:false,revealed:false,over:false};
+  const list=view.list||[]; const idx=list.indexOf(p.id); const nextId=idx>=0&&idx<list.length-1?list[idx+1]:null;
+  app.innerHTML=`<div class="stack">
+    <div class="ptop"><button class="btn ghost" id="back">← Back</button>${list.length>1?`<span class="chip plain">${idx+1} of ${list.length}</span>`:""}<span class="chip blue">${p.pts} points</span>
+      <span class="row" style="gap:6px"><span class="timer" id="timer" aria-live="off">${fmt(limit)}</span><button class="btn ghost" id="pause" style="padding:6px 10px">Pause</button></span></div>
+    <div class="card stack">
+      <div class="small muted">${srcLabel(p)}</div>
+      ${p.src==="own"?`<div class="ptext">${esc(p.text)}</div>${p.fig}`:`<div class="book">${esc(p.text)}</div>`}
+    </div>
+    <div class="spot"><div><b><span>S</span>ay</b>What do they want?</div><div><b><span>P</span>redict</b>${p.type==="mc"?"Tap ✕ on choices that can't be":"Guess before you work"}</div><div><b><span>O</span>ne move</b>Which trick fits?</div><div><b><span>T</span>est</b>Fits every sentence?</div></div>
+    ${p.type==="num"?`<div class="card stack" id="guessCard"><div class="eyebrow">Predict · your guess</div><div class="row"><input id="guess" class="num" style="width:150px" placeholder="Guess" autocomplete="off"><button class="btn dark" id="lock">Lock it in</button><button class="btn ghost" id="skip">Skip</button></div></div>`:""}
+    <div class="card stack" id="ansCard" ${p.type==="num"?"hidden":""}><div class="eyebrow">Your answer</div><div id="area"></div>
+      <div class="row"><button class="btn soft" id="stuck">I'm stuck</button><span class="small muted">Kip will ask you a question, not tell you the answer.</span></div></div>
+    <div class="stack" id="hints"></div><div id="result"></div></div>`;
+  const tEl=app.querySelector("#timer");
+  const elapsed=()=>((st.pauseAt||Date.now())-st.start-st.paused)/1000;
+  timerId=setInterval(()=>{ if(st.done||st.pauseAt) return; const left=limit-elapsed(); tEl.textContent=fmt(left); tEl.classList.toggle("low",left<=20&&left>0); tEl.classList.toggle("over",left<=0);
+    if(left<=0&&!st.over){ st.over=true; app.querySelector("#hints").insertAdjacentHTML("beforeend",kipSay("Time!",`<p>In the real test you would move on now. Here, keep thinking and finish it. Speed comes from practice.</p>`)) } },500);
+  app.querySelector("#pause").onclick=e=>{ if(st.done) return; if(st.pauseAt){ st.paused+=Date.now()-st.pauseAt; st.pauseAt=null; e.target.textContent="Pause" } else { st.pauseAt=Date.now(); e.target.textContent="Resume" } };
+  app.querySelector("#back").onclick=()=>go({tab:view.tab});
+  if(p.type==="num"){
+    const start=()=>{ app.querySelector("#guessCard").innerHTML=`<div class="eyebrow">Predict</div><div>${st.guess!==null?`Your guess: <b style="font-family:var(--mono)">${esc(st.guess)}</b>`:"No guess this time."}</div>`; app.querySelector("#ansCard").hidden=false; draw() };
+    app.querySelector("#lock").onclick=()=>{ st.guess=app.querySelector("#guess").value.trim()||null; start() };
+    app.querySelector("#guess").onkeydown=e=>{ if(e.key==="Enter") app.querySelector("#lock").click() };
+    app.querySelector("#skip").onclick=start;
+  } else draw();
+  app.querySelector("#stuck").onclick=()=>{ if(st.done) return; if(st.hints<3){ st.hints++; drawHints() } else offerReveal() };
+
+  function draw(){ const area=app.querySelector("#area");
+    if(p.type==="mc"){
+      area.innerHTML=`<div class="opts">${p.opts.map((o,i)=>{const k="ABCDE"[i]; const lbl=p.src==="own"?`<span class="k">${k}</span>${esc(o)}`:`<span class="k">${k}</span>`;
+        const cls=st.wrong.includes(k)?"wrong":st.done&&k===p.ans?"right":st.crossed.includes(k)?"x":"";
+        return `<div class="optw"><button class="opt ${cls}" data-k="${k}" ${st.wrong.includes(k)||st.done?"disabled":""}>${lbl}</button>${st.done||st.wrong.includes(k)?"":`<button class="xbtn" data-x="${k}" aria-pressed="${st.crossed.includes(k)}" aria-label="Cross out ${k}">✕</button>`}</div>`}).join("")}</div>`;
+      area.querySelectorAll(".opt").forEach(b=>b.onclick=()=>submit(b.dataset.k,b));
+      area.querySelectorAll(".xbtn").forEach(b=>b.onclick=()=>{ const k=b.dataset.x; st.crossed=st.crossed.includes(k)?st.crossed.filter(x=>x!==k):[...st.crossed,k]; draw() });
+    } else {
+      area.innerHTML=`<div class="row"><input id="ans" class="num" placeholder="Answer" autocomplete="off"><button class="btn" id="check">Check</button></div>`;
+      const inp=area.querySelector("#ans"); area.querySelector("#check").onclick=()=>submit(inp.value,inp); inp.onkeydown=e=>{if(e.key==="Enter")submit(inp.value,inp)}; inp.focus();
+    } }
+  function submit(v,el){ if(st.done) return; if(p.type==="num"&&String(v).trim()===""){el.focus();return}
+    st.tries++; if(isRight(p,v)) return finish(true,v);
+    if(p.type==="mc"){ st.wrong.push(v); if(st.crossed.includes(p.ans)) st.crossed=st.crossed.filter(x=>x!==p.ans); draw() } else { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); el.select() }
+    if(st.hints<3){ st.hints++; drawHints() } else offerReveal() }
+  function hintHtml(i){
+    if(i===1){ const extra=p.hints[1]; return kipSay(`Kip's move · ${MOVES[p.move].n}`, moveCard(p.move, extra||"")) }
+    const who = i===0?"Kip asks":"Kip leans closer";
+    return kipSay(who,`<p>${esc(p.hints[i])}</p>`);
+  }
+  function drawHints(){ const h=app.querySelector("#hints"); const keep=[...h.querySelectorAll(".timeup")];
+    h.innerHTML=[0,1,2].slice(0,st.hints).map(hintHtml).join("")+(st.hints===3?`<p class="small muted">That was Kip's last hint. Give it one more go!</p>`:"");
+    h.lastElementChild.scrollIntoView({behavior:"smooth",block:"nearest"}) }
+  function offerReveal(){ const r=app.querySelector("#result"); if(r.querySelector("#reveal")) return;
+    r.innerHTML=`<div class="result bad stack"><h3>Still not it. That's fine: struggling is how your brain grows.</h3><p>Want to see Kip's way? This one will come back in a day or two for you to try alone.</p><div><button class="btn" id="reveal">Show me Kip's way</button></div></div>`;
+    r.querySelector("#reveal").onclick=()=>{ st.revealed=true; finish(false,null) } }
+  async function finish(correct,v){
+    st.done=true; clearInterval(timerId); const secs=Math.round(elapsed()); if(secs>limit) st.over=true;
+    const a={key:p.id+"-"+Date.now(),pid:p.id,move:p.move,src:p.src,pts:p.pts,mode:view.daily?"daily":"practice",correct,tries:st.tries,hints:st.hints,revealed:st.revealed,over:st.over,limit,secs,guess:st.guess,crossed:st.crossed.length,answer:v,usedMove:null,at:new Date().toISOString()};
+    if(p.type==="mc") draw(); else { const i=app.querySelector("#ans"); if(i) i.disabled=true }
+    const clean=correct&&st.hints===0&&!st.over;
+    const title = !correct ? "Here's how Kip sees it" : clean ? "Yes! On your own and in time." : st.hints===0 ? "Yes! Now let's get faster." : "Yes! You got there.";
+    const ans = p.type==="mc" ? ((p.src==="own"||p.src==="learn")?`${p.ans} (${esc(p.opts["ABCDE".indexOf(p.ans)])})`:p.ans) : esc(p.show||p.ans);
+    const g = st.guess!==null ? `<p>Your guess was <b>${esc(st.guess)}</b>.${!isNaN(numVal(st.guess))?(isRight(p,st.guess)?" Spot on!":" Was it close? What would have made it closer?"):""}</p>`:"";
+    const r=app.querySelector("#result");
+    r.innerHTML=`<div class="result ${correct?"good":"bad"} stack pop">
+      <div><h3>${title}</h3><p>Answer <b style="font-family:var(--mono)">${ans}</b> · ${fmt(secs)} of ${fmt(limit)}${st.hints?` · ${st.hints} hint${st.hints>1?"s":""}`:""}</p>${g}</div>
+      ${correct?`<div class="stack" style="gap:8px"><div class="eyebrow">Which move did you use?</div><div class="picks">${MOVE_IDS.map(id=>`<button class="pick" data-m="${id}" aria-pressed="false">${MOVES[id].n}</button>`).join("")}<button class="pick" data-m="none" aria-pressed="false">Just saw it</button></div><div id="mvNote" class="small"></div></div>`:""}
+      <div class="why"><div class="eyebrow">Kip's way · ${MOVES[p.move].n}</div>${p.why.map(w=>`<p>${esc(w)}</p>`).join("")}${(p.src==="book"||p.src==="sample")?`<p class="small muted">The full worked solution is in your solutions book${p.src==="book"?` (Year ${p.year}, problem ${p.n})`:""}. Explain it back to your coach in your own words.</p>`:""}</div>
+      <div class="row">${nextId?`<button class="btn" id="next">Next problem →</button>`:""}<button class="btn ghost" id="done">${view.daily&&!nextId?"Finish today":"Done"}</button><span class="small muted">${saveNote}</span></div></div>`;
+    r.querySelectorAll(".pick").forEach(b=>b.onclick=async()=>{ r.querySelectorAll(".pick").forEach(x=>x.setAttribute("aria-pressed","false")); b.setAttribute("aria-pressed","true"); a.usedMove=b.dataset.m;
+      r.querySelector("#mvNote").textContent = b.dataset.m===p.move?`Kip used ${MOVES[p.move].n} too!`:b.dataset.m==="none"?`Nice! Kip calls this one ${MOVES[p.move].n}.`:`Your way worked! Kip's way was ${MOVES[p.move].n}. Two moves are better than one.`;
+      await saveAttempt(a) });
+    if(nextId) r.querySelector("#next").onclick=()=>go({tab:view.tab,pid:nextId,list,daily:view.daily});
+    r.querySelector("#done").onclick=async()=>{ if(view.daily) await closeDay(); go({tab:view.tab}) };
+    r.scrollIntoView({behavior:"smooth",block:"nearest"});
+    await saveAttempt(a); if(view.daily && !nextId) await closeDay();
+    if(p.src==="learn") await learnRecord(p,a);
+  }
+}
+
+/* ---------- tests ---------- */
+function renderTests(){
+  const years=[...new Set(BOOK.map(p=>p.year))];
+  app.innerHTML=`<div class="stack">${kipSay("Test day practice",`<p>A test is just puzzles with a clock. No hints during the test. Afterwards we look at every miss together.</p>`)}
+   <div class="card stack"><div class="eyebrow">Team Level 5–6 sample</div><h3>60 minutes · 30 questions · 1000 points</h3><p class="small muted">Read each question from the printed sample. Questions 1–20 are 25 points, 21–30 are 50.</p><div><button class="btn" data-t="sample">Start the sample test</button></div></div>
+   <div class="card stack"><div class="eyebrow">Practise one sample question at a time, with Kip</div><div class="list">${SAMPLE.map(item).join("")}</div></div>
+   <div class="card stack"><div class="eyebrow">Book papers</div><p class="small muted">Some questions from each year are also in the sample, so those years have fewer than 30 here. 75 minutes per paper.</p>
+     <div class="row">${years.map(y=>`<button class="btn ghost" data-t="${y}">${y}</button>`).join("")}</div></div>
+   ${tests.length?`<div class="card stack"><div class="eyebrow">Past tests</div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Paper</th><th>Score</th><th>Time</th></tr></thead><tbody>${[...tests].reverse().map(t=>`<tr><td>${new Date(t.at).toLocaleDateString()}</td><td>${t.paper==="sample"?"Sample":t.paper}</td><td class="n">${t.score} / ${t.max}</td><td class="n">${fmt(t.secs)}</td></tr>`).join("")}</tbody></table></div></div>`:""}</div>`;
+  bindOpen(SAMPLE.map(p=>p.id));
+  app.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{ const k=b.dataset.t; const qs=k==="sample"?SAMPLE:BOOK.filter(p=>p.year===+k);
+    go({tab:"test",run:{paper:k,ids:qs.map(p=>p.id),limit:k==="sample"?3600:4500,start:Date.now(),answers:{},cur:0,done:false}}) });
+}
+const testPts=(paper,p)=>paper==="sample"?(p.n<=20?25:50):p.pts;
+function renderTest(){
+  const T=view.run; if(T.done) return testResult(); const qs=T.ids.map(id=>byId[id]);
+  app.innerHTML=`<div class="stack"><div class="ptop"><span class="chip plain">${T.paper==="sample"?"Sample test":"Year "+T.paper+" paper"}</span><span class="timer" id="clock"></span></div>
+   <div class="card"><div class="qgrid" id="qgrid"></div></div><div class="card stack" id="qcard"></div>
+   <div class="row"><button class="btn dark" id="fin">Finish and score</button><span class="small muted" id="cnt"></span></div></div>`;
+  const clock=app.querySelector("#clock"); const tick=()=>{ const left=T.limit-(Date.now()-T.start)/1000; clock.textContent=fmt(Math.max(0,left)); clock.classList.toggle("low",left<300); if(left<=0){T.done=true;render()} }; tick(); timerId=setInterval(tick,1000);
+  const grid=()=>{ app.querySelector("#qgrid").innerHTML=qs.map((p,i)=>`<button class="qb ${T.answers[p.id]?"ans":""} ${i===T.cur?"cur":""}" data-i="${i}" aria-label="Question ${p.n}">${p.n}</button>`).join("");
+    app.querySelectorAll(".qb").forEach(b=>b.onclick=()=>{T.cur=+b.dataset.i;grid();card()}); app.querySelector("#cnt").textContent=Object.keys(T.answers).length+" of "+qs.length+" answered" };
+  const card=()=>{ const p=qs[T.cur]; const c=app.querySelector("#qcard"); const cur=T.answers[p.id]||"";
+    c.innerHTML=`<div class="eyebrow">Question ${p.n} · ${testPts(T.paper,p)} points</div>${p.type==="mc"?`<div class="opts">${"ABCDE".split("").map(k=>`<button class="opt ${cur===k?"right":""}" data-k="${k}"><span class="k">${k}</span></button>`).join("")}</div>`:`<div class="row"><input class="num" id="tin" value="${esc(cur)}" placeholder="Answer" autocomplete="off"><button class="btn" id="ts">Save</button></div>`}
+      <div class="row"><button class="btn ghost" id="pv" ${T.cur===0?"disabled":""}>← Previous</button><button class="btn ghost" id="nx" ${T.cur===qs.length-1?"disabled":""}>Next →</button></div>`;
+    const adv=()=>{ if(T.cur<qs.length-1)T.cur++; grid(); card() };
+    if(p.type==="mc") c.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{T.answers[p.id]=b.dataset.k; adv()});
+    else { const inp=c.querySelector("#tin"); const sv=()=>{const v=inp.value.trim(); if(v)T.answers[p.id]=v; else delete T.answers[p.id]; adv()}; c.querySelector("#ts").onclick=sv; inp.onkeydown=e=>{if(e.key==="Enter")sv()} }
+    c.querySelector("#pv").onclick=()=>{T.cur--;grid();card()}; c.querySelector("#nx").onclick=()=>{T.cur++;grid();card()} };
+  grid(); card(); app.querySelector("#fin").onclick=()=>{T.done=true; clearInterval(timerId); render()};
+}
+async function testResult(){
+  const T=view.run; clearInterval(timerId); const qs=T.ids.map(id=>byId[id]);
+  if(!T.scored){ let score=0,max=0; const miss=[]; qs.forEach(p=>{const w=testPts(T.paper,p); max+=w; const v=T.answers[p.id]; if(v&&isRight(p,v)) score+=w; else miss.push(p.id)});
+    T.scored={score,max,miss,secs:Math.min(T.limit,Math.round((Date.now()-T.start)/1000))};
+    await saveTest({key:"t"+Date.now(),paper:T.paper,score,max,missed:miss,secs:T.scored.secs,at:new Date().toISOString()}); }
+  const {score,max,miss,secs}=T.scored;
+  app.innerHTML=`<div class="stack">${kipSay("Test result",`<p><b>${score} out of ${max}</b> in ${fmt(secs)}. ${miss.length?`Now the best part: let's go through the ${miss.length} you missed, one at a time, with hints.`:"A perfect paper!"}</p>`)}
+    ${miss.length?`<div class="list">${miss.map(id=>item(byId[id])).join("")}</div>`:""}<div><button class="btn ghost" id="home">Back to tests</button></div></div>`;
+  app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>go({tab:"test",pid:b.dataset.open,list:miss}));
+  app.querySelector("#home").onclick=()=>go({tab:"test"});
+}
+
+/* ---------- coach ---------- */
+function renderCoach(){
+  const pr=practice(); const clean=pr.filter(isClean).length;
+  const avgPct = pr.length? Math.round(100*pr.reduce((s,a)=>s+Math.min(2,a.secs/a.limit),0)/pr.length):0;
+  const guessed=pr.filter(a=>a.guess!=null||a.crossed>0).length;
+  const days=new Set(pr.map(a=>a.at.slice(0,10))).size;
+  const d=today(); const tp=planResults(d);
+  // alert: struggling today or on the last closed day
+  const lastH=state.history[state.history.length-1];
+  const struggling = tp && tp.res.filter(Boolean).length>=3 && (tp.clean/tp.res.filter(Boolean).length<0.4 || tp.shown>=2);
+  const hardOnes = tp? tp.res.filter(a=>a && !isClean(a)).map(a=>byId[a.pid]) : [];
+  const moveRows=MOVE_IDS.map(id=>{const xs=pr.filter(a=>a.move===id); if(!xs.length) return null; const c=xs.filter(isClean).length;
+    return {id,t:xs.length,c,h:xs.filter(a=>a.correct&&!isClean(a)).length,s:xs.filter(a=>a.revealed).length,time:Math.round(100*xs.reduce((s,a)=>s+a.secs/a.limit,0)/xs.length)}}).filter(Boolean).sort((a,b)=>a.c/a.t-b.c/b.t);
+  const dueList=POOL.filter(p=>{const dd=dueOn(latest(p.id)); return dd}).slice(0,30);
+  const recent=[...pr].reverse().slice(0,20);
+  app.innerHTML=`<div class="stack">
+    <div><div class="eyebrow">For the grown-up</div><h2>How the thinking is going</h2><p class="small muted" style="margin-top:4px">${saveNote}.</p></div>
+    ${struggling?`<div class="alert stack"><h3>Time to sit together</h3><p>Today was tough: ${tp.clean} of ${tp.res.filter(Boolean).length} solved alone. Go through these with him. Ask Kip's questions, and let him explain each step back to you.</p><div class="list">${hardOnes.map(item).join("")}</div></div>`:""}
+    <div class="stats">
+      <div class="stat"><div class="small muted">Level</div><div class="v">${state.level}</div>${levelBar(state.level)}</div>
+      <div class="stat"><div class="small muted">Practice days</div><div class="v">${days}</div></div>
+      <div class="stat"><div class="small muted">Solved alone, in time</div><div class="v">${pr.length?Math.round(100*clean/pr.length):0}%</div></div>
+      <div class="stat"><div class="small muted">Time used vs allowed</div><div class="v">${avgPct}%</div></div>
+      <div class="stat"><div class="small muted">Predicted first</div><div class="v">${pr.length?Math.round(100*guessed/pr.length):0}%</div></div>
+    </div>
+    <div class="card stack"><div class="eyebrow">Pace</div><p>Level ${state.level}: <b>${LEVELS[state.level-1].n} problems a day</b>, ${Math.round(LEVELS[state.level-1].f*100)}% of the starting time. Level goes up after a day with 75% or more solved alone and in time, and down after a day under 40%.</p>
+      <div class="row"><button class="btn ghost" id="lvDown" ${state.level<=1?"disabled":""}>Easier</button><button class="btn ghost" id="lvUp" ${state.level>=5?"disabled":""}>Harder</button><span class="small muted">Changes start with tomorrow's set.</span></div></div>
+    ${moveRows.length?`<div class="stack"><div class="eyebrow">Moves, weakest first</div><div class="tablewrap"><table><thead><tr><th>Move</th><th>Tried</th><th>Alone</th><th></th><th>With help</th><th>Shown</th><th>Time used</th></tr></thead><tbody>${moveRows.map(r=>`<tr><td>${MOVES[r.id].n}</td><td class="n">${r.t}</td><td class="n">${r.c}</td><td><div class="bar"><i style="width:${Math.round(100*r.c/r.t)}%"></i></div></td><td class="n">${r.h}</td><td class="n">${r.s}</td><td class="n">${r.time}%</td></tr>`).join("")}</tbody></table></div></div>`:`<div class="card muted">Results appear here after the first problems.</div>`}
+    ${state.history.length?`<div class="stack"><div class="eyebrow">Daily sets</div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Level</th><th>Alone</th><th>Shown</th><th>Next</th></tr></thead><tbody>${[...state.history].reverse().slice(0,30).map(h=>`<tr><td>${h.date}</td><td class="n">${h.level}</td><td class="n">${h.clean}/${h.total}</td><td class="n">${h.shown}</td><td>${h.change>0?"Up":h.change<0?"Down":"Same"}</td></tr>`).join("")}</tbody></table></div></div>`:""}
+    <div class="stack"><div class="eyebrow">Coming back for another try (${dueList.length})</div>${dueList.length?`<div class="list">${dueList.map(item).join("")}</div>`:`<p class="small muted">None right now.</p>`}</div>
+    ${recent.length?`<div class="stack"><div class="eyebrow">Recent problems</div><div class="tablewrap"><table><thead><tr><th>Problem</th><th>Move</th><th>Result</th><th>Hints</th><th>Time</th><th>His move</th></tr></thead><tbody>${recent.map(a=>{const p=byId[a.pid]; return `<tr><td>${p?srcLabel(p):a.pid}</td><td>${MOVES[a.move]?.n||""}</td><td>${a.revealed?"Shown":isClean(a)?"Alone":a.correct?"With help":"–"}</td><td class="n">${a.hints}</td><td class="n">${fmt(a.secs)} / ${fmt(a.limit)}</td><td>${a.usedMove?(MOVES[a.usedMove]?.n||"Just saw it"):"–"}</td></tr>`}).join("")}</tbody></table></div></div>`:""}
+    <div class="card stack"><div class="eyebrow">Why it's built this way</div>
+      <p><b>Try first, then learn.</b> Kids who wrestle with a problem before being shown the method learn more from the explanation. Kip asks questions instead of giving steps. <a href="https://evidencebasedliving.human.cornell.edu/blog/to-better-learn-students-must-first-fail" target="_blank" rel="noopener">Productive failure research</a></p>
+      <p><b>Mixed, not blocked.</b> Each day's set mixes different moves, so he has to work out which move fits. In a classroom trial, mixed practice scored 61% against 38% on a delayed test. <a href="https://ies.ed.gov/use-work/awards/efficacy-study-interleaved-mathematics-practice" target="_blank" rel="noopener">Rohrer et al.</a></p>
+      <p><b>Spaced comebacks.</b> A problem that needed help returns after 3 days; one he was shown returns the next day.</p>
+      <p><b>Predict and explain.</b> Guessing first, crossing out impossible choices and naming the move afterwards build the habit of checking what's being asked. <a href="https://web.education.wisc.edu/pmatthews/wp-content/uploads/sites/35/2012/12/matthews-Rittle-Johnson-2009.pdf" target="_blank" rel="noopener">Self-explanation study</a></p>
+      <p><b>When you step in:</b> ask Kip's questions in order. "What do they want?" "What's your guess?" "Which move?" "Does it fit every sentence?" Let him do the writing.</p></div>
+  </div>`;
+  app.querySelector("#lvDown").onclick=async()=>{ state.level=Math.max(1,state.level-1); delete state.plans[today()+"_x"]; await saveState(); renderCoach() };
+  app.querySelector("#lvUp").onclick=async()=>{ state.level=Math.min(5,state.level+1); await saveState(); renderCoach() };
+  bindOpen(dueList.map(p=>p.id));
+}
+
+/* =================== Learn K–12 =================== */
+const STRANDS={number:"Numbers",ops:"Operations",frac:"Fractions, ratio, percent",measure:"Measuring, time, money",geo:"Shapes and space",data:"Data and chance",alg:"Algebra and patterns"};
+const gl=g=>g===0?"K":String(g); const gName=g=>g===0?"Kindergarten":"Grade "+g;
+const ri=(R,a,b)=>a+Math.floor(R()*(b-a+1)); const pk=(R,a)=>a[Math.floor(R()*a.length)];
+const m2=x=>(Math.round(x*100)/100).toFixed(2); const pl=(n,w)=>n+" "+w+(n===1?"":"s");
+const SKILLS=[
+ {id:"k1",g:0,st:"number",t:"How many more?",life:"Snacks",move:"lineup",make:R=>{const a=ri(R,2,7),b=ri(R,a+1,10);return{text:`Kip has ${a} apples. Mia has ${b} apples. How many more apples does Mia have than Kip?`,ans:b-a,
+  hints:["Who has more? Can you picture the apples in two rows?","Match each of Kip's apples with one of Mia's. How many of Mia's have no partner?",`Count up from ${a} to ${b} on your fingers.`],why:[`Pair up ${a} apples. Mia has ${b-a} apples with no partner, so she has ${b-a} more.`]}}},
+ {id:"k2",g:0,st:"ops",t:"Adding up to 10",life:"Snacks",move:"tryit",make:R=>{const a=ri(R,1,5),b=ri(R,1,4);return{text:`You have ${a} crackers. Grandma gives you ${b} more. How many crackers do you have now?`,ans:a+b,
+  hints:["Will you have more crackers or fewer?",`Hold up ${a} fingers. Now put up ${b} more.`,`Start at ${a} and count on ${b} more.`],why:[`${a} and ${b} more makes ${a+b}.`]}}},
+ {id:"k3",g:0,st:"geo",t:"Shapes around us",life:"Around the house",move:"flip",make:R=>{const o=pk(R,[["a stop sign",8,"an octagon"],["a door",4,"a rectangle"],["a yield sign",3,"a triangle"],["a book cover",4,"a rectangle"]]);return{text:`Think of the shape of ${o[0]}. How many corners does it have?`,ans:o[1],
+  hints:["Picture it, or find one near you. Can you draw its outline?","Trace the outline with your finger. Every time you turn is a corner.",`It is shaped like ${o[2]}. Count its corners.`],why:[`${o[0][0].toUpperCase()+o[0].slice(1)} is shaped like ${o[2]}, which has ${o[1]} corners.`]}}},
+ {id:"g1a",g:1,st:"ops",t:"Adding and taking away",life:"The bus",move:"tryit",make:R=>{const s=ri(R,5,12),off=ri(R,1,4),on=ri(R,2,6);return{text:`A bus has ${s} riders. At the next stop ${off} get off and ${on} get on. How many riders are on the bus now?`,ans:s-off+on,
+  hints:["What happens first, and what happens next? Act it out with toys.",`First ${off} get off. How many are left?`,`${s-off} are left. Then ${on} get on.`],why:[`${s} − ${off} = ${s-off}, then ${s-off} + ${on} = ${s-off+on}.`]}}},
+ {id:"g1b",g:1,st:"measure",t:"Telling time",life:"School day",move:"rhythm",make:R=>{const s=pk(R,[7,8,9]),a=ri(R,2,5),e=((s+a-1)%12)+1;return{text:`School starts at ${s}:00 in the morning. Lunch is ${a} hours later. At what hour is lunch? (type just the hour)`,ans:e,
+  hints:["Picture a clock. Which way do the hands go?",`Count the hours: ${s}, then ${s+1}, ...`,`Count ${a} hours after ${s}. After 12 the clock starts again at 1.`],why:[`${a} hours after ${s}:00 is ${e}:00.`]}}},
+ {id:"g1c",g:1,st:"measure",t:"Counting coins",life:"Piggy bank",move:"lineup",make:R=>{const d=ri(R,1,4),n=ri(R,0,3),p=ri(R,1,4);return{text:`You have ${pl(d,"dime")}, ${pl(n,"nickel")} and ${pl(p,"penny").replace("pennys","pennies")}. How many cents is that?`,ans:10*d+5*n+p,
+  hints:["How much is each kind of coin worth?","A dime is 10 cents, a nickel 5, a penny 1. Start with the biggest coins.",`Dimes make ${10*d}. Count on by 5s, then by 1s.`],why:[`${10*d} + ${5*n} + ${p} = ${10*d+5*n+p} cents.`]}}},
+ {id:"g2a",g:2,st:"ops",t:"How much more do I need?",life:"Saving up",move:"tryit",make:R=>{const h=ri(R,23,58),c=ri(R,h+6,95),t=Math.ceil(h/10)*10;return{text:`Ria has $${h}. The game she wants costs $${c}. How much more money does she need?`,ans:c-h,
+  hints:["Does she have enough? Is the answer smaller than the price?",`Count up from ${h} to ${c}. Jump to the next ten first.`,`From ${h} to ${t} is ${t-h}, then from ${t} to ${c} is ${c-t}.`],why:[`${c} − ${h} = ${c-h}, so she needs $${c-h} more.`]}}},
+ {id:"g2b",g:2,st:"measure",t:"Measuring length",life:"Wrapping gifts",move:"slide",make:R=>{const L=ri(R,50,95),a=ri(R,10,20),b=ri(R,10,20);return{text:`A ribbon is ${L} cm long. You cut off a ${a} cm piece and a ${b} cm piece for gifts. How many cm of ribbon are left?`,ans:L-a-b,
+  hints:["Draw the ribbon as a long bar and mark the two pieces.","How long are the two pieces together?",`${a+b} cm is used. Take that from ${L}.`],why:[`${L} − ${a+b} = ${L-a-b} cm left.`]}}},
+ {id:"g2c",g:2,st:"alg",t:"Skip counting",life:"Bike rack",move:"portions",make:R=>{const b=ri(R,2,6),t=ri(R,1,4);return{text:`The bike rack has ${b} bicycles and ${t} tricycles. How many wheels are there in all?`,ans:2*b+3*t,
+  hints:["How many wheels does each kind have?","Bicycles: count by 2s. Tricycles: count by 3s.",`${b} × 2 = ${2*b} and ${t} × 3 = ${3*t}.`],why:[`${2*b} + ${3*t} = ${2*b+3*t} wheels.`]}}},
+ {id:"g3a",g:3,st:"ops",t:"Multiplying in groups",life:"Cooking",move:"portions",make:R=>{const per=pk(R,[6,12]),c=ri(R,3,8),u=ri(R,2,5);return{text:`Eggs come in cartons of ${per}. You buy ${c} cartons and use ${u} eggs for pancakes. How many eggs are left?`,ans:per*c-u,
+  hints:["Two steps. How many eggs at the start?",`Picture ${c} cartons in a row, each with ${per} eggs.`,`${c} × ${per} = ${per*c}. Now take away ${u}.`],why:[`${per*c} − ${u} = ${per*c-u} eggs.`]}}},
+ {id:"g3b",g:3,st:"ops",t:"Sharing and leftovers",life:"Friends",move:"portions",make:R=>{const k=ri(R,3,6),e=ri(R,4,8),x=ri(R,1,k-1),s=k*e+x;return{text:`${s} stickers are shared equally among ${k} friends. How many stickers are left over?`,ans:x,
+  hints:["Could you hand them out one round at a time?",`Each round uses ${k} stickers. How many full rounds fit in ${s}?`,`${k} × ${e} = ${k*e}. How many are left from ${s}?`],why:[`${e} full rounds use ${k*e}, leaving ${x}.`]}}},
+ {id:"g3c",g:3,st:"measure",t:"How long does it take?",life:"Movie night",move:"portions",make:R=>{const h=ri(R,1,5),m=pk(R,[0,15,30,45]),L=pk(R,[85,95,110,125,140]),t=h*60+m+L,eh=((Math.floor(t/60)-1)%12)+1,em=t%60,mm=String(m).padStart(2,"0"),H=Math.floor(L/60);
+  return{type:"text",text:`A movie starts at ${h}:${mm} p.m. and lasts ${L} minutes. What time does it end? (type it like 4:35)`,ans:`${eh}:${String(em).padStart(2,"0")}`,
+  hints:["How many hours and minutes is the movie?",`${L} minutes is ${pl(H,"hour")} and ${L-60*H} minutes. Add the hours first.`,`After ${pl(H,"hour")} it is ${h+H}:${mm}. Now add ${L-60*H} minutes.`],why:[`${h}:${mm} + ${H} h ${L-60*H} min = ${eh}:${String(em).padStart(2,"0")}.`]}}},
+ {id:"g3d",g:3,st:"frac",t:"Parts of a whole",life:"Pizza",move:"portions",make:R=>{const s=pk(R,[4,6,8]),e=ri(R,1,s-1);return{text:`A pizza is cut into ${s} equal slices. You eat ${e}. What fraction of the pizza is left? (type it like 3/8)`,ans:`${s-e}/${s}`,tol:.002,
+  hints:["How many equal parts is the whole pizza? That's the bottom number.","How many slices are still on the plate?",`${s-e} slices out of ${s}.`],why:[`${s-e} of ${s} slices are left: ${s-e}/${s}.`]}}},
+ {id:"g4a",g:4,st:"measure",t:"Multiplying money",life:"Train trip",move:"portions",make:R=>{const p=ri(R,4,9),k=ri(R,12,28),T=p*k,pay=Math.floor(T/50)*50+50;return{text:`A family of ${p} buys train tickets at $${k} each. They pay with $${pay}. How much change do they get?`,ans:pay-T,
+  hints:["Two steps. What do you need before you can find the change?",`Total: ${p} × ${k}. Split ${k} into ${k-k%10} + ${k%10}.`,`The tickets cost $${T}. Count up to $${pay}.`],why:[`${p} × ${k} = ${T}. Change: ${pay} − ${T} = $${pay-T}.`]}}},
+ {id:"g4b",g:4,st:"geo",t:"Perimeter",life:"Garden fence",move:"slide",make:R=>{const l=ri(R,5,12),w=ri(R,3,8),c=pk(R,[2,3,5]);return{text:`A garden is ${l} m long and ${w} m wide. Fencing costs $${c} per metre. How much does a fence all the way around cost?`,ans:2*(l+w)*c,
+  hints:["Draw the garden and write a length on all four sides.","How long is the fence all the way around?",`The fence is ${2*(l+w)} m, at $${c} a metre.`],why:[`Fence: 2 × (${l} + ${w}) = ${2*(l+w)} m. Cost: ${2*(l+w)} × ${c} = $${2*(l+w)*c}.`]}}},
+ {id:"g4c",g:4,st:"frac",t:"Doubling a recipe",life:"Baking",move:"portions",make:R=>{const[a,b]=pk(R,[[3,4],[2,3],[1,2],[3,8]]);return{text:`A cookie recipe for 12 cookies uses ${a}/${b} cup of sugar. How much sugar do you need for 24 cookies? (a fraction like 3/2 or a decimal is fine)`,ans:`${2*a}/${b}`,tol:.01,
+  hints:["How many times bigger is the new batch?",`24 cookies is two batches. What is ${a}/${b} + ${a}/${b}?`,`Two lots of ${a} quarters, thirds or eighths make ${2*a} of them.`],why:[`2 × ${a}/${b} = ${2*a}/${b} cup.`]}}},
+ {id:"g5a",g:5,st:"measure",t:"Decimals and change",life:"Shopping",move:"columns",make:R=>{const n=["a notebook","glue","a pen","markers","a snack","a ruler"];const a=ri(R,150,899),b=ri(R,150,899),c=ri(R,150,899),S=a+b+c,P=S<2000?20:S<5000?50:100;
+  return{text:`You buy ${n[ri(R,0,1)]} for $${m2(a/100)}, ${n[ri(R,2,3)]} for $${m2(b/100)} and ${n[ri(R,4,5)]} for $${m2(c/100)}. You pay with a $${P} bill. How much change do you get?`,ans:(P*100-S)/100,tol:.005,show:"$"+m2((P*100-S)/100),
+  hints:["What do you need first: the total, or the change?","Add the dollars, then the cents. Line up the decimal points.",`The total is $${m2(S/100)}. Count up from there to $${P}.`],why:[`Total $${m2(S/100)}. Change: $${P} − $${m2(S/100)} = $${m2((P*100-S)/100)}.`]}}},
+ {id:"g5b",g:5,st:"geo",t:"Volume",life:"Moving day",move:"flip",make:R=>{const l=ri(R,30,60),w=ri(R,20,40),h=ri(R,20,40),V=l*w*h;return{text:`A moving box is ${l} cm long, ${w} cm wide and ${h} cm tall. How many litres does it hold? (1 litre = 1000 cm³)`,ans:V/1000,tol:.01,
+  hints:["Volume is how much fits inside. Which three numbers do you multiply?",`Find ${l} × ${w} × ${h} cubic centimetres.`,`That's ${V} cm³. How many 1000s fit in it?`],why:[`${l} × ${w} × ${h} = ${V} cm³ = ${V/1000} litres.`]}}},
+ {id:"g5c",g:5,st:"frac",t:"Fraction of an amount",life:"School",move:"portions",make:R=>{const c=pk(R,[24,28,30,32,36]),d=pk(R,[2,3,4,6].filter(x=>c%x===0)),n=ri(R,1,d-1);return{text:`There are ${c} students in a class. ${n}/${d} of them bring lunch from home. How many students bring lunch?`,ans:c*n/d,
+  hints:["Split the class into equal groups. How many groups does the bottom number say?",`Make ${d} equal groups. How many students are in each?`,`Each group has ${c/d}. Take ${n} groups.`],why:[`${c} ÷ ${d} = ${c/d}, and ${n} × ${c/d} = ${c*n/d}.`]}}},
+ {id:"g5d",g:5,st:"ops",t:"Adding up a bill",life:"Movie tickets",move:"stack",make:R=>{const a=ri(R,2,3),k=ri(R,1,4),A=ri(R,12,18),K=ri(R,6,10),p=ri(R,5,9);return{text:`Movie tickets cost $${A} for adults and $${K} for kids. ${a} adults and ${k} kids go, and they share one popcorn for $${p}. How much do they pay in total?`,ans:a*A+k*K+p,
+  hints:["What are the three parts of the bill?",`Adults: ${a} × ${A}. Kids: ${k} × ${K}. Then the popcorn.`,`$${a*A} + $${k*K} + $${p}.`],why:[`${a*A} + ${k*K} + ${p} = $${a*A+k*K+p}.`]}}},
+ {id:"g6a",g:6,st:"frac",t:"Best buy",life:"Grocery store",move:"seesaw",make:R=>{const n1=pk(R,[4,6,8]),u1=ri(R,60,150),n2=pk(R,[10,12,15]),u2=u1+pk(R,[-20,-10,10,20]);return{type:"mc",opts:["Pack A","Pack B","Same price per box"],ans:u1<u2?"A":"B",
+  text:`Pack A has ${n1} juice boxes for $${m2(n1*u1/100)}. Pack B has ${n2} juice boxes for $${m2(n2*u2/100)}. Which pack is cheaper per juice box?`,
+  hints:["Can you compare the two price tags directly? Why not?","Find the price of ONE juice box in each pack.",`A: $${m2(n1*u1/100)} ÷ ${n1}. B: $${m2(n2*u2/100)} ÷ ${n2}.`],why:[`A costs $${m2(u1/100)} a box and B costs $${m2(u2/100)} a box.`]}}},
+ {id:"g6b",g:6,st:"frac",t:"Percent off",life:"Sales",move:"portions",make:R=>{const p=ri(R,20,120),q=pk(R,[10,20,25,30,40]),s=p*(100-q)/100;return{text:`A jacket costs $${p}. It is ${q}% off. What is the sale price?`,ans:s,tol:.005,show:"$"+m2(s),
+  hints:["Will you pay more or less than $"+p+"? About how much?",`Find ${q}% of $${p} first. 10% of $${p} is $${m2(p/10)}.`,`The discount is $${m2(p*q/100)}. Take it off.`],why:[`${q}% of ${p} is ${m2(p*q/100)}, so the price is $${m2(s)}.`]}}},
+ {id:"g6c",g:6,st:"data",t:"The average",life:"Weather",move:"stack",make:R=>{const t=[0,1,2,3,4].map(()=>ri(R,55,82)),S=t.reduce((a,b)=>a+b,0);return{text:`This week's high temperatures were ${t.join(", ")} °F. What was the average (mean) high? Round to one decimal place if needed.`,ans:S/5,tol:.051,show:(S/5).toFixed(1),
+  hints:["Guess first: will the average be near the middle of these numbers?","Add all five temperatures.",`The sum is ${S}. Share it equally over 5 days.`],why:[`${S} ÷ 5 = ${(S/5).toFixed(1)} °F.`]}}},
+ {id:"g6d",g:6,st:"alg",t:"Finding the unknown",life:"Back to school",move:"rewind",make:R=>{const n=ri(R,2,6),c=ri(R,2,7),pen=ri(R,2,6),T=n*c+pen;return{text:`You buy ${n} notebooks that all cost the same and a $${pen} pen. You spend $${T}. How much does one notebook cost?`,ans:c,
+  hints:["You know the end. Can you undo the steps?","Take the pen away first. What did the notebooks cost together?",`The notebooks cost $${T-pen}. Share that over ${n}.`],why:[`${T} − ${pen} = ${T-pen}, and ${T-pen} ÷ ${n} = $${c}.`]}}},
+ {id:"g7a",g:7,st:"frac",t:"Tips and tax",life:"Restaurant",move:"portions",make:R=>{const m=ri(R,30,90),t=pk(R,[15,18,20]),T=m*(100+t)/100;return{text:`Dinner costs $${m}. You leave a ${t}% tip. How much do you pay in total?`,ans:T,tol:.005,show:"$"+m2(T),
+  hints:["About how big should the tip be?",`10% of $${m} is $${m2(m/10)}. Build ${t}% from that.`,`The tip is $${m2(m*t/100)}. Add it to $${m}.`],why:[`${t}% of ${m} = ${m2(m*t/100)}. Total $${m2(T)}.`]}}},
+ {id:"g7b",g:7,st:"frac",t:"Map scales",life:"Road trip",move:"portions",make:R=>{const s=pk(R,[2,5,10,25]),d=ri(R,3,12)+pk(R,[0,.5]);return{text:`On a map, 1 cm stands for ${s} km. Two towns are ${d} cm apart on the map. How far apart are they really, in km?`,ans:d*s,tol:.01,
+  hints:["Every 1 cm on the map is a lot of real distance. Will the answer be big?",`Each cm is ${s} km. How many cm are there?`,`${d} × ${s}.`],why:[`${d} cm × ${s} km per cm = ${d*s} km.`]}}},
+ {id:"g7c",g:7,st:"data",t:"Chance",life:"Games",move:"lineup",make:R=>{const r=ri(R,2,6),b=ri(R,2,6),g=ri(R,1,5),T=r+b+g;return{text:`A bag has ${r} red, ${b} blue and ${g} green marbles. You pick one without looking. What is the chance it is NOT red? (a fraction like 3/7)`,ans:`${b+g}/${T}`,tol:.002,
+  hints:["How many marbles are there altogether? That's the bottom of the fraction.","How many marbles are not red?",`${b+g} out of ${T}.`],why:[`${b+g} of the ${T} marbles are not red: ${b+g}/${T}.`]}}},
+ {id:"g7d",g:7,st:"geo",t:"Area of circles",life:"Pizza deal",move:"slide",make:R=>{const D=pk(R,[14,16,18]),d=pk(R,[8,10]),A=(D/2)**2,B=2*(d/2)**2;return{type:"mc",opts:["One large pizza","Two small pizzas","Exactly the same"],ans:A>B?"A":A<B?"B":"C",
+  text:`For the same price you can get one large ${D}-inch pizza or two small ${d}-inch pizzas (inches measure straight across). Which gives you more pizza?`,
+  hints:["Guess first. Does a pizza twice as wide have twice as much pizza?","The amount of pizza is the area, and area uses the radius times the radius.",`Compare ${D/2} × ${D/2} with 2 × ${d/2} × ${d/2}. π is on both sides, so skip it.`],why:[`Large: ${D/2}² = ${A}. Two small: 2 × ${d/2}² = ${B} (both times π).`]}}},
+ {id:"g8a",g:8,st:"alg",t:"Comparing plans",life:"Phone bills",move:"seesaw",make:R=>{const x=ri(R,3,10),rA=ri(R,5,9),rB=rA-ri(R,1,3),fA=ri(R,10,25),fB=fA+(rA-rB)*x;return{text:`Phone plan A costs $${fA} a month plus $${rA} for each GB of data. Plan B costs $${fB} a month plus $${rB} per GB. At how many GB do both plans cost the same?`,ans:x,
+  hints:["Which plan is cheaper with very little data? With lots of data?",`At 0 GB, B costs $${fB-fA} more. Each GB, A catches up by $${rA-rB}.`,`$${fB-fA} gap, closing by $${rA-rB} per GB.`],why:[`${fA} + ${rA}x = ${fB} + ${rB}x gives ${rA-rB}x = ${fB-fA}, so x = ${x} GB.`]}}},
+ {id:"g8b",g:8,st:"geo",t:"Right triangles",life:"Ladders",move:"slide",make:R=>{const[a,b,c]=pk(R,[[6,8,10],[5,12,13],[9,12,15],[8,15,17]]);return{text:`A ${c} m ladder leans against a wall. Its foot is ${a} m from the wall. How high up the wall does it reach, in m?`,ans:b,
+  hints:["Draw it. What shape do the wall, the ground and the ladder make?","It's a right triangle, and the ladder is the longest side.",`height² = ${c}² − ${a}² = ${c*c} − ${a*a}.`],why:[`${c*c} − ${a*a} = ${b*b}, and √${b*b} = ${b} m.`]}}},
+ {id:"g8c",g:8,st:"number",t:"Very big numbers",life:"Space",move:"columns",make:R=>{const s=pk(R,[60,120,300]);return{text:`Light travels about 300,000 km every second. How far does it travel in ${s} seconds, in km? (you may type 1.8e7 for 18,000,000)`,ans:300000*s,show:(300000*s).toLocaleString(),
+  hints:["Huge or small? About how many zeros?",`${s} × 300,000: work out ${s} × 3, then add the zeros.`,`${s*3} followed by five zeros.`],why:[`${s} × 300,000 = ${(300000*s).toLocaleString()} km.`]}}},
+ {id:"g9a",g:9,st:"alg",t:"Linear growth",life:"Saving money",move:"rewind",make:R=>{const a=ri(R,10,60),s=ri(R,5,15),w=ri(R,4,12),G=a+s*w;return{text:`You have $${a} and save $${s} every week. After how many weeks will you have $${G}?`,ans:w,
+  hints:["Write it as: start + weeks × savings = goal.",`How much more than $${a} do you need?`,`You need $${G-a} more, at $${s} a week.`],why:[`${a} + ${s}w = ${G}, so w = ${G-a} ÷ ${s} = ${w}.`]}}},
+ {id:"g9b",g:9,st:"alg",t:"Two unknowns",life:"Museum trip",move:"seesaw",make:R=>{const a=ri(R,2,6),k=ri(R,2,7),A=pk(R,[12,14,15,18]),C=pk(R,[6,7,8,9]),P=a+k,T=a*A+k*C;return{text:`${P} people visit a museum. Adult tickets are $${A} and child tickets are $${C}. The group pays $${T}. How many adults are there?`,ans:a,
+  hints:["Pretend: if everyone were a child, what would they pay?",`All children would cost ${P} × ${C} = $${P*C}. How much extra did they pay?`,`$${T-P*C} extra, and each adult costs $${A-C} more than a child.`],why:[`${T} − ${P*C} = ${T-P*C}, and ${T-P*C} ÷ ${A-C} = ${a} adults.`]}}},
+ {id:"g9c",g:9,st:"alg",t:"Doubling",life:"Going viral",move:"rhythm",make:R=>{const v=pk(R,[100,250,500]),n=ri(R,4,8),N=v*2**n-1;return{text:`A video gets ${v} views on day 1. Each day after, its daily views double. On which day does it first get more than ${N.toLocaleString()} views in one day?`,ans:n+1,
+  hints:["Make a table: day 1, day 2, day 3...",`Day 1: ${v}. Day 2: ${2*v}. Day 3: ${4*v}...`,`Keep doubling until you pass ${N.toLocaleString()}.`],why:[`Day ${n+1} has ${v} × 2^${n} = ${(v*2**n).toLocaleString()} views, the first above ${N.toLocaleString()}.`]}}},
+ {id:"g10a",g:10,st:"geo",t:"Similar triangles",life:"Measuring a tree",move:"portions",make:R=>{const p=pk(R,[1,1.5,2]),q=pk(R,[2,3,4]),S=q*ri(R,3,8);return{text:`A ${p} m pole casts a ${q} m shadow. At the same moment, a tree casts a ${S} m shadow. How tall is the tree, in m?`,ans:p*S/q,tol:.01,
+  hints:["Shadows at the same moment keep the same shape. How many times longer is the tree's shadow?",`${S} ÷ ${q} = ${S/q}. The tree is that many times taller than the pole.`,`${S/q} × ${p} m.`],why:[`Same ratio: ${p}/${q} = height/${S}, so height = ${p*S/q} m.`]}}},
+ {id:"g10b",g:10,st:"geo",t:"Surface area",life:"Painting a room",move:"flip",make:R=>{const l=ri(R,3,6),w=ri(R,3,5),h=pk(R,[2.5,3]),A=2*(l+w)*h-2;return{text:`A room is ${l} m by ${w} m and its walls are ${h} m tall. There is one door with an area of 2 m². How many m² of wall need paint?`,ans:A,tol:.01,
+  hints:["Unfold the four walls into one long strip in your head. How long is it?",`The strip is ${2*(l+w)} m long and ${h} m tall.`,`${2*(l+w)} × ${h} = ${2*(l+w)*h}. Leave out the door.`],why:[`Walls ${2*(l+w)*h} m² minus the 2 m² door = ${A} m².`]}}},
+ {id:"g10c",g:10,st:"geo",t:"Trigonometry",life:"Playground slide",move:"slide",make:R=>{const L=pk(R,[4,6,8,10,12]);return{text:`A playground slide is ${L} m long and makes a 30° angle with the ground. How high is the top of the slide, in m? (use sin 30° = 0.5)`,ans:L/2,tol:.01,
+  hints:["Draw the right triangle. Which side is the slide? Which is the height?","Sine = opposite side ÷ longest side. The height is opposite the 30° angle.",`height = ${L} × 0.5.`],why:[`sin 30° = height ÷ ${L}, so height = ${L/2} m.`]}}},
+ {id:"g11a",g:11,st:"alg",t:"Compound interest",life:"Savings account",move:"rhythm",make:R=>{const P=pk(R,[1000,2000,5000]),r=pk(R,[4,5,6]),n=ri(R,2,5),V=P*(1+r/100)**n;return{text:`You put $${P} in a savings account that pays ${r}% interest each year, added to your balance. How much is there after ${n} years? (round to the cent)`,ans:Math.round(V*100)/100,tol:.02,show:"$"+m2(V),
+  hints:["Guess: more or less than adding "+r+"% of $"+P+" each year? Why?",`Each year multiplies the balance by ${1+r/100}.`,`$${P} × ${1+r/100}, repeated ${n} times.`],why:[`${P} × ${1+r/100}^${n} = $${m2(V)}. Interest earns interest.`]}}},
+ {id:"g11b",g:11,st:"alg",t:"Best rectangle",life:"Building a pen",move:"squeeze",make:R=>{const F=pk(R,[40,60,80,100]),barn=R()<.5;return{text:barn?`You have ${F} m of fence for a rectangular pen against a long barn wall (the wall is one side, so no fence there). What is the largest area you can enclose, in m²?`:`You have ${F} m of fence for a rectangular pen. What is the largest area you can enclose, in m²?`,ans:barn?F*F/8:(F/4)**2,
+  hints:["Try a few rectangles. Long and thin, or more equal: which holds more?",barn?`Call each short side x. The long side is ${F} − 2x. Try several values of x.`:`The length and width add up to ${F/2}. Try pairs and watch the area rise and fall.`,barn?`Best: x = ${F/4}, long side ${F/2}.`:`Best: a square with side ${F/4} m.`],why:[barn?`x(${F} − 2x) is largest at x = ${F/4}: ${F/4} × ${F/2} = ${F*F/8} m².`:`A ${F/4} × ${F/4} square gives ${(F/4)**2} m².`]}}},
+ {id:"g11c",g:11,st:"alg",t:"Doubling time",life:"Investing",move:"rhythm",make:R=>{const r=pk(R,[4,6,8,9,12]);return{text:`Money grows by ${r}% a year. Using the rule of 72, about how many years until it doubles?`,ans:72/r,tol:.01,
+  hints:["What does 'doubles' mean for $100?","Bankers use a shortcut: years to double ≈ 72 ÷ yearly rate.",`72 ÷ ${r}.`],why:[`72 ÷ ${r} = ${72/r} years. The rule of 72 is a quick estimate of compound growth.`]}}},
+ {id:"g12a",g:12,st:"data",t:"Expected value",life:"Is the game fair?",move:"stack",make:R=>{const W=pk(R,[10,20,50]),k=pk(R,[4,5,8,10]),c=pk(R,[2,3,5]),E=W/k-c;return{text:`A game costs $${c} to play. You spin a wheel with ${k} equal parts. One part wins $${W}, the others win nothing. On average, how much do you gain per play? (type a negative number for a loss)`,ans:E,tol:.01,show:(E<0?"−$":"$")+m2(Math.abs(E)),
+  hints:[`If you played ${k} times, about how often would you win?`,`In ${k} plays you pay ${k} × $${c} and win $${W} about once.`,`Net over ${k} plays: $${W-k*c}. Share it over ${k} plays.`],why:[`Expected gain = ${W}/${k} − ${c} = ${m2(E)} dollars per play.`]}}},
+ {id:"g12b",g:12,st:"alg",t:"Rate of change",life:"Driving",move:"portions",make:R=>{const h=pk(R,[1.5,2,2.5,3]),s=ri(R,40,70),A=ri(R,12000,48000);return{text:`A car's odometer reads ${A} km at 1:00 p.m. and ${A+s*h} km ${h} hours later. What was its average speed, in km/h?`,ans:s,tol:.01,
+  hints:["Speed means distance per hour. What two things do you need?",`Distance: ${A+s*h} − ${A}.`,`${s*h} km in ${h} hours.`],why:[`${s*h} ÷ ${h} = ${s} km/h.`]}}},
+ {id:"g12c",g:12,st:"alg",t:"Half-life",life:"Caffeine",move:"rhythm",make:R=>{const a=pk(R,[80,120,160,200]),hl=pk(R,[5,6]),k=ri(R,1,4);return{text:`A drink has ${a} mg of caffeine. Your body clears half of what's left every ${hl} hours. How much is left after ${hl*k} hours, in mg?`,ans:a/2**k,tol:.01,
+  hints:[`How many ${hl}-hour periods fit into ${hl*k} hours?`,`${hl*k} ÷ ${hl} = ${k} halvings.`,`Halve ${a} ${k} time${k>1?"s":""}.`],why:[`${a} ÷ 2^${k} = ${a/2**k} mg.`]}}}
+];
+const SKM=Object.fromEntries(SKILLS.map(s=>[s.id,s]));
+function genProblem(sid,seed){ const s=SKM[sid]; const q=s.make(rng(sid+"|"+seed));
+  const p={id:`L-${sid}-${seed}`,src:"learn",skill:sid,g:s.g,move:s.move,pts:s.g<=3?3:s.g<=8?4:5,type:q.type||"num",text:q.text,opts:q.opts||null,ans:String(q.ans),tol:q.tol,show:q.show,hints:q.hints,why:q.why,fig:"",title:s.t,life:s.life};
+  byId[p.id]=p; return p }
+
+let learner=lsGet("kmg_learner",null);
+async function saveLearner(){ learner.updated=new Date().toISOString(); lsSet("kmg_learner",learner); if(db){ try{ await db.doc("app/learner").set(learner) }catch(e){} } }
+const skStat=id=>(learner.stats[id]||{t:0,c:0,streak:0,m:false});
+function skStatus(s){ const st=learner.stats[s.id]; if(st&&st.m) return "mastered"; if(s.g<learner.level) return "assumed"; if(s.g===learner.level) return "now"; if(s.g===learner.level+1) return "stretch"; return "later" }
+async function learnRecord(p,a){
+  const st={...skStat(p.skill)}; st.t++; const clean=a.correct&&a.hints===0; if(clean){st.c++;st.streak++} else st.streak=0; if(st.streak>=3) st.m=true; st.last=a.at.slice(0,10);
+  learner.stats[p.skill]=st; let msg="";
+  const cur=SKILLS.filter(s=>s.g===learner.level);
+  if(cur.length && cur.every(s=>(learner.stats[s.id]||{}).m) && learner.level<12){ learner.level++; msg=`Level up! You're now learning ${gName(learner.level)} skills.` }
+  await saveLearner();
+  if(st.m && st.streak===3) msg = (msg?msg+" ":"")+`You mastered "${SKM[p.skill].t}"!`;
+  if(msg){ const r=document.querySelector("#result .result"); if(r) r.insertAdjacentHTML("afterbegin",kipSay("Kip says",`<p><b>${esc(msg)}</b></p>`)) }
+}
+function learnPlan(){
+  const d=today(); if(learner.plans&&learner.plans[d]) return learner.plans[d];
+  const R=rng("learn"+d+learner.level); const L=learner.level;
+  const now=SKILLS.filter(s=>s.g===L&&!(learner.stats[s.id]||{}).m);
+  const below=SKILLS.filter(s=>s.g<L||(learner.stats[s.id]||{}).m);
+  const stretch=SKILLS.filter(s=>s.g===L+1);
+  const pick=[]; if(below.length) pick.push(pk(R,below));
+  const pool=now.length?now:SKILLS.filter(s=>s.g===L);
+  for(let i=0;i<3;i++) pick.push(pool[i%pool.length]);
+  if(stretch.length) pick.push(pk(R,stretch)); else if(pool.length) pick.push(pk(R,pool));
+  // interleave so the same skill is not twice in a row
+  for(let i=1;i<pick.length;i++) if(pick[i].id===pick[i-1].id){ const j=pick.findIndex((s,k)=>k>i&&s.id!==pick[i].id); if(j>0)[pick[i],pick[j]]=[pick[j],pick[i]] }
+  learner.plans=learner.plans||{}; learner.plans[d]=pick.map((s,i)=>[s.id,d+"-"+i]);
+  const ks=Object.keys(learner.plans).sort(); while(ks.length>30) delete learner.plans[ks.shift()];
+  saveLearner(); return learner.plans[d];
+}
+
+function renderLearn(){
+  if(!learner || !learner.placed) return learnOnboard();
+  const plan=learnPlan(); const ps=plan.map(([sid,seed])=>genProblem(sid,seed));
+  const res=ps.map(p=>practice().find(a=>a.pid===p.id)); const next=res.findIndex(a=>!a);
+  const dots=res.map(a=>`<span class="dot ${!a?"":a.revealed?"shown":isClean(a)?"clean":"helped"}"></span>`).join("");
+  const mastered=SKILLS.filter(s=>(learner.stats[s.id]||{}).m).length;
+  const chip={mastered:'<span class="chip good">Mastered</span>',assumed:'<span class="chip plain">Review</span>',now:'<span class="chip">Learning now</span>',stretch:'<span class="chip blue">Stretch</span>',later:'<span class="chip plain">Challenge</span>'};
+  app.innerHTML=`<div class="stack">
+    ${kipSay(`Hi ${esc(learner.nick)}!`, next===-1?`<p>Today's real-life set is done. Want more? Pick any skill below. Even the 'Challenge' ones: every brain can learn anything when it's taken one step at a time.</p>`:`<p>You're learning <b>${gName(learner.level)}</b> skills. Today: ${ps.length} real-life problems: one review, three at your level and one stretch. Guess first, then solve.</p>`)}
+    <div class="card stack"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Today's real-life set</div><div class="dots" style="margin-top:6px">${dots}</div></div><div style="text-align:right"><div class="eyebrow">${mastered} of ${SKILLS.length} skills mastered</div></div></div>
+      ${next===-1?"":`<div><button class="btn" id="lgo">${next===0?"Start":"Continue"} →</button></div>`}</div>
+    <div class="stack"><div class="eyebrow">The ladder, Kindergarten to Grade 12</div>
+      ${[...Array(13).keys()].map(g=>{const ss=SKILLS.filter(s=>s.g===g); return `<div class="card stack" style="padding:14px"><div class="row" style="justify-content:space-between"><h3>${gName(g)}</h3>${g===learner.level?'<span class="chip">You are here</span>':""}</div>
+        <div class="list">${ss.map(s=>`<button class="item" data-sk="${s.id}"><span class="l"><b>${s.t}</b><br><span class="small muted">${STRANDS[s.st]} · Real life: ${s.life}</span></span>${chip[skStatus(s)]}</button>`).join("")}</div></div>`}).join("")}
+    </div>
+    <div class="card stack"><div class="eyebrow">How Kip teaches</div>
+      <p><b>Real life first.</b> Every problem starts from something you'd really do: shopping, cooking, saving, building, travelling.</p>
+      <p><b>Picture, then numbers.</b> Hints move from "draw it" to "picture it" to the numbers, like the concrete-pictorial-abstract steps used in Singapore maths.</p>
+      <p><b>Placed by what you can do, not your age.</b> Finish a level and you move up, even past your grade.</p>
+      <p><b>Mastery means 3 in a row alone.</b> Skills come back mixed with others so you have to choose the move yourself.</p>
+      <div class="row"><button class="btn ghost" id="replace">Redo placement check</button><button class="btn ghost" id="edit">Change name or grade</button></div></div>
+  </div>`;
+  const g=app.querySelector("#lgo"); if(g) g.onclick=()=>go({tab:"learn",pid:ps[next].id,list:ps.map(p=>p.id)});
+  app.querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{ const t=Date.now(); const xs=[0,1,2].map(i=>genProblem(b.dataset.sk,"p"+t+i)); go({tab:"learn",pid:xs[0].id,list:xs.map(p=>p.id)}) });
+  app.querySelector("#replace").onclick=()=>startPlacement();
+  app.querySelector("#edit").onclick=()=>{ learner.placed=false; learnOnboard(true) };
+}
+function learnOnboard(editing){
+  const L=learner||{};
+  app.innerHTML=`<div class="stack">${kipSay("Let's get started",`<p>Tell me a little about you. Then I'll ask 8 quick questions to find the right starting step. It's not a test. Wrong answers help me find your level.</p>`)}
+   <form class="card stack" id="ob"><label class="stack" style="gap:4px"><span class="eyebrow">Nickname</span><input id="nick" class="num" style="width:260px;font-family:var(--body)" maxlength="20" value="${esc(L.nick||"")}" placeholder="What should Kip call you?" required></label>
+   <div class="row"><label class="stack" style="gap:4px"><span class="eyebrow">Age</span><input id="age" class="num" type="number" min="4" max="19" style="width:110px" value="${L.age||""}" required></label>
+   <label class="stack" style="gap:4px"><span class="eyebrow">Grade</span><select id="grade" class="num" style="width:160px">${[...Array(13).keys()].map(g=>`<option value="${g}" ${L.grade===g?"selected":""}>${gName(g)}</option>`).join("")}</select></label></div>
+   <p class="small muted">Only a nickname, no full names. It stays on this page.</p>
+   <div><button class="btn" type="submit">${editing?"Save":"Next: placement check"}</button></div></form></div>`;
+  app.querySelector("#ob").onsubmit=async e=>{ e.preventDefault();
+    learner={...(learner||{stats:{},plans:{}}),nick:app.querySelector("#nick").value.trim()||"friend",age:+app.querySelector("#age").value,grade:+app.querySelector("#grade").value};
+    if(editing&&learner.level!=null){ learner.placed=true; await saveLearner(); renderLearn() } else { await saveLearner(); startPlacement() } };
+}
+function startPlacement(){ go({tab:"learn",place:{i:0,cur:learner.grade,asked:[],seed:Date.now()}}) }
+function renderPlacement(){
+  const P=view.place, N=8;
+  if(P.i>=N){ const last=P.asked.slice(-4).map(x=>x.g); let lvl=Math.round(last.reduce((a,b)=>a+b,0)/last.length);
+    const rightG=P.asked.filter(x=>x.ok).map(x=>x.g); if(rightG.length) lvl=Math.max(lvl,Math.min(...rightG)); lvl=Math.max(0,Math.min(12,lvl));
+    learner.level=lvl; learner.placed=true; learner.plans={}; learnerSaveAndShow(lvl); return }
+  const pool=SKILLS.filter(s=>s.g===P.cur); const s=pool[(P.i+P.seed)%pool.length]; const p=genProblem(s.id,"place"+P.seed+P.i);
+  app.innerHTML=`<div class="stack"><div class="ptop"><span class="chip plain">Placement · ${P.i+1} of ${N}</span><span class="chip blue">${gName(s.g)}</span></div>
+   <div class="card stack"><div class="small muted">Real life: ${s.life}</div><div class="ptext">${esc(p.text)}</div>
+   ${p.type==="mc"?`<div class="opts">${p.opts.map((o,i)=>`<button class="opt" data-k="${"ABCDE"[i]}"><span class="k">${"ABCDE"[i]}</span>${esc(o)}</button>`).join("")}</div>`:`<div class="row"><input id="pa" class="num" placeholder="Answer" autocomplete="off"><button class="btn" id="pc">Next</button></div>`}
+   <div class="row"><button class="btn ghost" id="pskip">I haven't learned this yet</button></div></div></div>`;
+  const step=ok=>{ P.asked.push({g:P.cur,ok}); P.cur=ok?Math.min(12,P.cur+1):Math.max(0,P.cur-1); P.i++; render() };
+  if(p.type==="mc") app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>step(isRight(p,b.dataset.k)));
+  else { const inp=app.querySelector("#pa"); const go2=()=>{ if(inp.value.trim()) step(isRight(p,inp.value)) }; app.querySelector("#pc").onclick=go2; inp.onkeydown=e=>{if(e.key==="Enter")go2()}; inp.focus() }
+  app.querySelector("#pskip").onclick=()=>step(false);
+}
+async function learnerSaveAndShow(lvl){
+  await saveLearner();
+  app.innerHTML=`<div class="stack">${kipSay("Found your starting step!",`<p>You'll start with <b>${gName(lvl)}</b> skills${lvl>learner.grade?", ahead of your grade. Brilliant":lvl<learner.grade?". We'll build a strong base first, then climb fast":", right at your grade"}. Every day: one review, three at your level and one stretch.</p>`)}
+    <div><button class="btn" id="tolearn">See my ladder →</button></div></div>`;
+  app.querySelector("#tolearn").onclick=()=>go({tab:"learn"});
+}
+
+render(); initDb();
+</script>
