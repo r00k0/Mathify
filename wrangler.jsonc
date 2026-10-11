@@ -7,5 +7,6 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "mathify-db", "database_id": "55bddaf1-7a65-4db6-9986-e53c0068b248", "migrations_dir": "migrations" }
   ],
+  "workers_dev": true,
   "observability": { "enabled": true }
 }
