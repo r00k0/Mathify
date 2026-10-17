@@ -1,0 +1,323 @@
+{
+"b2018-1": {
+"ask": "3 arrows fly straight across, popping every balloon they touch. How many balloons are never hit?",
+"steps": [
+"Follow each arrow's line all the way across the picture with your finger.",
+"Every balloon on that line gets popped (the arrow keeps going).",
+"Mark the popped balloons on all three lines.",
+"Count the balloons that no line touches: 3."
+],
+"answer": "3 balloons (A).",
+"check": "Popped + not popped = 9 balloons. ✓",
+"spot": "Lines across a picture? Extend each line and see what it touches.",
+"oops": "Thinking an arrow stops after one balloon."
+},
+"b2018-2": {
+"ask": "What does Peter see when he looks down on the table from above?",
+"steps": [
+"From above, you see only the tops of things.",
+"The long block looks like a long rectangle.",
+"The round can looks like a circle, and the box looks like a square.",
+"Check where each one sits: circle on one side in front, square at the other end at the back. That's C."
+],
+"answer": "C.",
+"check": "Compare the positions in C with the 3D picture. Each object is in the right spot. ✓",
+"spot": "Views from above? Each object turns into its top shape.",
+"oops": "Mixing up which end the circle and square are on."
+},
+"b2018-3": {
+"ask": "Two arrows in the middle ring scored 14. A middle-ring arrow and a centre arrow scored 16. Two centre arrows score how much?",
+"steps": [
+"Two middle-ring hits = 14, so one middle-ring hit = 7.",
+"Centre + middle = 16, so the centre = 16 − 7 = 9.",
+"Two centre hits: 9 + 9 = 18."
+],
+"answer": "18 (B).",
+"check": "Middle 7: 7 + 7 = 14 ✓, 9 + 7 = 16 ✓.",
+"spot": "Two scores sharing a part? Find the part you can, then swap it in.",
+"oops": "Adding 14 + 16 and guessing."
+},
+"b2018-4": {
+"ask": "Two snails start at corner S going opposite ways around the garden, one at 1 m/h, one at 2 m/h. Where do they meet?",
+"steps": [
+"Count the perimeter of the garden on the grid: 24 m.",
+"Together they cover 1 + 2 = 3 m every hour.",
+"They meet when together they've gone all the way around: 24 ÷ 3 = 8 hours.",
+"The slow snail went 8 m: up 2, then 6 along the top. That's point B."
+],
+"answer": "B.",
+"check": "The fast snail went 16 m the other way and also lands on B. ✓",
+"spot": "Two things moving toward each other? Add their speeds.",
+"oops": "Forgetting they go in opposite directions."
+},
+"b2018-5": {
+"ask": "▢3 − 2▢ = 25 with two hidden digits. What do the hidden digits add to?",
+"steps": [
+"Turn it into adding: ▢3 = 25 + 2▢.",
+"Ones column: 5 + ▢ ends in 3. 5 + 8 = 13, so the hidden digit is 8.",
+"25 + 28 = 53, so the first hidden digit is 5.",
+"5 + 8 = 13."
+],
+"answer": "13 (D).",
+"check": "53 − 28 = 25. ✓",
+"spot": "Hidden digits in a subtraction? Flip it into an addition.",
+"oops": "Forgetting the carry into the tens."
+},
+"b2018-6": {
+"ask": "A star is a square with 4 equal-sided triangles on its sides. The square's perimeter is 36 cm. What's the star's perimeter?",
+"steps": [
+"Square side: 36 ÷ 4 = 9 cm.",
+"Each triangle has all sides equal, so each side is also 9 cm.",
+"Each triangle shows 2 sides on the outside of the star. 4 triangles × 2 = 8 sides.",
+"8 × 9 = 72 cm."
+],
+"answer": "72 cm (E).",
+"check": "The star's outline is exactly twice the square's: 2 × 36 = 72. ✓",
+"spot": "Shapes stuck together? Count only the edges on the outside.",
+"oops": "Counting the square's sides too. They're hidden inside."
+},
+"b2018-7": {
+"ask": "An ink spot covers a calendar. You can see the 3rd is a Friday. What day is the 25th?",
+"steps": [
+"The same weekday comes every 7 days.",
+"Fridays: 3, 10, 17, 24.",
+"The 25th is the day after Friday: Saturday."
+],
+"answer": "Saturday (D).",
+"check": "25 − 3 = 22 = 3 weeks + 1 day. Friday + 1 day = Saturday. ✓",
+"spot": "Calendars? Jump by 7s.",
+"oops": "Counting day by day and slipping."
+},
+"b2018-8": {
+"ask": "How many times must you roll a die to be SURE a result repeats?",
+"steps": [
+"Be unlucky Ulysses: roll as many different numbers as possible.",
+"A die has 6 numbers. You could roll 1, 2, 3, 4, 5, 6: six rolls, no repeat.",
+"The 7th roll must match one of them."
+],
+"answer": "7 times (C).",
+"check": "6 rolls can all be different; 7 can't. ✓",
+"spot": "'To be sure'? Imagine the unluckiest results, then add one.",
+"oops": "Saying 6. Six rolls could all be different."
+},
+"b2018-9": {
+"ask": "Three squares fit together. The smallest has side 6 cm. How long is the biggest square's side?",
+"steps": [
+"Write every length you know on the picture. The smallest square's side is 6 cm.",
+"The square next to it is 2 cm shorter where they line up, so one piece of the big square's side is 6 − 2 = 4 cm.",
+"The other piece is 2 cm plus another 6 cm side: 2 + 6 = 8 cm.",
+"The big square's side is 4 + 8 = 12 cm, twice the small square."
+],
+"answer": "12 cm (C).",
+"check": "6 − 2 + 2 + 6 = 12. ✓",
+"spot": "Squares fitting together? Label every side and use the edges that line up.",
+"oops": "Guessing from how big it looks."
+},
+"b2018-10": {
+"ask": "Touching a light bulb lights it and all its neighbours. Fewest touches to light every bulb?",
+"steps": [
+"Count each bulb's neighbours: every bulb has only 2 or 3.",
+"So touching one bulb lights at most 4 of the 8 bulbs. 1 touch can't do it.",
+"Touch a bulb with 3 neighbours: 4 bulbs light up.",
+"Pick a second bulb on the other side whose neighbours are the 4 still dark. 2 touches light all 8."
+],
+"answer": "2 (A).",
+"check": "Point at each bulb: it's one of the two you touched, or a neighbour of one. ✓",
+"spot": "Covering everything? Start with the most connected piece.",
+"oops": "Touching bulbs one at a time without planning."
+},
+"b2018-11": {
+"ask": "In which square is the black-to-white ratio the biggest?",
+"steps": [
+"Each big square is cut into the same small triangles. Count black and white pieces in each.",
+"Square A: black is 1/4 of the square. White is 3/4.",
+"Check B, C and D: the black triangles add up to 1/4 of the square in each one too.",
+"So every square is 1 black to 3 white."
+],
+"answer": "They are all the same (E).",
+"check": "Move the black triangles in your head: in each square they fill exactly one corner quarter. ✓",
+"spot": "Comparing areas? Count in equal small pieces.",
+"oops": "Thinking the squares with more black triangles have more black. The triangles are smaller."
+},
+"b2018-12": {
+"ask": "Nine cars drive off following their arrows. Which picture shows them afterwards?",
+"steps": [
+"Look at each car's arrow: straight, left or right.",
+"Count how many cars end up on each road after turning.",
+"Check each answer picture: does each road have the right number of cars?",
+"Only picture B matches."
+],
+"answer": "B.",
+"check": "Count cars on every road in B and compare with your list. ✓",
+"spot": "Lots of things moving? Count where they end up, road by road.",
+"oops": "Turning cars the wrong way. Imagine you're the driver."
+},
+"b2018-13": {
+"ask": "Four of 1 to 5 fill spots so both arrow calculations give 8. Which number is under the star?",
+"steps": [
+"The top path: green + pink − blue = 8. The bottom path: green × red ÷ blue = 8.",
+"Try blue = 1 (simplest): green × red = 8, so green and red are 2 and 4.",
+"Top: green + pink = 9. If green = 4, pink = 5. If green = 2, pink = 7 (not allowed).",
+"So pink (the star) = 5."
+],
+"answer": "5 (E).",
+"check": "4 + 5 − 1 = 8 ✓ and 4 × 2 ÷ 1 = 8 ✓.",
+"spot": "Missing numbers in a calculation? Try small numbers in the trickiest spot first.",
+"oops": "Forgetting each number can be used only once."
+},
+"b2018-14": {
+"ask": "A lion is behind one of 3 doors. Only one sign is true. Door 1: 'Not here.' Door 2: 'Here.' Door 3: 'Two and three is five.' Where's the lion?",
+"steps": [
+"Door 3's sign is ALWAYS true: 2 + 3 = 5.",
+"Only one sign is true, so door 1's and door 2's signs are false.",
+"Door 1 false: the lion IS behind door 1.",
+"Door 2 false: the lion is not behind door 2. That fits."
+],
+"answer": "Door 1 (A).",
+"check": "Lion behind door 1: sign 1 false, sign 2 false, sign 3 true. Exactly one true. ✓",
+"spot": "True and false signs? Find a sign that's definitely true (or false) first.",
+"oops": "Ignoring door 3 because it isn't about the lion."
+},
+"b2018-16": {
+"ask": "Any two cells sharing an edge in the triangle table add to the same number. Two cells are filled (2 and 3). What's the total?",
+"steps": [
+"If neighbours always add to the same number, then all the pointing-up triangles hold the same number, and all the pointing-down triangles hold the same number.",
+"So one kind is 2 and the other kind is 3.",
+"Count: there are 6 pointing-up triangles and 3 pointing-down triangles. The 2 is in an up-triangle and the 3 in a down-triangle.",
+"6 × 2 + 3 × 3 = 12 + 9 = 21."
+],
+"answer": "21 (C).",
+"check": "Every neighbouring pair is 2 + 3 = 5. ✓",
+"spot": "'Neighbours always add the same'? Neighbours of neighbours are equal.",
+"oops": "Thinking you need more numbers to work it out."
+},
+"b2018-17": {
+"ask": "Monday, Alexandra sends a picture to 5 friends. Each day everyone who just got it sends it to 2 new friends. When do more than 100 people have it?",
+"steps": [
+"Monday: 5 new people. Total 5.",
+"Tuesday: each of the 5 sends to 2: 10 new. Total 15.",
+"Wednesday: 20 new. Total 35. Thursday: 40 new. Total 75.",
+"Friday: 80 new. Total 155. That's over 100."
+],
+"answer": "Friday (C).",
+"check": "Thursday's total is 75 (not yet 100), Friday's is 155. ✓",
+"spot": "Things doubling? Make a table day by day.",
+"oops": "Only counting the new people each day instead of the total."
+},
+"b2018-20": {
+"ask": "Four ladybugs on a grid. One sleeps and never moves. The others move to a neighbouring cell each whistle, never straight back. What might the grid look like after the 4th whistle?",
+"steps": [
+"Find the sleeping ladybug: compare the start with after the 1st whistle. Only one cell has a ladybug both times. That's the sleeper.",
+"Each other ladybug steps up, down, left or right each whistle, and never straight back to the cell it just left.",
+"Check the answers against the picture after the 3rd whistle: E moves the sleeper; D needs a two-cell jump; C needs a diagonal step; B sends a ladybug back to where it came from.",
+"Only A follows every rule."
+],
+"answer": "A.",
+"check": "In A, the sleeper is in place and every other ladybug is one legal step away. ✓",
+"spot": "Step-by-step moves? Find what never changes first.",
+"oops": "Forgetting a ladybug can't go back to the cell it just left."
+},
+"b2018-21": {
+"ask": "From 3, 5, 2, 6, 1, 4, 7, Masha picks three numbers adding to 8, and Dasha picks three adding to 7. How many numbers do they share?",
+"steps": [
+"Three different numbers adding to 7: only 1 + 2 + 4. So Dasha has 1, 2, 4.",
+"Three different numbers adding to 8: 1 + 2 + 5, or 1 + 3 + 4.",
+"Compare with Dasha: 1, 2, 5 shares 1 and 2. 1, 3, 4 shares 1 and 4.",
+"Either way they share 2 numbers."
+],
+"answer": "2 (C).",
+"check": "Both of Masha's options share exactly two numbers with 1, 2, 4. ✓",
+"spot": "Only a few options? List them all and check each.",
+"oops": "Thinking you can't tell because Masha has two options."
+},
+"b2018-22": {
+"ask": "Five balls weigh 30, 50, 50, 50 and 80 g. Use the scales to find the 30 g ball.",
+"steps": [
+"Look at the third scale: two balls on one side balance three balls on the other.",
+"All five balls add to 260 g. Balanced means each side is 130 g.",
+"Two balls making 130: must be 80 + 50. Three balls making 130: 50 + 50 + 30.",
+"Use the other scales to see which ball in the group of three is lighter: it's C."
+],
+"answer": "C.",
+"check": "With C = 30 g, every scale in the picture tips the right way. ✓",
+"spot": "Balance scales? Start with the one that balances.",
+"oops": "Ignoring which side is heavier on the tipped scales."
+},
+"b2018-23": {
+"ask": "A biggest-possible 6-digit number uses A three times, B twice and C once. Which pattern can it never be?",
+"steps": [
+"To make the biggest number, put the biggest digits first.",
+"Equal digits will always be next to each other: you'd put all the copies of the biggest digit first, then the next, and so on.",
+"AAABCB splits the two Bs with a C in between.",
+"If B were bigger than C, BB would come before C. If C were bigger, C would come before BB. So AAABCB never happens."
+],
+"answer": "D (AAABCB).",
+"check": "The other patterns keep equal digits together, so they can happen with the right digits. ✓",
+"spot": "Biggest number from digits? Biggest digits first, and equal digits stay together.",
+"oops": "Trying lots of actual numbers instead of thinking about the pattern."
+},
+"b2018-24": {
+"ask": "Kate + Mom = 36 years. Mom + Granny = 81 years. How old was Granny when Kate was born?",
+"steps": [
+"Both sums have Mom. Take the first away from the second: (Mom + Granny) − (Kate + Mom) = Granny − Kate.",
+"81 − 36 = 45.",
+"Granny is 45 years older than Kate, so she was 45 when Kate was born."
+],
+"answer": "45 (C).",
+"check": "Example: Kate 8, Mom 28, Granny 53. 8 + 28 = 36 ✓, 28 + 53 = 81 ✓, 53 − 8 = 45 ✓.",
+"spot": "Two sums sharing a person? Subtract them and the shared person disappears.",
+"oops": "Trying to find everyone's exact age."
+},
+"b2018-25": {
+"ask": "Split 2 to 10 into groups with equal sums. Most groups possible?",
+"steps": [
+"2 + 3 + ... + 10 = 54.",
+"The group with 10 has a sum of at least 10. So each group's sum is at least 10.",
+"The sum must divide 54 evenly and be at least 10: 18, 27 or 54. The smallest is 18, which gives 54 ÷ 18 = 3 groups.",
+"It works: 10 + 8, 9 + 7 + 2, 6 + 5 + 4 + 3."
+],
+"answer": "3 groups (B).",
+"check": "18 + 18 + 18 = 54. ✓",
+"spot": "Equal groups? The total must divide evenly, and the biggest piece sets a minimum.",
+"oops": "Choosing 6 groups of 9: the 10 can't fit in a group of 9."
+},
+"b2018-27": {
+"ask": "Fill a 5 × 5 table with 0s and 1s so every 2 × 2 square has exactly three equal numbers. Biggest total?",
+"steps": [
+"Each 2 × 2 square has three equal numbers and one different. To make the total big, use three 1s and one 0.",
+"So every 2 × 2 square needs at least one 0.",
+"You can fit four 2 × 2 squares that don't overlap in a 5 × 5 table. Each needs its own 0: at least four 0s.",
+"25 − 4 = 21, and you can arrange it so it works."
+],
+"answer": "21 (B).",
+"check": "Put 0s in a spread-out pattern (e.g. the second and fourth cells of rows 2 and 4): every 2 × 2 square has exactly one 0. ✓",
+"spot": "Biggest total with a rule for small squares? Count how many small squares don't overlap.",
+"oops": "Thinking some 2 × 2 squares can be all 1s."
+},
+"b2018-28": {
+"ask": "14 people around a table, each a liar or truth-teller. Each says 'Both my neighbours are liars.' Most liars possible?",
+"steps": [
+"A truth-teller really has two liar neighbours.",
+"A liar's sentence is false, so at least one neighbour is a truth-teller. Three liars in a row would make the middle one truthful, which can't happen.",
+"So liars come in groups of at most 2, with a truth-teller between groups: T L L T L L ...",
+"14 seats: 4 groups of T L L (12 seats, 8 liars) + T L (1 more liar) = 9 liars."
+],
+"answer": "9 (C).",
+"check": "10 liars would need groups bigger than 2 somewhere, which breaks the rule. ✓",
+"spot": "Liars around a table? Work out what pattern of neighbours each type needs.",
+"oops": "Saying 14 or 10 without checking the liars' sentences must be false."
+},
+"b2018-30": {
+"ask": "Put 3 to 9 in seven circles: three lines through the centre circle, each with equal sums. Add up all possible centre numbers.",
+"steps": [
+"3 + 4 + ... + 9 = 42.",
+"Adding all three lines counts the centre 3 times and every other number once: 42 + 2 × centre.",
+"That must divide by 3 (three equal lines). 42 already divides by 3, so 2 × centre must too: centre = 3, 6 or 9.",
+"All three work. 3 + 6 + 9 = 18."
+],
+"answer": "18 (E).",
+"check": "Centre 6: lines 6 + 3 + 9, 6 + 4 + 8, 6 + 5 + 7, each 18. ✓",
+"spot": "Lines meeting in the middle? Add all lines and see how often the centre is counted.",
+"oops": "Finding one centre and stopping. The question asks for all of them."
+}
+}

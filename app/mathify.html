@@ -93,6 +93,21 @@ svg.fig{max-width:100%;height:auto;display:block;margin:6px 0}
 .badge{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:700 13px var(--mono);background:var(--accent-soft);color:var(--accent);flex:0 0 auto}
 .move .t{font-family:var(--display);font-weight:800;font-size:17px}
 .move .m{font-weight:600}
+/* explanations */
+details.why summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.xp{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.xs p{margin-top:2px}
+.xsteps{margin:4px 0 0;padding-left:0;list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:8px}
+.xsteps li{counter-increment:st;display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
+.xsteps li:before{content:counter(st);width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:700 13px var(--mono)}
+.xans{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:17px}
+.xmove{background:var(--kip);color:var(--kip-ink);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.xmove .eyebrow{color:inherit;opacity:.75}
+.xoops{background:var(--card);border:2px solid var(--bad);border-radius:10px;padding:8px 12px}
+.btn.sm{padding:6px 12px;font-size:14px}
+button.move.mv{font:inherit;color:var(--ink);text-align:left;cursor:pointer;align-items:flex-start}
+button.move.mv:hover{border-color:var(--accent)}
+.spotl{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
@@ -135,6 +150,9 @@ const KIP = `<svg class="face" viewBox="0 0 64 64" aria-hidden="true">
 <rect x="22" y="18" width="20" height="4" rx="2" fill="var(--accent)"/></svg>`;
 document.getElementById("logo").innerHTML = KIP.replace('class="face"','class="face" style="width:36px;height:36px"');
 function kipSay(who, html, extra=""){ return `<div class="kip pop">${KIP}<div class="bubble"><div class="who">${who}</div>${html}${extra}</div></div>` }
+
+/* Kip's full step-by-step explanations, injected at build time from app/explain.js + data/explain/*.json */
+const EXPLAIN = window.__EXPLAIN__ || {};
 
 /* =================== Thinking moves =================== */
 const MOVES = {
@@ -179,7 +197,36 @@ const MOVES = {
    q:"Did you think of adding all the totals together and seeing what got counted more than once?"},
  tryit:{n:"Try it!",b:"TR",m:"Stuck? Try a small number, or test the answer choices.",
    s:"Kip doesn't know which key opens the door, so he tries them, smartly, most likely first. Plugging in a choice or a small example often shows the answer.",
-   q:"Did you think of testing the answer choices, or trying it with a small number?"}
+   q:"Did you think of testing the answer choices, or trying it with a small number?"},
+ jigsaw:{n:"Fit the pieces",b:"FP",m:"Start where there's only ONE choice. Bumps go in dips.",
+   s:"When Kip does a jigsaw, he never starts in the middle of the sky. He starts with the corners, because a corner piece can only go one place. Then each piece he places makes the next one easier.",
+   q:"Did you think of starting with the spot that has only one possible piece?"},
+ walk:{n:"Walk around it",b:"WA",m:"One side at a time. Count in layers: front, middle, back.",
+   s:"Kip walks all the way around his block tower: front, side, back, top. Then he counts it one layer at a time, like slices of bread, so no hidden block gets missed.",
+   q:"Did you think of looking from one side at a time, or counting layer by layer?"},
+ act:{n:"Act it out",b:"AO",m:"Draw it or act it out, one step at a time. Never skip a step.",
+   s:"When Kip's friends argue about who threw the ball to whom, he grabs a ball and acts it out, one throw at a time. Paths, turns, gears and moves are easy when you follow them step by step with your finger.",
+   q:"Did you think of drawing it or acting it out, one step at a time?"}
+};
+/* How to spot when a move fits: the clues in the question that point to it */
+const MOVE_SPOT = {
+ rewind:["You know the END, not the start.","A chain of steps: add, then double, then take away…","'How many did she have at first?'"],
+ seesaw:["Two groups that share something: 3 apples + melon, 1 apple + melon.","Scales, prices or weights that balance.","Totals that overlap."],
+ portions:["Food that lasts a number of days for some animals.","Mixes and ratios: 1 part to 3 parts.","Ages that all grow together each year."],
+ odd:["'Odd' or 'even' in the question.","Dividing by 3 or 9: add the digits.","Huge numbers where only the last digit or the remainder matters."],
+ columns:["Sums with hidden digits or letters (ABC + CBA).","A number written in boxes or on cards.","Biggest or smallest number made from digits."],
+ unlucky:["'At least how many to be SURE…'","Socks, marbles, dice: pick without looking.","'For any 5 we pick, one is red.'"],
+ squeeze:["'Largest possible' or 'smallest possible'.","Everyone different, someone has the most or least.","Fewest cuts, most pieces."],
+ pretend:["Truth-tellers and liars.","Clues about who sits where or who did what.","'Which one MUST be true?'"],
+ lineup:["'How many ways…'","Counting pairs, handshakes, routes.","Lists where it's easy to miss one or count one twice."],
+ rhythm:["Patterns that grow: towers, triangles, sequences.","Days of the week, clocks, things that repeat.","'What is the 100th…?'"],
+ slide:["Perimeter of a stepped or bumpy shape.","Areas of shaded parts.","Lengths on a picture you need to add up."],
+ flip:["Nets that fold into cubes or pyramids.","Mirrors, folding paper, cutting and unfolding.","Painted cubes: corners, edges, middles."],
+ stack:["Several totals that overlap: add them all up.","Things counted twice: shared corners, handshakes.","'The sum of all…'"],
+ tryit:["Answer choices you can plug in.","A rule you can test with a small number.","Too many cases to think about all at once."],
+ jigsaw:["Puzzle pieces, tiles or bars that fit together.","'Which piece is left over?' or 'Which shape can't be made?'","A spot that only one piece can fill."],
+ walk:["Views from the front, top or side.","3D shapes made of little cubes: count what's hidden.","See-through boxes or towers."],
+ act:["Moves on a grid, turns on a map, jumps.","People throwing, passing, swapping or facing each way.","Gears, wheels and things that move step by step."]
 };
 const MOVE_IDS = Object.keys(MOVES);
 function moveCard(id, extra){ const M=MOVES[id]; return `<p><b>${M.q}</b></p><p>${M.s}</p><span class="mn">Remember: ${M.m}</span>${extra?`<p style="margin-top:8px">${extra}</p>`:""}` }
@@ -243,8 +290,8 @@ const BOOK_RAW = [
 [2012,8,"A","flip","Roll the top coin around the bottom one in your head. Where does its head end up?","Half way round, the kangaroo is upside down with its arms in front."],
 [2012,9,"B","seesaw","Adding one balloon lets it lift how many more kilograms?","One balloon lifts 100 kg, and with one balloon it lifts the basket plus 80 kg."],
 [2012,10,"B","portions","How many pieces did they eat on the way? How many came home?","They ate 9 and brought 16 home: half are pears. Add the pears they ate."],
-[2012,11,"D","flip","Which piece can sit in the middle? It needs the right tabs and holes.","Only piece 2 fits the centre. Then find the piece beside it and the corner above."],
-[2012,12,"B","flip","Which dice does the hidden die touch? Which letters do those show?","It touches dice with A, C and D, so it can't be any of them."],
+[2012,11,"D","jigsaw","Which piece can sit in the middle? It needs the right tabs and holes.","Only piece 2 fits the centre. Then find the piece beside it and the corner above."],
+[2012,12,"B","jigsaw","Which dice does the hidden die touch? Which letters do those show?","It touches dice with A, C and D, so it can't be any of them."],
 [2012,13,"D","lineup","If every pair of 5 cities had a road, how many roads?","5 cities make 10 pairs. Count the visible roads."],
 [2012,14,"C","odd","Each colour is a leftover after dividing by 3. What leftover does red + blue give?","Leftover 1 + leftover 2 = leftover 3, which is no leftover: green."],
 [2012,15,"D","slide","How many equal segments make the outline? How long is one?","14 segments make 42 cm, so each is 3 cm. Then count the 3 × 3 squares."],
@@ -254,7 +301,7 @@ const BOOK_RAW = [
 [2012,19,"A","rhythm","When the first gear moves one tooth, how far does the last gear move?","Every gear moves the same number of teeth: 30 teeth on a 10-tooth gear."],
 [2012,20,"C","flip","Unfold the paper one fold at a time. Where does the cut go?","Mirror the cut across each fold line, last fold first."],
 [2012,21,"B","tryit","Call the wine 1 whole. How much vinegar and water is there?","Vinegar is 1/2 and water 1/3. Together 5/6."],
-[2012,22,"D","flip","Follow each move square by square on the grid.","Draw every step carefully, counting across and up."],
+[2012,22,"D","act","Follow each move square by square on the grid.","Draw every step carefully, counting across and up."],
 [2012,23,"D","portions","8 is the most common age and four children are 6. How many 8-year-olds at least?","At least 5 eight-year-olds, and one each of 7, 9 and 10. Then find the average."],
 [2012,24,"B","slide","The big outline is made of sides of which small rectangles?","The two rectangles at opposite corners cover the whole outline: 11 + 19."],
 [2012,25,"D","pretend","Who can sit next to 12?","12 sits between 11 and 10. Keep going down both sides."],
@@ -263,9 +310,9 @@ const BOOK_RAW = [
 [2012,28,"D","slide","Where are the folding lines compared with the diagonal?","Each shaded rectangle is 1/8 of the square."],
 [2012,29,"C","columns","Write the house numbers as abc, bc and c. Add them by place value.","100a + 20b + 3c = 912. Which c makes that work?"],
 [2012,30,"B","pretend","If someone had the number 1, what would they know right away?","Ann didn't have 1. Then Bill didn't have 1 or 2. So what must Ann have?"],
-[2013,2,"C","flip","Look at the cube layer by layer, front to back. How many cubes are missing in each?","The middle layer misses 2, the front layer misses 5."],
+[2013,2,"C","walk","Look at the cube layer by layer, front to back. How many cubes are missing in each?","The middle layer misses 2, the front layer misses 5."],
 [2013,3,"C","portions","100 m is what fraction of the whole way?","100 m is one eighth of the way."],
-[2013,4,"B","flip","Trace a route from A to B turning only right. How few turns?","You need at least 4 right turns."],
+[2013,4,"B","act","Trace a route from A to B turning only right. How few turns?","You need at least 4 right turns."],
 [2013,5,"E","portions","In 3 years, how much older is each person?","Each gains 3, three people gain 9."],
 [2013,6,"B","tryit","Write 176 as a two-digit number times a one-digit number.","88 × 2, 44 × 4, 22 × 8: which uses the same digit everywhere?"],
 [2013,7,"B","rhythm","How many minutes between pills? List the times.","Every 15 minutes: 11:05, 11:20, 11:35, ..."],
@@ -276,9 +323,9 @@ const BOOK_RAW = [
 [2013,12,"C","slide","Do the inside lines match the missing parts of the outline?","A shape keeps the same perimeter when its inside lines match the edges it lost."],
 [2013,13,"D","portions","How long is the whole ride? What is one third of that?","The ride is 2 hours, a third is 40 minutes after 1:30."],
 [2013,14,"B","seesaw","3 times the fish minus 1 times the fish is 12. What is 2 times the fish?","2 × fish = 12."],
-[2013,15,"E","flip","From the front you see the tallest tower in each column.","Read the tallest number in each column: 4, 3, 3, 2."],
+[2013,15,"E","walk","From the front you see the tallest tower in each column.","Read the tallest number in each column: 4, 3, 3, 2."],
 [2013,16,"B","squeeze","Take away the winner's and last place's votes. What's left for the middle three?","20 votes for three; the 4th place got 5, the other two share 15."],
-[2013,17,"D","flip","Cut a small cube from a corner. How many new faces appear?","Each corner adds 3 faces: 6 + 8 × 3."],
+[2013,17,"D","walk","Cut a small cube from a corner. How many new faces appear?","Each corner adds 3 faces: 6 + 8 × 3."],
 [2013,18,"A","lineup","The bigger number is at least how much bigger than the smaller?","Pairs from 10 & 60 up to 49 & 99."],
 [2013,19,"C","pretend","What could the half-time score be if the guests led after 6 goals?","Only 2 : 4 lets the home team win with 3 more goals."],
 [2013,20,"D","rhythm","Neighbours differ by 1. What's the biggest number each colour can hold?","Walking from 3 to 9 step by step forces every colour."],
@@ -288,13 +335,13 @@ const BOOK_RAW = [
 [2013,24,"A","rhythm","Walk around the circle: a chain of girls ends with a boy on each side.","Each chain has one boy giving his left hand and one his right."],
 [2013,25,"D","lineup","4 black and 4 white small cubes. Sort the cubes by their bottom layer.","List carefully, turning cubes so you don't count the same one twice."],
 [2013,26,"D","columns","Write abc − cba by place value. What is left?","It is 99 × (a − c) = 297, so a − c = 3. Count choices for a and b."],
-[2013,27,"B","flip","How many track pieces make half a circle?","Split the circle into two halves and add joining pieces."],
+[2013,27,"B","jigsaw","How many track pieces make half a circle?","Split the circle into two halves and add joining pieces."],
 [2013,28,"B","rewind","Start from the last islander. Is his sentence true?","Working backwards, knights and liars take turns."],
 [2013,29,"D","rhythm","Do the change-sum a few times. Watch the differences.","The differences only flip their sign, so the biggest difference never changes."],
 [2013,30,"B","squeeze","To keep big numbers outside, which faces should be glued inside?","Glue the small numbers inside; check which pairs can touch."],
 [2014,1,"C","lineup","How many quarter-turns does each card need?","K 2, A 1, N 1, second A 2."],
 [2014,2,"D","seesaw","The biggest piece weighs as much as the other three. What fraction is it?","It is half of the cake."],
-[2014,3,"D","flip","Seen from the back, what swaps?","From behind, left and right swap: the white ring is on the right."],
+[2014,3,"D","walk","Seen from the back, what swaps?","From behind, left and right swap: the white ring is on the right."],
 [2014,4,"A","columns","Add the visible digits column by column. Any carrying?","The columns already make 309, so the stars add nothing."],
 [2014,5,"A","tryit","Smallest 5-digit number? Largest 4-digit number?","10000 − 9999."],
 [2014,6,"D","slide","How long is a side of the square? Then the rectangle's sides?","Side 12, so the rectangle is 24 by 6."],
@@ -303,19 +350,19 @@ const BOOK_RAW = [
 [2014,9,"B","lineup","Work out each lap's time from the table.","Subtract start from end for each lap."],
 [2014,10,"C","pretend","Which digits could the broken display show? Which pair is one minute apart?","12:43 then 12:44."],
 [2014,11,"E","slide","Count light and dark areas in whole and half squares.","Light 5 and dark 3: can 1 more dark square ever catch up?"],
-[2014,12,"B","flip","Draw both walks on squared paper.","John ends 1 km south of Henry."],
+[2014,12,"B","act","Draw both walks on squared paper.","John ends 1 km south of Henry."],
 [2014,13,"D","portions","Who ate ice cream yesterday? How many every-other-day kids?","13 − 7 = 6 every-other-day kids ate yesterday. The other 3 eat today."],
-[2014,15,"B","slide","Each piece is a square with bumps added or bites taken. Which four make exactly 4 squares?","Leave out the piece that keeps the bumps and bites from cancelling."],
+[2014,15,"B","jigsaw","Each piece is a square with bumps added or bites taken. Which four make exactly 4 squares?","Leave out the piece that keeps the bumps and bites from cancelling."],
 [2014,16,"D","columns","Break 135 into prime factors.","135 = 3 × 3 × 3 × 5 = 3 × 5 × 9."],
 [2014,17,"A","seesaw","How many people do the 6-chair tables seat?","6 tables of 6 seat 36. The other 10 tables seat 36 with 3 or 4 chairs each."],
 [2014,18,"D","slide","Draw the line and work from F back to A.","Find each gap: 8, 4, 7, 5, 11."],
 [2014,19,"E","odd","Without the 2 extra stones, the count divides by 3 and by 5.","The total is 2 more than a multiple of 15."],
 [2014,20,"A","flip","Which faces share an edge? Faces that touch can't be opposite.","Three faces meeting at a corner aren't opposite each other. Find the one left over for 4."],
-[2014,21,"D","flip","Which small cubes block the view from the right, front and top?","Count the cubes in the crossed rows that must go."],
+[2014,21,"D","walk","Which small cubes block the view from the right, front and top?","Count the cubes in the crossed rows that must go."],
 [2014,22,"A","rhythm","How long does one loop of all the songs take?","One loop is 13 minutes. After 60 minutes you're 8 minutes past a loop start."],
 [2014,23,"E","squeeze","Where can 5 go so its neighbours add to 9?","5 must sit between 1 and 2 with 6 in the centre."],
 [2014,24,"C","lineup","Half the trees are maples. Which trees are lindens?","Every 6th tree is a linden."],
-[2014,25,"E","flip","A see-through cube shows the ribbon on the front and back together.","Check each picture against the six views."],
+[2014,25,"E","walk","A see-through cube shows the ribbon on the front and back together.","Check each picture against the six views."],
 [2014,26,"D","portions","When does each messenger get back to the castle?","They arrive at 1.5 h, 3 h and 4.5 h."],
 [2014,27,"B","tryit","The product of the three digits is 36 and one is 3. The other two multiply to?","12 = 2 × 6 or 3 × 4. The digits add to 15."],
 [2014,28,"C","pretend","Try 0, 1, 2 or 3 days of eating only 9 carrots.","Only 2 days works with 30 carrots."],
@@ -336,7 +383,7 @@ const BOOK_RAW = [
 [2015,15,"C","odd","Double 'a number with leftover 7 when divided by 9'. What leftover?","14 = 9 + 5."],
 [2015,17,"C","pretend","Each triangle has 3 different colours. Start where two sides are known.","Fill triangle by triangle until you reach x."],
 [2015,18,"E","unlucky","Unlucky Ulysses takes out everything that doesn't match. How many?","12 pieces can all mismatch. Then?"],
-[2015,19,"B","flip","Where can the kangaroo get in one move? In two?","Check the target isn't reachable in 2."],
+[2015,19,"B","act","Where can the kangaroo get in one move? In two?","Check the target isn't reachable in 2."],
 [2015,20,"E","columns","X + X + YY is at most 115. So what is Z?","Z = 1 and YY must be 99."],
 [2015,21,"C","tryit","Write 80 as two whole numbers multiplied.","5 × 16 and 8 × 10 add to 39."],
 [2015,22,"C","rewind","Work from the last book back to the start.","After the second book she had $6 + ... Undo each 'half plus'."],
@@ -355,11 +402,11 @@ const BOOK_RAW = [
 [2016,6,"B","lineup","Which utensils need to swap?","Two swaps fix it."],
 [2016,7,"D","portions","How many feet already have shoes?","25 pairs cover 50 feet."],
 [2016,8,"C","portions","How many cubes are in Tom's box?","24 cubes, and John's level holds 6."],
-[2016,9,"C","flip","Which way does each girl face? Is she on her right side?","Look at each pair separately."],
+[2016,9,"C","act","Which way does each girl face? Is she on her right side?","Look at each pair separately."],
 [2016,10,"B","flip","Fold face A up first, then the rest.","Every face ends up next to one face. That is the bottom."],
-[2016,11,"A","flip","Which shape can't come from two equal squares?","Check whether the top triangle fits a square of the same size."],
+[2016,11,"A","jigsaw","Which shape can't come from two equal squares?","Check whether the top triangle fits a square of the same size."],
 [2016,12,"C","portions","On Ann's day off, who works?","Mary and Nata, then Ann pairs with each."],
-[2016,13,"C","lineup","Move all the squirrels one step at a time.","Track each nut as it is picked."],
+[2016,13,"C","act","Move all the squirrels one step at a time.","Track each nut as it is picked."],
 [2016,15,"B","squeeze","There is one 4-digit piece. Make it as small as you can.","Start the 4-digit piece with 1."],
 [2016,16,"E","flip","A mirror swaps left and right. What is the real time?","Mirror the clock to find the real time, then go back 10 minutes."],
 [2016,18,"D","odd","For divisibility by 3, add the digits.","28 + N must divide by 3, and N is odd."],
@@ -374,7 +421,7 @@ const BOOK_RAW = [
 [2016,30,"E","squeeze","Make each 3-digit number as small as possible.","Try the second number starting with 2, then with 4."],
 [2017,1,"B","pretend","One swap moves exactly two cards. How many moved here?","Count cards out of place."],
 [2017,2,"C","seesaw","Count legs on each side.","34 legs against 18 legs: the difference is cats."],
-[2017,3,"E","flip","Try covering each shape with the pieces.","One shape has a cell that can't be covered."],
+[2017,3,"E","jigsaw","Try covering each shape with the pieces.","One shape has a cell that can't be covered."],
 [2017,4,"D","columns","1111 × 2222 = 1111 × 1111 × 2.","1111 × 1111 = 1234321."],
 [2017,5,"B","squeeze","How many separate paths join A and B?","Each separate path needs one closed bridge."],
 [2017,6,"A","seesaw","Who is heavier than whom?","Kate is lightest; Lynn is heaviest."],
@@ -389,16 +436,16 @@ const BOOK_RAW = [
 [2017,17,"E","flip","Reflect the triangle step by step.","Draw each reflection."],
 [2017,18,"D","tryit","Test each order with a starting amount.","Only one order doubles and adds 1."],
 [2017,19,"B","slide","Add the three squares, then subtract the overlaps.","4 + 16 + 36 − 1 − 4."],
-[2017,21,"A","flip","Each bar has one white end. Look at one corner.","Find a cube that can't belong to any bar."],
+[2017,21,"A","jigsaw","Each bar has one white end. Look at one corner.","Find a cube that can't belong to any bar."],
 [2017,22,"D","lineup","Where can 1 go? Where can 5 go?","1 in the corner, 5 at an end. List the rest."],
 [2017,23,"D","rhythm","Track each left-facing kangaroo as it jumps.","3 + 5 + 5 jumps."],
 [2017,24,"C","squeeze","Multiply each by 2 or 3 to make results match.","Try to make as many products equal as you can."],
-[2017,25,"C","flip","What should each edge look like?","Count grey and white triangles along each edge."],
+[2017,25,"C","jigsaw","What should each edge look like?","Count grey and white triangles along each edge."],
 [2017,27,"D","pretend","Who took 45? Who took 20?","Beata before Celina, Celina before Ala."],
 [2017,29,"E","lineup","Which countries don't touch?","4 × 3 × 2 × 2."],
 [2017,30,"C","squeeze","Can a row with no lit lamp ever light up?","Each row and column needs a lit lamp to start."],
-[2018,1,"A","flip","Extend each arrow's path across the picture.","Count the balloons no arrow touches."],
-[2018,2,"C","flip","Look straight down from above.","A long rectangle, a circle on one side, a square on the other."],
+[2018,1,"A","act","Extend each arrow's path across the picture.","Count the balloons no arrow touches."],
+[2018,2,"C","walk","Look straight down from above.","A long rectangle, a circle on one side, a square on the other."],
 [2018,3,"B","seesaw","Two middle-ring hits make 14. What is one?","Then centre + middle = 16."],
 [2018,4,"B","portions","Together the snails cover how many metres per hour?","3 m an hour around a 24 m path."],
 [2018,5,"D","columns","Turn the subtraction into an addition.","25 + 2▢ ends in 3."],
@@ -408,7 +455,7 @@ const BOOK_RAW = [
 [2018,9,"C","slide","Write every length on the picture.","The big square's side is twice the small one's."],
 [2018,10,"A","tryit","Touch one bulb. Does it light everything?","Each bulb has 2 or 3 neighbours."],
 [2018,11,"E","slide","Compare black to white in each square.","Each is 1 black to 3 white."],
-[2018,12,"B","flip","Which cars could move to make the picture?","Follow each car's path."],
+[2018,12,"B","act","Which cars could move to make the picture?","Follow each car's path."],
 [2018,13,"E","tryit","green + pink is at least 9.","Only 4 + 5 works with the second equation."],
 [2018,14,"A","pretend","Which sign is surely true?","'Two and three is five' is true, so the others are false."],
 [2018,16,"C","pretend","Neighbouring cells add to 5.","Fill from the 2 and 3 you know."],
@@ -431,9 +478,9 @@ const BOOK_RAW = [
 [2019,7,"D","lineup","Count the 2 × 2 squares at the corners, then in the middle.","4 corners + 4 in the middle 3 × 3."],
 [2019,8,"C","odd","Three odd numbers add to odd or even?","Always odd."],
 [2019,9,"B","portions","How much does the age total grow in one year?","24 in two years, so 12 a year."],
-[2019,10,"A","flip","Count the outside unit squares of each solid.","One solid has hidden inside squares to paint."],
+[2019,10,"A","walk","Count the outside unit squares of each solid.","One solid has hidden inside squares to paint."],
 [2019,12,"C","seesaw","If every day was normal, how many spiders in 9 days?","45, but she ate 60. Each hungry day adds 5."],
-[2019,13,"C","pretend","Where can the yardstick start and end?","Points where 3 parts meet must be ends."],
+[2019,13,"C","jigsaw","Where can the yardstick start and end?","Points where 3 parts meet must be ends."],
 [2019,15,"A","slide","Find equal sides using equilateral triangles.","The bottom side is 1 + 2 + 2."],
 [2019,16,"C","rewind","Start at the end: 10 dogs, 10 cats, 10 mice. Undo the steps.","Undo 5 cats → mice, then 6 dogs → cats."],
 [2019,18,"C","flip","Fold the square twice. Where do the cuts go?","Unfold and mirror the cuts."],
@@ -447,7 +494,7 @@ const BOOK_RAW = [
 [2019,27,"D","seesaw","Compare the two pyramids. Which cans are missing?","Jette's missing cans add to 25."],
 [2019,28,"A","pretend","Which digit can the first place be on a 24-hour clock?","Find 23:47, then add 3 h 45 min."],
 [2019,30,"C","tryit","He starts with only white tokens. What must the first exchanges be?","After 4 white-to-red exchanges, track the totals."],
-[2020,1,"E","flip","What does the missing piece need at its corners?","One quarter circle and two narrow spikes."],
+[2020,1,"E","jigsaw","What does the missing piece need at its corners?","One quarter circle and two narrow spikes."],
 [2020,2,"E","tryit","Add the two numbers on each signpost.","All but one add to 11."],
 [2020,3,"D","flip","Switch every colour, row by row.","Write each row in letters, then swap."],
 [2020,4,"B","portions","A pair of eggs makes 6 muffins.","One box makes 18 muffins."],
@@ -459,11 +506,11 @@ const BOOK_RAW = [
 [2020,10,"E","portions","The dog walks 3 times as fast as the cat.","Split the path in the ratio 3 : 1."],
 [2020,11,"A","stack","Use the opposite-circle rule.","Opposite pairs follow the same pattern."],
 [2020,12,"E","flip","Turn the clock upside down. What did it really show?","Then count the time between."],
-[2020,14,"B","lineup","Count visible cubes of each colour.","Compare with Mary's cubes."],
-[2020,17,"E","slide","The shape has 4 short segments and 1 double. Can two pieces make each option?","Two pieces need at least 2 double segments."],
+[2020,14,"B","walk","Count visible cubes of each colour.","Compare with Mary's cubes."],
+[2020,17,"E","jigsaw","The shape has 4 short segments and 1 double. Can two pieces make each option?","Two pieces need at least 2 double segments."],
 [2020,18,"D","flip","Where does the ladybug's head point in each view?","The dog is opposite the mouse."],
-[2020,20,"A","flip","Same amount of liquid in each. Longer vessel, lower level.","Order the lengths opposite to the levels."],
-[2020,21,"B","flip","Find the one special face first.","Then go round the frame."],
+[2020,20,"A","walk","Same amount of liquid in each. Longer vessel, lower level.","Order the lengths opposite to the levels."],
+[2020,21,"B","walk","Find the one special face first.","Then go round the frame."],
 [2020,22,"E","slide","Find the side of each small square from the big one.","28 − 22 and 28 − 15."],
 [2020,24,"C","seesaw","Add the two balanced scales together.","Then take the same off both sides."],
 [2020,25,"D","lineup","Vanilla has 4 scoops and 4 toppings. Match them first.","Go flavour by flavour."],
@@ -473,33 +520,33 @@ const BOOK_RAW = [
 [2020,29,"E","lineup","Count contact points layer by layer.","Base, middle, and between layers."],
 [2020,30,"B","pretend","Find islands with only two bridges.","Those paths are forced."],
 [2021,1,"D","lineup","How many grey and white bricks are there?","4 grey, 2 white."],
-[2021,2,"A","flip","Who faces you and who faces away?","Left hands meet only where the facing changes."],
+[2021,2,"A","act","Who faces you and who faces away?","Left hands meet only where the facing changes."],
 [2021,3,"E","squeeze","Big digits first make the biggest number.","Both best lines start 98. Compare the next digit."],
 [2021,4,"D","pretend","Which box gives only one choice?","Box 3 has only N. Then follow the forced picks."],
-[2021,5,"B","flip","Match tabs with holes.","Only one order fits."],
+[2021,5,"B","jigsaw","Match tabs with holes.","Only one order fits."],
 [2021,6,"C","rhythm","How much do the numbers go up per level?","Each level adds 21."],
-[2021,7,"B","flip","How wide can a figure be to fit through G?","At most 3 blocks wide in every row."],
+[2021,7,"B","jigsaw","How wide can a figure be to fit through G?","At most 3 blocks wide in every row."],
 [2021,8,"E","portions","Simplify each mix to green : white.","Every mix is 1 : 3."],
 [2021,9,"E","flip","Fold each shape in half twice in your head.","Try P, Q and R one at a time."],
 [2021,10,"D","slide","Midpoints split the square into halves and quarters.","Find a piece that is half of a quarter."],
 [2021,11,"B","squeeze","10 digits into 3 numbers. How long should each be?","One 4-digit number starting with 1, two 3-digit."],
 [2021,12,"B","stack","Add all three tours from A, B and C.","Outer path + inner path. Subtract the inner one."],
-[2021,13,"D","flip","Which piece connects the two lines in the centre?","Pieces can rotate. Find the one that never connects."],
+[2021,13,"D","jigsaw","Which piece connects the two lines in the centre?","Pieces can rotate. Find the one that never connects."],
 [2021,14,"B","stack","Each hexagon adds to 30. Find the unknown pairs.","Left gives A + B = 18, right gives C + D = 7."],
 [2021,15,"C","slide","Areas and widths give the shared height.","(12 + 18) ÷ 6 = height."],
-[2021,16,"A","pretend","Which letter appears on the top ball in every view?","The second A must be hidden."],
+[2021,16,"A","walk","Which letter appears on the top ball in every view?","The second A must be hidden."],
 [2021,17,"E","pretend","Ronja starts. Who places the last token?","Wanja ends, so a grey token is on top."],
 [2021,18,"C","tryit","How much was the first wheel turned?","Turn every wheel the same amount and check."],
 [2021,19,"D","seesaw","Carl's apples + Luca's apples = 20. Carl's apples + Carl's pears = 20.","Compare the two sentences."],
 [2021,20,"B","portions","How long does each train take per segment?","30 minutes and 10 minutes."],
 [2021,21,"A","pretend","Bob is not next to Ann or Dan. So his neighbours are?","Carina and Ed sit next to Bob."],
 [2021,22,"B","portions","How many pancakes from each ingredient alone?","The smallest number wins."],
-[2021,23,"A","flip","How many teeth does the small gear turn?","Every gear moves the same number of teeth."],
+[2021,23,"A","act","How many teeth does the small gear turn?","Every gear moves the same number of teeth."],
 [2021,24,"C","seesaw","Add the first scale to the others.","Remove what's on both sides."],
 [2021,25,"E","flip","Four lines of symmetry: across, up, and both diagonals.","Mirror the shape every way."],
 [2021,26,"C","pretend","Two pirates agree on coins. Can both lie about coins?","Then their diamond answers would both be true, but they differ."],
 [2021,27,"D","seesaw","Write each shelf as an equation.","Halve one shelf and compare."],
-[2021,28,"B","flip","Each diagonal marks how many small cubes? Corners count for 3 faces.","13 per face, then fix the corners."],
+[2021,28,"B","walk","Each diagonal marks how many small cubes? Corners count for 3 faces.","13 per face, then fix the corners."],
 [2021,29,"B","squeeze","The real total is 55. How much must trolls lower it?","Big lies: say 1 with a 10."],
 [2021,30,"E","pretend","Which shapes always share a row on a card?","Circle and triangle stay in one row."]
 ];
@@ -510,14 +557,14 @@ const BOOK = BOOK_RAW.map(([y,n,a,mv,h1,h3])=>({id:`b${y}-${n}`,year:y,n,move:mv
 const SAMP = [
  ["D","portions","Is there any pair of two boys?","Each boy comes with 2 girls, so groups of 3."],
  ["C","columns","Start with the ones column. What do you carry?","Ones carry 1. Tens must end in 2, hundreds make 8."],
- ["C","flip","Count the shape in three directions.","3 high, 4 deep, 5 wide."],
+ ["C","walk","Count the shape in three directions.","3 high, 4 deep, 5 wide."],
  ["E","squeeze","Biggest month digit sum? Biggest day?","09 and 29: September 29 exists."],
  ["A","portions","Count the food in cat-days.","48 cat-days for 6 cats."],
  ["C","flip","Fold each triangle up from the square.","One net puts two triangles on the same side."],
  ["B","pretend","If one doesn't move, the other four swap in pairs.","Find who stays to get A E B D C."],
  ["C","pretend","Which lock has a repeated letter?","DAD = 414, HAB = 812."],
  ["A","pretend","Could the truthful elf and the lying troll both say it?","'I am telling the truth' works for both."],
- ["A","tryit","Act out the throws in order.","Either way the 4th throw returns to Adam."],
+ ["A","act","Act out the throws in order.","Either way the 4th throw returns to Adam."],
  ["B","slide","Compare black area as a fraction.","5/9 is more than 1/2."],
  ["E","flip","Which squares end up opposite?","The two squares that stick out are opposite."],
  ["A","columns","The sum of two 3-digit numbers is 4 equal digits. Which ones?","1111. Then B + B + 1 can't carry."],
@@ -526,7 +573,7 @@ const SAMP = [
  ["B","lineup","List rectangles with area 12.","1 × 12, 2 × 6, 3 × 4."],
  ["C","portions","Each year the gap changes by how much?","13 shrinks by 2 a year."],
  ["B","rhythm","Make a table of blocks and heights.","The 28-block tower is the 6th."],
- ["D","flip","Each black cube shows 3 black squares.","Total black squares must divide by 3."],
+ ["D","walk","Each black cube shows 3 black squares.","Total black squares must divide by 3."],
  ["C","tryit","Try starting with 1, then with 2.","Three numbers in a row hold one multiple of 3."],
  ["3","pretend","Who has only 2 friends?","Beatrice's friends have 4 lines each."],
  ["67","lineup","List the four possible results after adding.","Only 201 divides evenly."],
@@ -694,15 +741,64 @@ function renderToday(){
 }
 function item(p){ const a=latest(p.id);
   const chip=!a?'<span class="chip plain">New</span>':a.revealed?'<span class="chip bad">Try again soon</span>':isClean(a)?'<span class="chip good">Solved alone</span>':'<span class="chip">Solved with help</span>';
-  return `<button class="item" data-open="${p.id}"><span class="l"><span class="small muted">${srcLabel(p)}</span><br>${p.src==="own"?esc(p.text.slice(0,64))+"…":MOVES[p.move].n}</span>${chip}</button>` }
-function bindOpen(list){ app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>go({tab:view.tab,pid:b.dataset.open,list})) }
+  return `<button class="item" data-open="${p.id}"><span class="l"><span class="small muted">${srcLabel(p)}</span><br>${p.src==="own"?esc(p.text.slice(0,64))+"…":EXPLAIN[p.id]?esc(EXPLAIN[p.id].ask.slice(0,70))+(EXPLAIN[p.id].ask.length>70?"…":""):MOVES[p.move].n}</span>${chip}</button>` }
+function bindOpen(list){ app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>go({tab:view.tab,pid:b.dataset.open,list,from:view.move||view.from})) }
 
+/* ---------- explanations ---------- */
+function xpBody(p,withMove=true){ const X=EXPLAIN[p.id]; const M=MOVES[p.move];
+  return `<div class="xp">
+   <div class="xs"><div class="eyebrow">What it's asking</div><p>${esc(X.ask)}</p></div>
+   <div class="xs"><div class="eyebrow">Step by step</div><ol class="xsteps">${X.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
+   <div class="xs xans"><span class="eyebrow">Answer</span> <b>${esc(X.answer)}</b></div>
+   <div class="xs"><div class="eyebrow">Check it</div><p>${esc(X.check)}</p></div>
+   ${withMove?`<div class="xs xmove"><div class="row" style="gap:8px"><span class="badge">${M.b}</span><div><div class="eyebrow">Kip's move</div><b>${M.n}</b></div></div><p>${esc(M.m)}</p><p><b>Spot it next time:</b> ${esc(X.spot)}</p><div><button class="btn ghost sm" data-move="${p.move}">Revise ${M.n} →</button></div></div>`:`<div class="xs"><div class="eyebrow">Spot it next time</div><p>${esc(X.spot)}</p></div>`}
+   <div class="xs xoops"><b>Watch out:</b> ${esc(X.oops)}</div></div>` }
+function explainHtml(p,open){ const M=MOVES[p.move];
+  if(!EXPLAIN[p.id]) return `<div class="why"><div class="eyebrow">Kip's way · ${M.n}</div>${p.why.map(w=>`<p>${esc(w)}</p>`).join("")}</div>`;
+  return open?`<div class="why"><div class="eyebrow">Kip's way, step by step</div>${xpBody(p)}</div>`
+    :`<details class="why"><summary>See Kip's way, step by step</summary>${xpBody(p)}</details>` }
+function bindExplain(root){ root.querySelectorAll("[data-move]").forEach(b=>b.onclick=()=>go({tab:"moves",move:b.dataset.move})) }
+
+/* ---------- Kip's moves: the technique library ---------- */
+function moveStats(){ const s={}; MOVE_IDS.forEach(id=>s[id]={t:0,c:0});
+  practice().forEach(a=>{const p=byId[a.pid]; if(!p||!s[p.move]) return; s[p.move].t++; if(isClean(a)) s[p.move].c++}); return s }
+function moveTag(x){ if(!x.t) return `<span class="chip plain">Not tried yet</span>`;
+  const r=x.c/x.t; return r<0.5?`<span class="chip bad">Needs practice · ${x.c}/${x.t}</span>`:r>=0.8&&x.t>=3?`<span class="chip good">Strong · ${x.c}/${x.t}</span>`:`<span class="chip">Getting there · ${x.c}/${x.t}</span>` }
+function weakOrder(){ const s=moveStats(); const k=id=>s[id].t?s[id].c/s[id].t:0.6; return [...MOVE_IDS].sort((x,y)=>k(x)-k(y)||s[x].t-s[y].t) }
+const PRACTICE_POOL=()=>[...OWN,...BOOK,...SAMPLE];
+function practiceList(id){ const rank=p=>{const a=latest(p.id); return !a?1:a.revealed?0:isClean(a)?3:2};
+  return PRACTICE_POOL().filter(p=>p.move===id).sort((x,y)=>rank(x)-rank(y)||x.pts-y.pts).slice(0,5) }
+function startPractice(id){ const ps=practiceList(id); if(ps.length) go({tab:"moves",pid:ps[0].id,list:ps.map(p=>p.id),from:id}) }
 function renderMoves(){
-  const cnt={}; practice().forEach(a=>{const p=byId[a.pid]; if(!p) return; cnt[p.move]=cnt[p.move]||{t:0,c:0}; cnt[p.move].t++; if(isClean(a)) cnt[p.move].c++});
-  app.innerHTML=`<div class="stack">${kipSay("My 14 moves", `<p>Every hard puzzle gets easier with the right move. Read the stories, they help you remember. When you're stuck, ask: <b>which move would make this easy?</b></p>`)}
-  <div class="mgrid">${MOVE_IDS.map(id=>{const M=MOVES[id]; const c=cnt[id];
-   return `<div class="move"><div class="row"><span class="badge">${M.b}</span><span class="t">${M.n}</span></div><p class="m">${M.m}</p><p class="small muted">${M.s}</p>${c?`<span class="small muted">Solved alone ${c.c} of ${c.t}</span>`:""}<div><button class="btn ghost" data-try="${id}" style="padding:6px 12px;font-size:14px">Practise this move</button></div></div>`}).join("")}</div></div>`;
-  app.querySelectorAll("[data-try]").forEach(b=>b.onclick=()=>{ const ps=POOL.filter(p=>p.move===b.dataset.try).sort((x,y)=>(!!latest(x.id))-(!!latest(y.id))||x.pts-y.pts).slice(0,4); go({tab:"moves",pid:ps[0].id,list:ps.map(p=>p.id)}) });
+  if(view.move) return renderMove(view.move);
+  const s=moveStats(); const order=weakOrder(); const weakest=order.find(id=>s[id].t)||order[0];
+  app.innerHTML=`<div class="stack">${kipSay(`My ${MOVE_IDS.length} moves`, `<p>Every hard puzzle gets easier with the right move. Tap a move to see how to spot it, a worked example, and every problem that uses it. Your weakest moves are first.</p>`)}
+  <div class="card row" style="justify-content:space-between"><div><div class="eyebrow">Revise</div><b>Practise my weakest move: ${MOVES[weakest].n}</b></div><button class="btn" id="weak">Start →</button></div>
+  <div class="mgrid">${order.map(id=>{const M=MOVES[id]; const n=ALL.filter(p=>p.move===id).length;
+   return `<button class="move mv" data-open-move="${id}"><span class="row" style="gap:8px"><span class="badge">${M.b}</span><span class="t">${M.n}</span></span><span class="m">${M.m}</span>${moveTag(s[id])}<span class="small muted">${n} problems · tap to revise</span></button>`}).join("")}</div></div>`;
+  app.querySelector("#weak").onclick=()=>startPractice(weakest);
+  app.querySelectorAll("[data-open-move]").forEach(b=>b.onclick=()=>go({tab:"moves",move:b.dataset.openMove}));
+}
+function renderMove(id){ const M=MOVES[id]; const s=moveStats()[id];
+  const probs=ALL.filter(p=>p.move===id);
+  const groups={redo:[],fresh:[],done:[]}; probs.forEach(p=>{const a=latest(p.id); (!a?groups.fresh:isClean(a)?groups.done:groups.redo).push(p)});
+  const seen=probs.filter(p=>latest(p.id)&&EXPLAIN[p.id]); const clueSrc=[...seen,...probs.filter(p=>!latest(p.id)&&EXPLAIN[p.id])];
+  const clues=[...new Set(clueSrc.map(p=>EXPLAIN[p.id].spot))].slice(0,6);
+  const ex=probs.find(p=>p.src==="own"&&EXPLAIN[p.id])||probs.find(p=>EXPLAIN[p.id]);
+  const grp=(t,xs,note)=>xs.length?`<div class="stack" style="gap:8px"><div class="eyebrow">${t} · ${xs.length}</div>${note?`<p class="small muted">${note}</p>`:""}<div class="list">${xs.map(item).join("")}</div></div>`:"";
+  app.innerHTML=`<div class="stack">
+   <div class="row"><button class="btn ghost" id="back">← All moves</button>${moveTag(s)}</div>
+   <div class="card stack"><div class="row" style="gap:10px"><span class="badge">${M.b}</span><h2>${M.n}</h2></div>
+     <span class="mn" style="color:var(--accent)">Remember: ${esc(M.m)}</span><p>${esc(M.s)}</p>
+     <div><button class="btn" id="prac">Practise this move →</button></div></div>
+   <div class="card stack"><div class="eyebrow">How to spot it</div><ul class="spotl">${(MOVE_SPOT[id]||[]).map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+     ${clues.length?`<div class="eyebrow" style="margin-top:4px">Clues from real problems</div><ul class="spotl">${clues.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}</div>
+   ${ex?`<div class="card stack"><div class="eyebrow">Worked example · ${srcLabel(ex)}</div>${ex.src==="own"?`<p class="ptext" style="font-size:17px">${esc(ex.text)}</p>`:""}<details><summary>Show the steps</summary>${xpBody(ex,false)}</details></div>`:""}
+   <div class="card stack"><div class="eyebrow">Every ${M.n} problem</div>
+     ${grp("Try these again",groups.redo,"You needed help or saw Kip's way. Try them alone now.")}${grp("Not tried yet",groups.fresh)}${grp("Solved alone",groups.done)}</div></div>`;
+  app.querySelector("#back").onclick=()=>go({tab:"moves"});
+  app.querySelector("#prac").onclick=()=>startPractice(id);
+  bindOpen(probs.map(p=>p.id));
 }
 
 /* ---------- problem screen ---------- */
@@ -727,14 +823,14 @@ function renderProblem(){
   timerId=setInterval(()=>{ if(st.done||st.pauseAt) return; const left=limit-elapsed(); tEl.textContent=fmt(left); tEl.classList.toggle("low",left<=20&&left>0); tEl.classList.toggle("over",left<=0);
     if(left<=0&&!st.over){ st.over=true; app.querySelector("#hints").insertAdjacentHTML("beforeend",kipSay("Time!",`<p>In the real test you would move on now. Here, keep thinking and finish it. Speed comes from practice.</p>`)) } },500);
   app.querySelector("#pause").onclick=e=>{ if(st.done) return; if(st.pauseAt){ st.paused+=Date.now()-st.pauseAt; st.pauseAt=null; e.target.textContent="Pause" } else { st.pauseAt=Date.now(); e.target.textContent="Resume" } };
-  app.querySelector("#back").onclick=()=>go({tab:view.tab});
+  app.querySelector("#back").onclick=()=>go({tab:view.tab,move:view.from});
   if(p.type==="num"){
     const start=()=>{ app.querySelector("#guessCard").innerHTML=`<div class="eyebrow">Predict</div><div>${st.guess!==null?`Your guess: <b style="font-family:var(--mono)">${esc(st.guess)}</b>`:"No guess this time."}</div>`; app.querySelector("#ansCard").hidden=false; draw() };
     app.querySelector("#lock").onclick=()=>{ st.guess=app.querySelector("#guess").value.trim()||null; start() };
     app.querySelector("#guess").onkeydown=e=>{ if(e.key==="Enter") app.querySelector("#lock").click() };
     app.querySelector("#skip").onclick=start;
   } else draw();
-  app.querySelector("#stuck").onclick=()=>{ if(st.done) return; if(st.hints<3){ st.hints++; drawHints() } else offerReveal() };
+  app.querySelector("#stuck").onclick=()=>{ if(st.done) return; if(st.hints<3){ st.hints++; drawHints() } else revealNow() };
 
   function draw(){ const area=app.querySelector("#area");
     if(p.type==="mc"){
@@ -750,20 +846,20 @@ function renderProblem(){
   function submit(v,el){ if(st.done) return; if(p.type==="num"&&String(v).trim()===""){el.focus();return}
     st.tries++; if(isRight(p,v)) return finish(true,v);
     if(p.type==="mc"){ st.wrong.push(v); if(st.crossed.includes(p.ans)) st.crossed=st.crossed.filter(x=>x!==p.ans); draw() } else { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); el.select() }
-    if(st.hints<3){ st.hints++; drawHints() } else offerReveal() }
+    if(st.hints<3){ st.hints++; drawHints() } else revealNow() }
   function hintHtml(i){
     if(i===1){ const extra=p.hints[1]; return kipSay(`Kip's move · ${MOVES[p.move].n}`, moveCard(p.move, extra||"")) }
     const who = i===0?"Kip asks":"Kip leans closer";
     return kipSay(who,`<p>${esc(p.hints[i])}</p>`);
   }
   function drawHints(){ const h=app.querySelector("#hints"); const keep=[...h.querySelectorAll(".timeup")];
-    h.innerHTML=[0,1,2].slice(0,st.hints).map(hintHtml).join("")+(st.hints===3?`<p class="small muted">That was Kip's last hint. Give it one more go!</p>`:"");
+    h.innerHTML=[0,1,2].slice(0,st.hints).map(hintHtml).join("")+(st.hints===3?`<p class="small muted">That was Kip's last hint. Give it one more go! Still stuck? Tap <b>Show me every step</b> and Kip will explain the whole thing.</p>`:"");
+    const sb=app.querySelector("#stuck"); if(sb&&st.hints===3){ sb.textContent="Show me every step"; sb.className="btn"; const n=sb.nextElementSibling; if(n) n.textContent="This one will come back in a day or two for you to try alone." }
     h.lastElementChild.scrollIntoView({behavior:"smooth",block:"nearest"}) }
-  function offerReveal(){ const r=app.querySelector("#result"); if(r.querySelector("#reveal")) return;
-    r.innerHTML=`<div class="result bad stack"><h3>Still not it. That's fine: struggling is how your brain grows.</h3><p>Want to see Kip's way? This one will come back in a day or two for you to try alone.</p><div><button class="btn" id="reveal">Show me Kip's way</button></div></div>`;
-    r.querySelector("#reveal").onclick=()=>{ st.revealed=true; finish(false,null) } }
+  function revealNow(){ if(st.done) return; st.revealed=true; finish(false,null) }
   async function finish(correct,v){
     st.done=true; clearInterval(timerId); const secs=Math.round(elapsed()); if(secs>limit) st.over=true;
+    const sbx=app.querySelector("#stuck"); if(sbx) sbx.parentElement.hidden=true;
     const a={key:p.id+"-"+Date.now(),pid:p.id,move:p.move,src:p.src,pts:p.pts,mode:view.daily?"daily":"practice",correct,tries:st.tries,hints:st.hints,revealed:st.revealed,over:st.over,limit,secs,guess:st.guess,crossed:st.crossed.length,answer:v,usedMove:null,at:new Date().toISOString()};
     if(p.type==="mc") draw(); else { const i=app.querySelector("#ans"); if(i) i.disabled=true }
     const clean=correct&&st.hints===0&&!st.over;
@@ -774,13 +870,14 @@ function renderProblem(){
     r.innerHTML=`<div class="result ${correct?"good":"bad"} stack pop">
       <div><h3>${title}</h3><p>Answer <b style="font-family:var(--mono)">${ans}</b> · ${fmt(secs)} of ${fmt(limit)}${st.hints?` · ${st.hints} hint${st.hints>1?"s":""}`:""}</p>${g}</div>
       ${correct?`<div class="stack" style="gap:8px"><div class="eyebrow">Which move did you use?</div><div class="picks">${MOVE_IDS.map(id=>`<button class="pick" data-m="${id}" aria-pressed="false">${MOVES[id].n}</button>`).join("")}<button class="pick" data-m="none" aria-pressed="false">Just saw it</button></div><div id="mvNote" class="small"></div></div>`:""}
-      <div class="why"><div class="eyebrow">Kip's way · ${MOVES[p.move].n}</div>${p.why.map(w=>`<p>${esc(w)}</p>`).join("")}${(p.src==="book"||p.src==="sample")?`<p class="small muted">The full worked solution is in your solutions book${p.src==="book"?` (Year ${p.year}, problem ${p.n})`:""}. Explain it back to your coach in your own words.</p>`:""}</div>
+      ${explainHtml(p,!correct)}
       <div class="row">${nextId?`<button class="btn" id="next">Next problem →</button>`:""}<button class="btn ghost" id="done">${view.daily&&!nextId?"Finish today":"Done"}</button><span class="small muted">${saveNote}</span></div></div>`;
+    bindExplain(r);
     r.querySelectorAll(".pick").forEach(b=>b.onclick=async()=>{ r.querySelectorAll(".pick").forEach(x=>x.setAttribute("aria-pressed","false")); b.setAttribute("aria-pressed","true"); a.usedMove=b.dataset.m;
       r.querySelector("#mvNote").textContent = b.dataset.m===p.move?`Kip used ${MOVES[p.move].n} too!`:b.dataset.m==="none"?`Nice! Kip calls this one ${MOVES[p.move].n}.`:`Your way worked! Kip's way was ${MOVES[p.move].n}. Two moves are better than one.`;
       await saveAttempt(a) });
-    if(nextId) r.querySelector("#next").onclick=()=>go({tab:view.tab,pid:nextId,list,daily:view.daily});
-    r.querySelector("#done").onclick=async()=>{ if(view.daily) await closeDay(); go({tab:view.tab}) };
+    if(nextId) r.querySelector("#next").onclick=()=>go({tab:view.tab,pid:nextId,list,daily:view.daily,from:view.from});
+    r.querySelector("#done").onclick=async()=>{ if(view.daily) await closeDay(); go({tab:view.tab,move:view.from}) };
     r.scrollIntoView({behavior:"smooth",block:"nearest"});
     await saveAttempt(a); if(view.daily && !nextId) await closeDay();
     if(p.src==="learn") await learnRecord(p,a);
@@ -841,7 +938,7 @@ function renderCoach(){
   const lastH=state.history[state.history.length-1];
   const struggling = tp && tp.res.filter(Boolean).length>=3 && (tp.clean/tp.res.filter(Boolean).length<0.4 || tp.shown>=2);
   const hardOnes = tp? tp.res.filter(a=>a && !isClean(a)).map(a=>byId[a.pid]) : [];
-  const moveRows=MOVE_IDS.map(id=>{const xs=pr.filter(a=>a.move===id); if(!xs.length) return null; const c=xs.filter(isClean).length;
+  const moveRows=MOVE_IDS.map(id=>{const xs=pr.filter(a=>(byId[a.pid]?.move||a.move)===id); if(!xs.length) return null; const c=xs.filter(isClean).length;
     return {id,t:xs.length,c,h:xs.filter(a=>a.correct&&!isClean(a)).length,s:xs.filter(a=>a.revealed).length,time:Math.round(100*xs.reduce((s,a)=>s+a.secs/a.limit,0)/xs.length)}}).filter(Boolean).sort((a,b)=>a.c/a.t-b.c/b.t);
   const dueList=POOL.filter(p=>{const dd=dueOn(latest(p.id)); return dd}).slice(0,30);
   const recent=[...pr].reverse().slice(0,20);

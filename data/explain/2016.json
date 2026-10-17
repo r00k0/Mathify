@@ -1,0 +1,323 @@
+{
+"b2016-1": {
+"ask": "Which traffic sign has the most lines of symmetry?",
+"steps": [
+"A line of symmetry is a fold line where both halves land exactly on each other.",
+"Try folding each sign across the middle (left to right) and down the middle (top to bottom).",
+"A folds evenly only across the middle: 1 line. E folds evenly only down the middle: 1 line. B and D don't fold evenly at all.",
+"C folds evenly BOTH ways: 2 lines. That's the most."
+],
+"answer": "C.",
+"check": "Fold C across the middle: the halves match. Fold it down the middle: they match again. ✓",
+"spot": "Symmetry? Imagine folding along a line and check if the halves land on each other.",
+"oops": "Thinking a circle has lots of lines, without noticing the picture inside spoils most of them."
+},
+"b2016-2": {
+"ask": "Pizza cut into quarters, then each quarter into thirds. What part of the pizza is one piece?",
+"steps": [
+"4 quarters, each cut into 3 pieces.",
+"4 × 3 = 12 equal pieces.",
+"One piece is 1/12 of the pizza."
+],
+"answer": "A twelfth (E).",
+"check": "12 pieces × 1/12 = the whole pizza. ✓",
+"spot": "Cutting pieces into smaller pieces? Multiply to count all the pieces.",
+"oops": "Adding 4 + 3 = 7 and saying a seventh."
+},
+"b2016-3": {
+"ask": "A 10 cm thread is folded into equal zigzag parts and cut at two marked places. How long are the three pieces?",
+"steps": [
+"Count the equal parts the folded thread makes: 10. So each part is 1 cm.",
+"The cuts split the thread into three pieces. Count how many 1 cm parts are in each piece.",
+"The pieces have 2, 3 and 5 parts.",
+"So they're 2 cm, 3 cm and 5 cm."
+],
+"answer": "2 cm, 3 cm, 5 cm (A).",
+"check": "2 + 3 + 5 = 10 cm. ✓",
+"spot": "Folded things? Count the equal parts first to find one part's length.",
+"oops": "Guessing from how long the pieces look in the picture."
+},
+"b2016-4": {
+"ask": "8 magnets hold up postcards. What's the most magnets Lisa can remove without any postcard falling?",
+"steps": [
+"Each postcard needs at least one magnet. Find the fewest magnets you must keep; the rest can go.",
+"The cards form two groups. In the top group, one magnet holds both overlapping cards, so keep just 1 magnet there.",
+"In the bottom group, one magnet holds three overlapping cards. Two more cards don't overlap each other, so each needs its own magnet: 3 magnets there.",
+"Keep 1 + 3 = 4 magnets. So 8 − 4 = 4 can be removed."
+],
+"answer": "4 magnets (C).",
+"check": "Point at the 4 magnets you keep: every card is under at least one of them. ✓",
+"spot": "Most you can remove? Find the fewest you must keep.",
+"oops": "Forgetting that one magnet can hold two cards where they overlap."
+},
+"b2016-5": {
+"ask": "Join the midpoints of a 10 cm square's sides. What's the area of the smaller square?",
+"steps": [
+"Draw lines across the middle of the big square, making 4 small squares (5 × 5 each).",
+"The green square cuts each small square exactly in half along its diagonal.",
+"So the green square is half of the big square.",
+"Big square: 10 × 10 = 100. Half: 50 cm²."
+],
+"answer": "50 cm² (E).",
+"check": "The 4 white corner triangles also add up to 50. 50 + 50 = 100. ✓",
+"spot": "Tilted shapes inside squares? Cut the square into pieces you understand.",
+"oops": "Guessing 25 because the side looks half as long."
+},
+"b2016-6": {
+"ask": "Each plate needs a knife on the right and a fork on the left. Fewest knife-fork swaps?",
+"steps": [
+"Look at each plate: which ones are wrong?",
+"Some plates have the fork and knife on the wrong sides, and some have two of the same thing.",
+"A swap can fix two problems at once if you swap a misplaced knife with a misplaced fork.",
+"Two swaps fix everything."
+],
+"answer": "2 swaps (B).",
+"check": "After the 2 swaps, every plate has fork left, knife right. ✓",
+"spot": "Fewest swaps? Make each swap fix two wrong things at once.",
+"oops": "Counting how many things are wrong instead of how many swaps fix them."
+},
+"b2016-7": {
+"ask": "A centipede has 100 feet and 25 pairs of shoes. How many more shoes does it need?",
+"steps": [
+"25 pairs = 25 × 2 = 50 shoes.",
+"It needs 100 shoes, one per foot.",
+"100 − 50 = 50 more shoes."
+],
+"answer": "50 (D).",
+"check": "50 + 50 = 100 shoes for 100 feet. ✓",
+"spot": "Pairs? Change pairs into single items first.",
+"oops": "Using 25 instead of 50 and answering 75."
+},
+"b2016-8": {
+"ask": "Tom and John build boxes with the same number of cubes. How many levels will John's box have?",
+"steps": [
+"Count Tom's cubes: his box is 6 long, 2 wide and 2 high. 6 × 2 × 2 = 24 cubes.",
+"John's first level is 3 × 2 = 6 cubes.",
+"24 cubes ÷ 6 per level = 4 levels."
+],
+"answer": "4 levels (C).",
+"check": "John's box: 4 levels of 6 = 24 cubes, same as Tom's. ✓",
+"spot": "Same total, different shape? Count the total, then divide by one layer.",
+"oops": "Only counting the cubes you can see in Tom's picture."
+},
+"b2016-9": {
+"ask": "Four girls in four beds. Bea and Pia face each other; Mary and Karen have their backs to each other. How many lie on their right side?",
+"steps": [
+"Try it yourself: lie down facing someone. If your friend lies the same way (head on the same side), one of you is on your right side and the other on your left.",
+"Bea and Pia face each other with heads on the same side: one is on her right side, one on her left.",
+"Mary and Karen face away from each other, heads on the same side: again, one right, one left.",
+"So 1 + 1 = 2 girls are on their right side."
+],
+"answer": "2 (C).",
+"check": "Act it out with a friend or two toys. ✓",
+"spot": "Left, right and facing? Act it out with your body.",
+"oops": "Thinking 'facing each other' means both on the same side."
+},
+"b2016-10": {
+"ask": "A paper net is folded into an open box. Which face is the bottom?",
+"steps": [
+"The bottom of an open box touches all four side walls.",
+"Look at the net: A B on top, C D E below, with B above C.",
+"Fold it in your head with B flat: A folds up on one side, C folds up below, and D and E wrap around to make the other walls.",
+"B is the face that touches every other face. It's the bottom."
+],
+"answer": "B.",
+"check": "Fold a paper copy and see: A, C, D, E stand up around B. ✓",
+"spot": "Nets of boxes? Find the face that touches all the walls.",
+"oops": "Choosing the face in the middle of the long row (D) without folding."
+},
+"b2016-11": {
+"ask": "Which shape can't be made by gluing these two equal squares together?",
+"steps": [
+"Each shape must be made of exactly two squares of the same size, overlapping or touching.",
+"Check each picture: can you see two equal squares inside it?",
+"B is two squares turned like a star. C is two squares side by side. D is two squares overlapping corner to corner. E is a square and a turned square.",
+"A has a triangle on top that doesn't fit inside a square of the same size. It can't be made."
+],
+"answer": "A.",
+"check": "Trace two squares onto A: the pointed top always sticks out. ✓",
+"spot": "Which can't be made? Try to build each one from the pieces you're given.",
+"oops": "Picking B because it looks complicated."
+},
+"b2016-12": {
+"ask": "Monday to Friday, exactly two of Mary, Ann and Nata work each day. Mary works 3 days, Ann 4. How many days does Nata work?",
+"steps": [
+"5 days × 2 people = 10 work-days in total.",
+"Mary 3 + Ann 4 = 7.",
+"Nata: 10 − 7 = 3 days."
+],
+"answer": "3 days (C).",
+"check": "3 + 4 + 3 = 10. ✓",
+"spot": "Shifts or turns? Count the total spots, then take away what's known.",
+"oops": "Thinking only one person works each day."
+},
+"b2016-13": {
+"ask": "Five squirrels run to the nearest nut at the same speed, then to the next nearest. Which squirrel gets two nuts?",
+"steps": [
+"Look at the number line: count the marks between each squirrel and the nuts.",
+"Move ALL the squirrels at once, one step at a time. Each runs to its closest nut.",
+"Step 1: A, C, D and E each grab a nut. Step 3: B grabs one. Now every squirrel has one nut and one nut is left.",
+"C is closest to that last nut, so C gets two nuts."
+],
+"answer": "C.",
+"check": "Write down which nut each squirrel grabs and when: 6 nuts, 5 squirrels, and C gets two. ✓",
+"spot": "Things moving at the same time? Go one step at a time for everyone.",
+"oops": "Moving one squirrel all the way before the others."
+},
+"b2016-15": {
+"ask": "Cut the strip 2581953764 twice to make 3 numbers. What's the smallest sum?",
+"steps": [
+"10 digits into 3 numbers. To keep the sum small, no number should be too long: 4 + 3 + 3 digits.",
+"The 4-digit number matters most. Make it start with the smallest digit: 1.",
+"There's a 1 in the middle: 258 | 1953 | 764.",
+"258 + 1953 + 764 = 2975."
+],
+"answer": "2975 (B).",
+"check": "Other cuts give bigger 4-digit numbers, like 2581 + 953 + 764 = 4298. ✓",
+"spot": "Making a small sum? Keep the longest number as small as possible.",
+"oops": "Cutting into equal-looking pieces without checking which number is longest."
+},
+"b2016-16": {
+"ask": "Bart sees a clock in a mirror. What would the mirror show 10 minutes earlier?",
+"steps": [
+"A mirror swaps left and right. The mirror clock looks like 1:45, so the real clock shows 10:15.",
+"Go back 10 minutes on the real clock: 10:05.",
+"Now mirror 10:05: it looks like 1:55.",
+"Find the picture that looks like 1:55: E."
+],
+"answer": "E.",
+"check": "Mirror 1:55 back: 10:05, which is 10 minutes before 10:15. ✓",
+"spot": "Mirror clocks? Turn it into a real time, do the math, then mirror back.",
+"oops": "Moving the hands backwards in the mirror picture (that's forwards in real life)."
+},
+"b2016-18": {
+"ask": "BENJAMIN uses digits 1 to 7, same letters same digits. It's odd and divides by 3. What digit is N?",
+"steps": [
+"BENJAMIN has 8 letters but only 7 different ones: B, E, N, J, A, M, I. N appears twice.",
+"So the digits 1 to 7 are each used once, plus N one more time. Digit sum = 28 + N.",
+"To divide by 3, 28 + N must divide by 3: N = 2 or 5.",
+"The number is odd, and it ends in N. So N is odd: 5."
+],
+"answer": "5 (D).",
+"check": "28 + 5 = 33, which divides by 3 ✓, and it ends in 5, odd ✓.",
+"spot": "Divides by 3? Add up the digits. Odd? Look at the last digit.",
+"oops": "Forgetting N is used twice."
+},
+"b2016-19": {
+"ask": "Triplets and their brother who is 3 years younger. Which could be the total of all four ages?",
+"steps": [
+"If the triplets are each T, the brother is T − 3.",
+"Total = T + T + T + T − 3 = 4 × T − 3.",
+"So total + 3 must divide by 4.",
+"53 + 3 = 56 = 4 × 14. ✓ (54, 56, 59, 60 don't work.)"
+],
+"answer": "53 (A).",
+"check": "Triplets 14, brother 11: 14 + 14 + 14 + 11 = 53. ✓",
+"spot": "People with ages related to each other? Write everyone in terms of one age.",
+"oops": "Forgetting the brother is younger, not older."
+},
+"b2016-21": {
+"ask": "A circle of paper is folded three times, cut along a line, and unfolded. What does the middle part look like?",
+"steps": [
+"Unfold one step at a time, starting with the LAST fold.",
+"The cut is one straight line. Each unfold mirrors it across the fold line, so it doubles: 1 → 2 → 4 → 8 lines.",
+"Draw the 8 cut lines around the centre: together they make the outline of the middle piece.",
+"That outline matches picture D."
+],
+"answer": "D.",
+"check": "Fold a paper circle three times and snip it the same way. ✓",
+"spot": "Folding and cutting? Unfold one fold at a time and mirror the cut each time.",
+"oops": "Picking the shape with the most notches without checking."
+},
+"b2016-22": {
+"ask": "Numbers that start with 1, each next digit at least as big as the one before, digits adding to 5. How many?",
+"steps": [
+"Make an ordered list, shortest numbers first.",
+"2 digits: 14 (1 + 4).",
+"3 digits: 113, 122.",
+"4 digits: 1112. 5 digits: 11111. That's all."
+],
+"answer": "5 numbers (B).",
+"check": "Each digit is at least the one before, each starts with 1, each adds to 5. ✓",
+"spot": "Counting numbers with rules? List them by length, in order.",
+"oops": "Including 131 (the 1 after 3 goes down)."
+},
+"b2016-23": {
+"ask": "How many L-shapes made of 4 squares can be cut from a 5 × 5 square?",
+"steps": [
+"The square has 25 small squares. Each L uses 4.",
+"7 L-shapes would need 28 squares. Too many. So at most 6.",
+"Try to fit 6: with careful arrangement, 6 L-shapes fit (using 24 squares, 1 left over).",
+"So the answer is 6."
+],
+"answer": "6 (D).",
+"check": "Draw a 5 × 5 grid and fit 6 L-shapes. ✓",
+"spot": "How many fit? Area gives a limit; then try to reach it.",
+"oops": "Saying 5 because it's hard to fit 6 at first try."
+},
+"b2016-24": {
+"ask": "With all tables single (4 chairs each), Luigi needs 6 more chairs. With double tables (6 chairs each), he has 4 left over. How many tables?",
+"steps": [
+"Single tables: 4 chairs per table. Double tables: 2 tables share 6 chairs, which is 3 per table.",
+"So switching from single to double saves 1 chair per table.",
+"From '6 chairs short' to '4 chairs extra' is a change of 10 chairs.",
+"1 chair per table saves 10 chairs: 10 tables."
+],
+"answer": "10 tables (B).",
+"check": "10 tables: singles need 40 chairs, he has 34 (6 short ✓). Doubles need 30, 4 left ✓.",
+"spot": "Two ways of sharing that give different leftovers? Find how much each item changes.",
+"oops": "Using 6 chairs per table for doubles. That's per pair of tables."
+},
+"b2016-27": {
+"ask": "A pentagon has 10 circles, 5 already filled. Fill the rest so every side's three numbers add the same. What is X?",
+"steps": [
+"Two sides that share a corner circle have the same sum, so the OTHER two circles on each side must add to the same amount.",
+"The side with 3 and the side with 1 share a corner: 7 + 3 = 1 + y, so the bottom-left circle y = 9.",
+"Now the bottom side and the lower-right side share a corner: 9 + 6 = 2 + X.",
+"X = 15 − 2 = 13."
+],
+"answer": "13 (D).",
+"check": "Fill in all circles and add each side: every side gives the same sum. ✓",
+"spot": "Equal sums around a shape? Compare neighbouring sides and cancel what they share.",
+"oops": "Guessing numbers without using the sides that share circles."
+},
+"b2016-28": {
+"ask": "○□○ has digit sum □△. □△ has digit sum □. What digit is ○?",
+"steps": [
+"□△ has digit sum □. So □ + △ = □, which means △ = 0.",
+"So □△ = □0, a two-digit number ending in 0 (10 times □).",
+"○ + □ + ○ = 10 × □, so 2 × ○ = 9 × □.",
+"Digits only: □ = 2 and ○ = 9."
+],
+"answer": "9 (E).",
+"check": "929: 9 + 2 + 9 = 20. 20: 2 + 0 = 2. ✓",
+"spot": "Symbol puzzles? Find the easiest clue first. Here △ must be 0.",
+"oops": "Starting with the 3-digit number, the hardest part."
+},
+"b2016-29": {
+"ask": "Start at 12. Multiply or divide by 2 or 3, exactly 60 times. Which result is impossible?",
+"steps": [
+"12 = 2 × 2 × 3. Each step adds or removes one 2 or one 3.",
+"60 steps is an even number. Steps that cancel (×2 then ÷2) come in pairs.",
+"So the number of 2s and 3s you change, added together, must be EVEN.",
+"36 = 2 × 2 × 3 × 3: just one extra 3 (odd). Impossible. The others need an even number of changes."
+],
+"answer": "36 (C).",
+"check": "18 = 12 ÷ 2 × 3 (2 changes ✓), 72 = 12 × 2 × 3 (2 ✓), 108 = 12 × 3 × 3 (2 ✓), 12 (0 ✓).",
+"spot": "Lots of steps? Look at odd and even: how many steps does each answer need?",
+"oops": "Thinking 36 is easy because 12 × 3 = 36. That's 1 step, and 59 more must cancel out, which can't happen."
+},
+"b2016-30": {
+"ask": "Two 3-digit numbers use 6 different digits. The second's first digit is twice the first's last digit. What's the smallest sum?",
+"steps": [
+"To keep the sum small, the hundreds digits should be small.",
+"If the first number starts with 1, it can't end in 1, so it ends in 2 and the second starts with 4.",
+"Use the smallest digits left for the tens and ones: 0, 3, 5. First 102, second 435.",
+"102 + 435 = 537. (Starting the second number with 2 forces the first to start with 3 or more: 301 + 245 = 546, bigger.)"
+],
+"answer": "537 (E).",
+"check": "Digits 1, 0, 2, 4, 3, 5 are all different, and 4 = 2 × 2. ✓",
+"spot": "Smallest sum? Make the hundreds digits as small as possible first.",
+"oops": "Starting the second number with 2 without checking it forces bigger hundreds."
+}
+}

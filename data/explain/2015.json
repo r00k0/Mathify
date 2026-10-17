@@ -1,0 +1,333 @@
+{
+"b2015-1": {
+"ask": "Which figure has exactly half of its area shaded?",
+"steps": [
+"Check each figure: what fraction is shaded?",
+"The circle has 1 of 3 equal parts shaded: 1/3. The square C has 3 of 4 parts: 3/4.",
+"The square D has 1 of 4 triangles: 1/4. The pentagon has 2 of 5 parts: 2/5.",
+"The triangle B is split down the middle into two equal halves, one shaded: 1/2."
+],
+"answer": "B.",
+"check": "Fold triangle B along its middle line: the shaded half covers the white half exactly. ✓",
+"spot": "Fractions of shapes? Count the equal parts, then the shaded ones.",
+"oops": "Counting parts that aren't the same size."
+},
+"b2015-2": {
+"ask": "An umbrella has KANGAROO written around it. Which picture does NOT show this umbrella?",
+"steps": [
+"Read the letters around the umbrella in order: K-A-N-G-A-R-O-O, then back to K.",
+"Any view shows a few letters next to each other, in that order, going round the same way.",
+"Check each picture (turn it upside down if that helps): ANG, OOK, NGA and ARO are all real pieces of the ring.",
+"Picture C reads backwards: its letters go round the wrong way. So it can't be this umbrella."
+],
+"answer": "C.",
+"check": "Turn picture C halfway round: it still doesn't match any stretch of KANGAROO. ✓",
+"spot": "Which view is impossible? Look for a mirrored letter or a wrong order.",
+"oops": "Only checking which letters appear, not which way round they go."
+},
+"b2015-3": {
+"ask": "9 squares are painted black, white and gray. Fewest squares to repaint so no two touching squares match?",
+"steps": [
+"Find the touching pairs with the same colour.",
+"In the top row, two gray squares touch. In the bottom row, two black squares touch.",
+"These two problems are in different rows and don't share a square, so one repaint can't fix both.",
+"Repaint the top-right square black and the bottom-middle square gray: 2 repaints, and now no two touching squares match."
+],
+"answer": "2 squares (A).",
+"check": "After 2 repaints, check every touching pair: all different. ✓",
+"spot": "Fewest changes? Find all the problems first, then see if one change can fix more than one.",
+"oops": "Repainting a square without checking it doesn't create a new match."
+},
+"b2015-4": {
+"ask": "5 ducks lay an egg every day, 5 lay every other day. How many eggs in 10 days?",
+"steps": [
+"Everyday ducks: 5 ducks × 10 days = 50 eggs.",
+"Every-other-day ducks lay on 5 of the 10 days: 5 ducks × 5 = 25 eggs.",
+"50 + 25 = 75."
+],
+"answer": "75 eggs (A).",
+"check": "Each day: 5 eggs, plus 5 more every second day. 10 × 5 + 5 × 5 = 75. ✓",
+"spot": "Groups doing things at different rates? Work out each group, then add.",
+"oops": "Treating all 10 ducks the same."
+},
+"b2015-5": {
+"ask": "Each small square has area 4 cm². How long is the thick black line?",
+"steps": [
+"Area 4 cm² means each side is 2 cm (2 × 2 = 4).",
+"The thick line runs along the sides of the small squares. Count how many sides it uses: 9.",
+"9 sides × 2 cm = 18 cm."
+],
+"answer": "18 cm (B).",
+"check": "Count again, carefully following the line from one end to the other. ✓",
+"spot": "Area of a square given? First find the side length.",
+"oops": "Using 4 cm as the side. 4 is the area."
+},
+"b2015-6": {
+"ask": "Which fraction is smaller than 2?",
+"steps": [
+"A fraction is smaller than 2 if the top is less than 2 times the bottom.",
+"19/8: 2 × 8 = 16, and 19 > 16. Bigger than 2. Same for 20/9, 21/10 and 22/11 (that one is exactly 2).",
+"23/12: 2 × 12 = 24, and 23 < 24. Smaller than 2!"
+],
+"answer": "23/12 (E).",
+"check": "23/12 = 1 and 11/12, just under 2. ✓",
+"spot": "Comparing fractions with a whole number? Multiply the bottom by that number.",
+"oops": "Thinking the biggest numbers make the biggest fraction."
+},
+"b2015-7": {
+"ask": "Pumpkin + watermelon = 8 kg. The watermelon is 2 kg lighter. How heavy is the pumpkin?",
+"steps": [
+"Pretend the watermelon were 2 kg heavier: then both would weigh the same as the pumpkin.",
+"The total would be 8 + 2 = 10 kg for 2 pumpkins.",
+"One pumpkin = 10 ÷ 2 = 5 kg."
+],
+"answer": "5 kg (D).",
+"check": "Pumpkin 5, watermelon 3. 5 + 3 = 8 and 5 − 3 = 2. ✓",
+"spot": "Two things with a total and a difference? Even them out first, then split.",
+"oops": "Splitting 8 into 4 and 4 and ignoring the difference."
+},
+"b2015-8": {
+"ask": "Each plant has either 5 leaves, or 2 leaves and 1 flower. Altogether: 6 flowers and 32 leaves. How many plants?",
+"steps": [
+"6 flowers means 6 flowering plants. They have 6 × 2 = 12 leaves.",
+"The other leaves: 32 − 12 = 20, all on 5-leaf plants.",
+"20 ÷ 5 = 4 plants with 5 leaves.",
+"Total: 6 + 4 = 10 plants."
+],
+"answer": "10 plants (A).",
+"check": "Leaves: 6 × 2 + 4 × 5 = 12 + 20 = 32 ✓. Flowers: 6 ✓.",
+"spot": "Two kinds of things? Use the clue that only fits one kind (flowers) first.",
+"oops": "Forgetting the flowering plants also have leaves."
+},
+"b2015-9": {
+"ask": "Two equal strips overlapping 10 cm make 50 cm. With two more of the same strips, how much overlap gives 56 cm?",
+"steps": [
+"Two strips with 10 cm overlap = 50 cm. With no overlap they'd be 50 + 10 = 60 cm.",
+"So two strips laid end to end are 60 cm (each is 30 cm).",
+"To get 56 cm, the overlap must eat up 60 − 56 = 4 cm."
+],
+"answer": "4 cm (A).",
+"check": "30 + 30 − 4 = 56. ✓",
+"spot": "Overlaps? Total length = both pieces − the overlap.",
+"oops": "Thinking a longer strip needs a longer overlap. It's the other way round."
+},
+"b2015-10": {
+"ask": "6 unit squares make a stepped shape (1 on top, 2 in the middle, 3 on the bottom). What's its perimeter?",
+"steps": [
+"Count the up-and-down edges and the across edges separately.",
+"Up-and-down: every row has one edge on its left end and one on its right end. 3 rows × 2 = 6.",
+"Across: the bottom is 3 long. The top of the bottom row sticks out by 1 in total (half on each side). The top of the middle row sticks out by 1. The very top is 1. That's 3 + 1 + 1 + 1 = 6.",
+"6 + 6 = 12."
+],
+"answer": "12 (D).",
+"check": "Count the edges again starting from a different corner: still 12. ✓",
+"spot": "Perimeter of square shapes? Walk all the way around, counting each edge once.",
+"oops": "Counting inside lines as part of the perimeter."
+},
+"b2015-12": {
+"ask": "Rectangle ABCD is made of 4 equal small rectangles. BC = 1 cm. How long is AB?",
+"steps": [
+"Look at the picture: a standing rectangle on the left, two lying rectangles stacked in the middle, and a standing one on the right.",
+"The standing rectangles' long side = the height BC = 1 cm.",
+"The two lying rectangles stacked make the same height: 2 short sides = 1 cm, so a short side is 0.5 cm.",
+"AB = short (left) + long (middle) + short (right) = 0.5 + 1 + 0.5 = 2 cm."
+],
+"answer": "2 cm (C).",
+"check": "Each small rectangle is 1 by 0.5, and they fit together exactly. ✓",
+"spot": "Equal pieces in a picture? Label the short and long sides and match them up.",
+"oops": "Thinking all the rectangles are the same way round."
+},
+"b2015-14": {
+"ask": "Lucy and her mom were both born in February. On March 19, 2015, she adds both birth years and both ages. What's the total?",
+"steps": [
+"After your birthday each year, birth year + age = this year. Example: born 2005, age 10 in 2015: 2005 + 10 = 2015.",
+"Both birthdays (in February) have already happened by March 19.",
+"So Lucy's year + age = 2015, and Mom's year + age = 2015.",
+"2015 + 2015 = 4030."
+],
+"answer": "4030 (C).",
+"check": "Try any example: Lucy born 2006 (age 9), Mom born 1980 (age 35): 2006 + 1980 + 9 + 35 = 4030. ✓",
+"spot": "Birth year and age together? They add up to this year (if the birthday has passed).",
+"oops": "Trying to guess their actual ages. You don't need them."
+},
+"b2015-15": {
+"ask": "A number divided by 9 leaves 7. What's left over when twice that number is divided by 9?",
+"steps": [
+"The number is some 9s plus 7 left over.",
+"Doubling it doubles the 9s (still fits into 9s) and doubles the leftover: 7 + 7 = 14.",
+"14 is one more 9 with 5 left over."
+],
+"answer": "5 (C).",
+"check": "Try 16: 16 ÷ 9 leaves 7. 32 ÷ 9 = 3 remainder 5. ✓",
+"spot": "Remainders? Only the leftover matters. Do the math on the leftover.",
+"oops": "Answering 14. A remainder must be smaller than 9."
+},
+"b2015-17": {
+"ask": "Colour each segment red, green or blue so every triangle has three different colours. Some are already coloured. What colour is x?",
+"steps": [
+"Call the four triangles A, B, C and D. Start where two sides are already known.",
+"The side shared by A and B can't be blue or red (those are used next to it), so it's green.",
+"Triangle B now has green and red, so its last side is blue. The side shared by C and D can't be blue or red, so it's green.",
+"Triangle C now has green and blue, so its last side, x, must be red."
+],
+"answer": "Only red (C).",
+"check": "Fill in the whole picture: every triangle has red, green and blue. ✓",
+"spot": "Colouring with rules? Start where the most is known, and let each answer unlock the next.",
+"oops": "Starting with x and guessing."
+},
+"b2015-18": {
+"ask": "3 green apples, 5 yellow apples, 7 green pears, 2 yellow pears. Fewest fruits to be sure of an apple and a pear of the same colour?",
+"steps": [
+"Be unlucky Ulysses: what's the most you can take WITHOUT a matching apple and pear?",
+"Take all 5 yellow apples and all 7 green pears. Yellow apples need a yellow pear, green pears need a green apple. No match!",
+"That's 12 fruits with no match.",
+"The 13th fruit is a green apple or a yellow pear, which makes a match."
+],
+"answer": "13 (E).",
+"check": "12 can fail, 13 can't. ✓",
+"spot": "'To be sure'? Find the unluckiest grab, then add one.",
+"oops": "Taking all the apples first (8). Mixing colours is unluckier."
+},
+"b2015-19": {
+"ask": "A 'kangaroo' chess piece jumps 3 one way and 1 the other way. Fewest moves to reach square A?",
+"steps": [
+"Find where the kangaroo can get in 1 move (the arrows). A isn't one of them.",
+"From each of those squares, find where it can get in another move. A still isn't reachable in 2.",
+"Try 3 moves: there's a path that lands on A.",
+"So the fewest is 3."
+],
+"answer": "3 moves (B).",
+"check": "Trace the 3 jumps on the board: each is 3 + 1 squares. ✓",
+"spot": "Fewest moves? Check 1 move, then 2, then 3, until you reach it.",
+"oops": "Thinking it's close, so 2 moves must work. Close squares can be the hardest to reach."
+},
+"b2015-20": {
+"ask": "X + X + YY = ZZZ, where each letter is a different digit. What is X?",
+"steps": [
+"The biggest X + X + YY can be is 9 + 9 + 99 = 117.",
+"ZZZ has three equal digits and is at most 117, so it's 111. Z = 1.",
+"YY must be 99 or 88 (to get near 111). 111 − 99 = 12, so X + X = 12, X = 6.",
+"(111 − 88 = 23 can't be split into two equal digits.)"
+],
+"answer": "X = 6 (E).",
+"check": "6 + 6 + 99 = 111. ✓",
+"spot": "Letter puzzles? Find the biggest or smallest possible total first.",
+"oops": "Forgetting each letter must be a different digit."
+},
+"b2015-21": {
+"ask": "Four whole numbers add to 39. Two of them multiply to 80, and the other two also multiply to 80. What's the biggest number?",
+"steps": [
+"List every pair that multiplies to 80: 1 × 80, 2 × 40, 4 × 20, 5 × 16, 8 × 10.",
+"Their sums: 81, 42, 24, 21, 18.",
+"Two pairs must add to 39. 21 + 18 = 39! So the numbers are 5, 16, 8 and 10.",
+"The biggest is 16."
+],
+"answer": "16 (C).",
+"check": "5 + 16 + 8 + 10 = 39 ✓, 5 × 16 = 80 ✓, 8 × 10 = 80 ✓.",
+"spot": "Numbers with a known product? List all the factor pairs.",
+"oops": "Picking the same pair twice."
+},
+"b2015-22": {
+"ask": "Jane spent half her money + $1 on book 1, half the rest + $2 on book 2, half the rest + $3 on book 3, and then had nothing. How much did the books cost?",
+"steps": [
+"Rewind from the end. After book 3: $0. Book 3 cost half + $3, so the other half was $3. Before book 3 she had $6.",
+"Book 2: she had some money, spent half + $2, and $6 was left. So half − $2 = $6, half = $8. Before book 2: $16.",
+"Book 1: spent half + $1, $16 left. Half = $17. Before book 1: $34.",
+"She spent everything, so the books cost $34."
+],
+"answer": "$34 (C).",
+"check": "Forwards: 34 → spend 17 + 1 = 18, left 16 → spend 8 + 2 = 10, left 6 → spend 3 + 3 = 6, left 0. 18 + 10 + 6 = 34. ✓",
+"spot": "Spending in steps until nothing's left? Rewind from the end.",
+"oops": "Undoing 'half + 1' as 'half − 1'. Write it out carefully."
+},
+"b2015-23": {
+"ask": "9 houses, at least 1 person each, two neighbouring houses have at most 6 together. Most people possible?",
+"steps": [
+"Big houses next to small ones: a house of 5 next to a house of 1 makes 6.",
+"Pattern: 5, 1, 5, 1, 5, 1, 5, 1, 5. Start and end with 5 to fit five 5s.",
+"5 × 5 + 4 × 1 = 25 + 4 = 29."
+],
+"answer": "29 (D).",
+"check": "Pair houses 1–2, 3–4, 5–6, 7–8: at most 6 each = 24. House 9 at most 5. 24 + 5 = 29. ✓",
+"spot": "Limit on neighbours? Alternate big and small, and start and end with big.",
+"oops": "Using 3, 3, 3... That gives only 27."
+},
+"b2015-25": {
+"ask": "In the 4-digit number abcd, a < b < c < d. What's the biggest bd − ac?",
+"steps": [
+"bd − ac = 10 × (b − a) + (d − c). The tens part matters most, so make b − a as big as possible.",
+"a must be at least 1 (it starts a number). c and d must be bigger than b, so b can be at most 7 (with c = 8, d = 9).",
+"a = 1, b = 7, c = 8, d = 9: b − a = 6 and d − c = 1.",
+"79 − 18 = 61."
+],
+"answer": "61 (B).",
+"check": "Try b = 6 instead: 69 − 17 = 52. Smaller. With b = 7 you get the biggest tens part, so 61 is the best. ✓",
+"spot": "Biggest difference of 2-digit numbers? Focus on the tens digits first.",
+"oops": "Forgetting that c and d must be bigger than b."
+},
+"b2015-26": {
+"ask": "Each vertex of a cube gets the sum of its three faces. C = 14, D = 16, E = 24. What's F?",
+"steps": [
+"C and D are next to each other. They share two faces; C has the right face and D has the left face.",
+"So C − D = right face − left face = 14 − 16 = −2.",
+"E and F are also next to each other, the same way: F has the right face, E has the left face.",
+"So F − E = right − left = −2. F = 24 − 2 = 22."
+],
+"answer": "22 (C).",
+"check": "The difference between neighbours along that direction is always the same: right minus left. ✓",
+"spot": "Sums that share parts? Take away what they share.",
+"oops": "Trying to find every face's number. You don't need to."
+},
+"b2015-27": {
+"ask": "Every train car has the same number of compartments. Compartment 50 is in the 7th car. How many compartments per car?",
+"steps": [
+"The first 6 cars hold fewer than 50 compartments (or 50 would be in car 6 or earlier).",
+"7 cars hold at least 50.",
+"Try 7 per car: 7 cars = 49. Not enough. Try 8: 6 cars = 48 (less than 50) and 7 cars = 56 (at least 50). ✓",
+"Try 9: 6 cars = 54, so 50 would be in car 6. ✗. So 8."
+],
+"answer": "8 (B).",
+"check": "Car 7 holds compartments 49 to 56, and 50 is one of them. ✓",
+"spot": "Which group is item N in? Test choices: the groups before must hold fewer than N.",
+"oops": "Dividing 50 by 7 and rounding."
+},
+"b2015-28": {
+"ask": "In a strip of 7 cells, colour 3 cells so no two coloured cells touch. How many ways?",
+"steps": [
+"Make a neat list, left to right. Name the cells 1 to 7.",
+"Starting with 1, 3: then 5, 6 or 7 (3 ways). 1, 4: then 6 or 7 (2 ways). 1, 5: then 7 (1 way).",
+"Starting with 2, 4: then 6 or 7 (2 ways). 2, 5: 7 (1 way).",
+"Starting with 3, 5, 7: 1 way. Total: 3 + 2 + 1 + 2 + 1 + 1 = 10."
+],
+"answer": "10 ways (E).",
+"check": "Every set in the list has gaps between the cells, and none is listed twice. ✓",
+"spot": "Counting arrangements? Use an ordered list so nothing is missed or doubled.",
+"oops": "Listing randomly and missing a few."
+},
+"b2015-29": {
+"ask": "Four points on a line. The 6 distances between them, in order, are 2, 3, k, 11, 12, 14. What is k?",
+"steps": [
+"The biggest distance, 14, is from the first point to the last. The three gaps between neighbouring points add to 14.",
+"The smallest distances, 2 and 3, must be gaps between neighbours.",
+"14 − 2 = 12 and 14 − 3 = 11: these are on the list, so 2 and 3 are the two END gaps.",
+"The middle gap is 14 − 2 − 3 = 9. Distances: 2, 3, 9, 11, 12, 14. So k = 9."
+],
+"answer": "9 (E).",
+"check": "Points at 0, 2, 11, 14: distances 2, 11, 14, 9, 12, 3 → sorted 2, 3, 9, 11, 12, 14. ✓",
+"spot": "Distances between points on a line? Draw it and label the gaps.",
+"oops": "Putting 2 and 3 next to each other in the middle."
+},
+"b2015-30": {
+"ask": "A 4 × 4 × 4 cube has 3 faces painted red and 3 blue. No small cube has 3 red faces. How many small cubes have both red and blue?",
+"steps": [
+"If three red faces met at a corner, that corner cube would have 3 red faces. So the red faces are two opposite faces plus one more (like top, bottom and front). Blue is left, right and back.",
+"Every corner cube touches 3 faces, and none can be all red or all blue. All 8 corners have both colours.",
+"Edges between a red face and a blue face: 8 of the 12 edges. Each edge has 2 middle cubes: 8 × 2 = 16.",
+"8 + 16 = 24."
+],
+"answer": "24 (D).",
+"check": "Edges between two red faces (2) or two blue faces (2) don't count. 2 + 2 + 8 = 12 edges ✓.",
+"spot": "Painted cubes? Corners touch 3 faces, edges 2, middles 1.",
+"oops": "Forgetting to count the corner cubes."
+}
+}

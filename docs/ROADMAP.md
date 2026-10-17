@@ -16,3 +16,11 @@
 
 ## Mobile
 - [ ] Wrap with Capacitor for iOS and Android; App Store Kids category rules (no third-party ads or tracking)
+
+## Done (Oct 2026)
+- Step-by-step explanations for every problem, shown on the tap after hint 3.
+- Technique library: 3 new moves (Fit the pieces, Walk around it, Act it out), how-to-spot clues, worked examples, per-move problem lists, weakest-first practice.
+
+## Next ideas
+- Small diagrams inside explanations for the picture-heavy book problems.
+- Let Shivan write his own "spot it" note on a move after he solves one.

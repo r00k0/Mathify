@@ -1,0 +1,377 @@
+{
+"b2014-1": {
+"ask": "The word KANGAROO is spelled with cards, but some are turned. Each quarter turn is one 90° rotation. How many quarter turns fix all the cards?",
+"steps": [
+"Look at each card and ask: how many quarter turns until it looks right?",
+"K needs 2 quarter turns (it's upside down). The first A needs 1.",
+"N is lying on its side (it looks like Z): 1 quarter turn.",
+"The second A is upside down: 2 quarter turns. G, R, O, O are already fine.",
+"2 + 1 + 1 + 2 = 6."
+],
+"answer": "6 turns (C).",
+"check": "Go card by card again and make sure you didn't skip any. ✓",
+"spot": "Turning shapes? Turn each one in your head a quarter at a time.",
+"oops": "Missing the N, which is turned on its side."
+},
+"b2014-2": {
+"ask": "A 900 g cake is cut into 4 pieces. The biggest piece weighs as much as the other 3 together. How heavy is the biggest piece?",
+"steps": [
+"The biggest piece = the other three together.",
+"So the cake is two equal halves: the biggest piece, and the other three.",
+"Half of 900 g = 450 g."
+],
+"answer": "450 g (D).",
+"check": "Biggest 450 g, the rest 450 g, total 900 g. ✓",
+"spot": "'One part equals all the others together'? That part is exactly half.",
+"oops": "Dividing by 4. The pieces aren't equal."
+},
+"b2014-3": {
+"ask": "Peter sees two linked rings from the front. What does Paul see from behind?",
+"steps": [
+"From behind, left and right swap, like looking at your reflection the wrong way round.",
+"So the gray ring, which is on one side for Peter, is on the other side for Paul.",
+"Where the rings cross, the part that was in front for Peter is behind for Paul, and the other way round.",
+"Picture D shows both changes."
+],
+"answer": "D.",
+"check": "Try it with two rubber bands or bracelets linked together. Look from the front, then from the back. ✓",
+"spot": "Seeing from behind? Left and right swap, and front and back swap.",
+"oops": "Only swapping sides but forgetting which ring is in front at the crossings."
+},
+"b2014-4": {
+"ask": "1★2 + 1★3 + 1★4 = 309. What do the hidden digits add up to?",
+"steps": [
+"Ones column: 2 + 3 + 4 = 9. That's the 9 in 309, with nothing carried.",
+"Hundreds column: 1 + 1 + 1 = 3. That's the 3 in 309.",
+"So the tens column must make 0 with nothing carried: ★ + ★ + ★ = 0.",
+"All the stars are 0. Their sum is 0."
+],
+"answer": "0 (A).",
+"check": "102 + 103 + 104 = 309. ✓",
+"spot": "Hidden digits? Ones first, then check what each column must make.",
+"oops": "Thinking the stars must be something because they're hidden. Zero is a digit too!"
+},
+"b2014-5": {
+"ask": "What's the smallest 5-digit number minus the largest 4-digit number?",
+"steps": [
+"Smallest 5-digit number: 10000.",
+"Largest 4-digit number: 9999.",
+"10000 − 9999 = 1. They're right next to each other!"
+],
+"answer": "1 (A).",
+"check": "9999 + 1 = 10000. ✓",
+"spot": "'Biggest' and 'smallest' numbers? Write them out first.",
+"oops": "Thinking the smallest 5-digit number is 11111."
+},
+"b2014-6": {
+"ask": "A square with perimeter 48 cm is cut in half, and the two halves are put side by side to make a long rectangle. What is the rectangle's perimeter?",
+"steps": [
+"Square perimeter 48 cm, so each side is 48 ÷ 4 = 12 cm.",
+"Cut in half: two pieces, each 12 cm long and 6 cm wide.",
+"Side by side, end to end: a rectangle 24 cm long and 6 cm tall.",
+"Perimeter: 24 + 6 + 24 + 6 = 60 cm."
+],
+"answer": "60 cm (D).",
+"check": "Same area (144 cm²) ✓, but longer and thinner, so a bigger perimeter. ✓",
+"spot": "Shapes rearranged? Write every length on a drawing.",
+"oops": "Thinking the perimeter stays 48 because the pieces are the same."
+},
+"b2014-7": {
+"ask": "38 matches make a triangle and a square. Each triangle side is 6 matches. How many matches per square side?",
+"steps": [
+"Triangle: 3 sides × 6 = 18 matches.",
+"Left for the square: 38 − 18 = 20 matches.",
+"A square has 4 equal sides: 20 ÷ 4 = 5."
+],
+"answer": "5 matches (B).",
+"check": "18 + 4 × 5 = 38. ✓",
+"spot": "A total shared between parts? Take away what you know, then share the rest.",
+"oops": "Forgetting a triangle has 3 sides."
+},
+"b2014-8": {
+"ask": "Alex wants 5 dark pearls. She can only take pearls from the ends of the necklace. What's the fewest white pearls she must take?",
+"steps": [
+"She can only take pearls from the two ends, so try different mixes of left and right.",
+"Only from the left: to get 5 dark pearls she'd take 4 white. Only from the right: 5 white.",
+"Now mix: take a dark pearl from each end first, then keep taking from whichever end gives dark pearls with the fewest whites in the way.",
+"The best mix takes just 3 white pearls."
+],
+"answer": "3 white pearls (B).",
+"check": "Look at the necklace and try the best split: you get 5 dark with 3 white. No split does it with 2. ✓",
+"spot": "Taking from the ends? Make a neat list of every left-and-right split.",
+"oops": "Only taking from one end."
+},
+"b2014-9": {
+"ask": "Harry flew 5 laps. The table shows when he passed the start. Which lap was fastest?",
+"steps": [
+"Work out each lap: the time from one row to the next.",
+"Lap 1: 9:55 to 10:26 = 31 min. Lap 2: 10:26 to 10:54 = 28 min.",
+"Lap 3: 10:54 to 11:28 = 34 min. Lap 4: 11:28 to 12:03 = 35 min.",
+"Lap 5: 12:03 to 12:32 = 29 min. The shortest is lap 2."
+],
+"answer": "The second lap (B).",
+"check": "31 + 28 + 34 + 35 + 29 = 157 min, and 9:55 + 157 min = 12:32. ✓",
+"spot": "Time between clock readings? Count up to the next hour, then add the rest.",
+"oops": "Subtracting times like ordinary numbers (10:26 − 9:55 isn't 71 minutes)."
+},
+"b2014-10": {
+"ask": "On Ben's watch the last digit only shows its up-and-down lines. The time just changed. What time is it now?",
+"steps": [
+"You can only see some of the lines of the last digit, so list every digit that could fit.",
+"Before: the lines could belong to 1, 3 or 7, so 12:41, 12:43 or 12:47.",
+"After: the lines could belong to 4 or 9, so 12:44 or 12:49.",
+"The time went up by exactly one minute. Only 12:43 → 12:44 does that."
+],
+"answer": "12:44 (C).",
+"check": "12:41 → 12:44 is 3 minutes, 12:47 → 12:49 is 2 minutes. Only 3 → 4 is one minute. ✓",
+"spot": "Broken displays? Write which lines each digit uses, then match.",
+"oops": "Forgetting that the time JUST changed, so the two digits are one minute apart."
+},
+"b2014-11": {
+"ask": "Which tile can make the light gray and dark gray areas equal?",
+"steps": [
+"Measure everything in whole squares. Two half-squares make one square.",
+"Light gray already adds up to 5 squares. Dark gray adds up to 3 squares.",
+"The missing tile is only 1 square big. Even if it were all dark, dark would only reach 4.",
+"4 is still less than 5. No tile can make them equal."
+],
+"answer": "It's impossible (E).",
+"check": "Best case: 3 + 1 = 4 dark against 5 light. Not equal. ✓",
+"spot": "Equal areas? Measure everything in small equal pieces, like quarter-tiles.",
+"oops": "Picking a tile without counting first."
+},
+"b2014-12": {
+"ask": "Henry and John walk from the same point. Which last step brings John to where Henry ended?",
+"steps": [
+"Draw both walks on squared paper, 1 square = 1 km.",
+"Henry: up 1, left 2, down 4, left 1. He ends 3 left and 3 down from the start.",
+"John: right 1, down 4, left 4. He ends 3 left and 4 down.",
+"John is 1 km below Henry. He needs to walk 1 km north."
+],
+"answer": "1 km north (B).",
+"check": "3 left and 4 down, then 1 up = 3 left and 3 down, the same as Henry. ✓",
+"spot": "Walks and directions? Draw them on squared paper.",
+"oops": "Trying to keep it all in your head and mixing up left and right."
+},
+"b2014-13": {
+"ask": "7 kids eat ice cream every day. 9 kids eat it every other day. Yesterday 13 kids ate ice cream. How many eat it today?",
+"steps": [
+"The 7 everyday kids ate yesterday. 13 − 7 = 6 of the every-other-day kids ate yesterday.",
+"Those 6 skip today.",
+"The other 9 − 6 = 3 every-other-day kids eat today.",
+"Today: 7 + 3 = 10."
+],
+"answer": "10 kids (D).",
+"check": "Yesterday 7 + 6 = 13 ✓. Today 7 + 3 = 10.",
+"spot": "Groups taking turns? Work out who went yesterday, and the rest go today.",
+"oops": "Saying 13 again, or 'can't be determined'."
+},
+"b2014-15": {
+"ask": "Four of the five pieces make a square. Which one isn't used?",
+"steps": [
+"Every piece is a square with curved bits added (bulges) or taken away (dips). Every bulge or dip is the same size.",
+"Count: A has 2 dips, B has none, C has 2 bulges, D has 1 bulge, E has 1 dip.",
+"Four pieces must make a square exactly 4 squares big, so the bulges and dips must cancel out.",
+"Leave out B: 2 bulges + 1 bulge = 3 bulges, 2 dips + 1 dip = 3 dips. They cancel. Leave out anything else and they don't."
+],
+"answer": "B.",
+"check": "A, C, D and E fit together with every bulge in a dip. ✓",
+"spot": "Fitting pieces? Count bumps and dips: they must match up.",
+"oops": "Choosing by how the pieces look instead of checking each curve."
+},
+"b2014-16": {
+"ask": "A 3-digit number's digits multiply to 135. What do they add to?",
+"steps": [
+"Break 135 into small factors: 135 = 5 × 27 = 5 × 3 × 9.",
+"Each digit must be from 1 to 9. 5, 3 and 9 are all digits.",
+"Other splits don't work (like 1 × 5 × 27, since 27 isn't a digit; or 1 × 15 × 9, since 15 isn't a digit).",
+"5 + 3 + 9 = 17."
+],
+"answer": "17 (D).",
+"check": "5 × 3 × 9 = 135. ✓",
+"spot": "Digits that multiply to a number? Break the number into its smallest factors.",
+"oops": "Forgetting each digit has to be 9 or less."
+},
+"b2014-17": {
+"ask": "16 tables with 3, 4 or 6 chairs. The 3- and 4-chair tables seat 36. All tables seat 72. How many 3-chair tables?",
+"steps": [
+"The 6-chair tables seat 72 − 36 = 36 people: 36 ÷ 6 = 6 tables.",
+"So 16 − 6 = 10 tables have 3 or 4 chairs, seating 36.",
+"If all 10 had 3 chairs: 30. We need 6 more, and each 4-chair table adds 1 more.",
+"So 6 tables have 4 chairs and 4 tables have 3."
+],
+"answer": "4 tables with 3 chairs (A).",
+"check": "4 × 3 + 6 × 4 + 6 × 6 = 12 + 24 + 36 = 72, and 4 + 6 + 6 = 16 tables. ✓",
+"spot": "Two kinds of things with a total? Pretend they're all the small kind, then count the extras.",
+"oops": "Forgetting to work out the 6-chair tables first."
+},
+"b2014-18": {
+"ask": "Points A to F are on a line in order. AF = 35, AC = 12, BD = 11, CE = 12, DF = 16. How long is BE?",
+"steps": [
+"Draw the line and mark all the lengths.",
+"AC + DF = 12 + 16 = 28. These cover everything except CD. So CD = 35 − 28 = 7.",
+"BD = 11 and CD = 7, so BC = 4. CE = 12 and CD = 7, so DE = 5.",
+"BE = BC + CD + DE = 4 + 7 + 5 = 16."
+],
+"answer": "16 (D).",
+"check": "AB = 12 − 4 = 8, EF = 16 − 5 = 11. 8 + 4 + 7 + 5 + 11 = 35. ✓",
+"spot": "Lengths on a line? Draw it and find the overlapping or missing pieces.",
+"oops": "Adding BD + CE and forgetting they overlap."
+},
+"b2014-19": {
+"ask": "Marisa's stones leave 2 over in groups of 3 and 2 over in groups of 5. Fewest extra stones so nothing is left over either way?",
+"steps": [
+"She has 2 more than a number that fits into both 3s and 5s, so 2 more than a multiple of 15.",
+"For example 17, 32 or 47 stones.",
+"To reach the next multiple of 15, add 15 − 2 = 13.",
+"Then the number divides evenly by 3 and by 5."
+],
+"answer": "13 more stones (E).",
+"check": "17 + 13 = 30: 30 ÷ 3 = 10 and 30 ÷ 5 = 6. ✓",
+"spot": "Same leftover for different group sizes? Think about numbers that fit both groups.",
+"oops": "Adding 1 (to fix groups of 3) or 3 (to fix groups of 5) but not both at once."
+},
+"b2014-20": {
+"ask": "Some pairs of cube faces share an edge. Which number is opposite 4?",
+"steps": [
+"Face 1 touches 6, 5 and 2. Face 6 touches 1, 5, 4 and 2.",
+"A face touches 4 others and is opposite exactly 1.",
+"6 touches 1, 5, 4, 2, so 6 is opposite 3.",
+"1 touches 6, 5, 2, so 1 is opposite 3 or 4. 3 is taken by 6, so 1 is opposite 4."
+],
+"answer": "1 (A).",
+"check": "Opposite pairs: 6–3, 1–4, so 2–5. Every touching pair in the list is allowed. ✓",
+"spot": "Faces of a cube? Each face has 4 neighbours and 1 opposite.",
+"oops": "Guessing 'can't be determined' too early."
+},
+"b2014-21": {
+"ask": "How many small cubes do you need to take out of the 3 × 3 × 3 cube so it looks like the picture from the right, from above and from the front?",
+"steps": [
+"Look at the picture: from the right and from the front, the top middle square is missing. From above, the front middle is missing.",
+"For the front and right views: take out every top cube in the middle row going front-to-back AND the middle row going side-to-side (they share the centre).",
+"For the top view: take out the whole middle column at the front, all the way down.",
+"Count them without counting any cube twice: 7 cubes."
+],
+"answer": "7 cubes (D).",
+"check": "Imagine the cube with those 7 removed. Look from the right, above and front: each matches the picture. ✓",
+"spot": "Views of a 3D shape? Check each direction one at a time.",
+"oops": "Only thinking about one view."
+},
+"b2014-22": {
+"ask": "Songs A (3 min), B (2:30), C (2 min), D (1:30), E (4 min) play in a loop. C was playing when Andy left. What's playing one hour later?",
+"steps": [
+"One full loop: 3 + 2.5 + 2 + 1.5 + 4 = 13 minutes.",
+"60 minutes = 4 loops (52 min) + 8 minutes.",
+"4 full loops bring us back to the same spot, so we just move 8 minutes ahead.",
+"C plays from 5.5 to 7.5 minutes into a loop. 8 minutes later is 13.5 to 15.5, which is 0.5 to 2.5 minutes into the next loop: song A."
+],
+"answer": "Song A (A).",
+"check": "A plays from 0 to 3 minutes of each loop, and 0.5 to 2.5 fits inside. ✓",
+"spot": "Repeating things? Find the loop length and look at the leftover.",
+"oops": "Forgetting that full loops don't change anything."
+},
+"b2014-23": {
+"ask": "Numbers 1 to 9 fill a 3 × 3 grid with 1, 3, 2, 4 in the corners. The cells next to 5 add to 9. What do the cells next to 6 add to?",
+"steps": [
+"5 can't be in a corner (the corners are taken). If 5 were in the middle, its 4 neighbours would add to far more than 9. So 5 is on an edge.",
+"An edge cell touches two corners and the centre. Try each edge: only the left edge works, between 1 and 2: 1 + 2 + centre = 9, so the centre is 6.",
+"6 in the centre touches all four edge cells.",
+"The edge cells hold 5 and the leftover numbers 7, 8, 9. 5 + 7 + 8 + 9 = 29."
+],
+"answer": "29 (E).",
+"check": "Other edges would need the centre to be 5, 2 or 3, which are already used. ✓",
+"spot": "Grid with clues? Start with the cell that has the most limits.",
+"oops": "Putting 5 in a spot without checking that the centre number is still free."
+},
+"b2014-24": {
+"ask": "60 trees in a row. Every 2nd tree is a maple. Every 3rd tree is a linden or a maple. The rest are birches. How many birches?",
+"steps": [
+"Every 2nd tree is a maple: 60 ÷ 2 = 30 maples.",
+"Every 3rd tree is linden or maple: 60 ÷ 3 = 20 trees.",
+"Some of those 20 are every 6th tree, which are already maples: 60 ÷ 6 = 10. The other 10 are lindens.",
+"Birches: 60 − 30 maples − 10 lindens = 20."
+],
+"answer": "20 birches (C).",
+"check": "30 + 10 + 20 = 60. ✓",
+"spot": "Every 2nd, every 3rd...? Watch out for the ones counted in both (every 6th).",
+"oops": "Saying 60 − 30 − 20 = 10, counting the maples on every 6th tree twice."
+},
+"b2014-25": {
+"ask": "A ribbon is glued across a see-through cube. Which picture can't be a view of the cube from any side?",
+"steps": [
+"Look at the ribbon: on each face it runs as a straight line, joining corners or edges.",
+"Look at the cube from the front, back, sides, top and bottom. Because the cube is clear, you see the ribbon on the near face AND the far face.",
+"Draw what each view shows: some views give an X, some a single diagonal, some just the square.",
+"One of the pictures never appears from any side: E."
+],
+"answer": "E.",
+"check": "Each of the other four pictures matches at least one view. ✓",
+"spot": "See-through shapes? Remember you see the front and the back at the same time.",
+"oops": "Forgetting you can see the far side through the clear plastic."
+},
+"b2014-26": {
+"ask": "The king rides at 5 km/h and every hour sends a messenger back to the castle at 10 km/h. How long between messengers arriving?",
+"steps": [
+"First messenger: sent after 1 hour, 5 km away. 5 km at 10 km/h takes half an hour. Arrives at 1.5 hours.",
+"Second messenger: sent after 2 hours, 10 km away. Takes 1 hour. Arrives at 3 hours.",
+"Third: sent after 3 hours, 15 km away, takes 1.5 hours. Arrives at 4.5 hours.",
+"Gap each time: 1.5 hours = 90 minutes."
+],
+"answer": "90 minutes (D).",
+"check": "1.5, 3, 4.5, 6 hours... always 1.5 hours apart. ✓",
+"spot": "Hard to picture? Work out the first few cases and look for the pattern.",
+"oops": "Saying 60 minutes. Each messenger has farther to go than the last."
+},
+"b2014-27": {
+"ask": "Three one-digit numbers add to 15. Ali swaps one for a 3, and the three numbers now multiply to 36. Which number could Ali have erased?",
+"steps": [
+"After the swap, the numbers are 3 and two numbers that weren't erased. 36 ÷ 3 = 12, so the two kept numbers multiply to 12.",
+"One-digit pairs that multiply to 12: 2 and 6, or 3 and 4.",
+"If they're 2 and 6, the erased number is 15 − 8 = 7.",
+"If they're 3 and 4, the erased number is 15 − 7 = 8. Both work."
+],
+"answer": "Either 7 or 8 (B).",
+"check": "2, 6, 7 → 2, 6, 3: product 36 ✓. 3, 4, 8 → 3, 4, 3: product 36 ✓.",
+"spot": "More than one answer possible? List every option and check them all.",
+"oops": "Finding 7 and stopping without checking for another answer."
+},
+"b2014-28": {
+"ask": "Peter eats either 9 carrots, or 2 cabbages, or 1 cabbage + 4 carrots, or only grass each day. In 10 days he ate 30 carrots and 9 cabbages. How many grass days?",
+"steps": [
+"Call the mixed days (1 cabbage + 4 carrots) 'mixed'. Carrots come from 9-carrot days and mixed days.",
+"Try numbers of mixed days. 30 − 4 × (mixed) must divide by 9. Mixed = 3 gives 30 − 12 = 18 = 2 × 9. So 2 carrot days.",
+"Cabbages: 3 from mixed days, 9 − 3 = 6 left = 3 cabbage days.",
+"Days used: 2 + 3 + 3 = 8. Grass days: 10 − 8 = 2."
+],
+"answer": "2 days (C).",
+"check": "Carrots: 2 × 9 + 3 × 4 = 30 ✓. Cabbages: 3 × 2 + 3 = 9 ✓.",
+"spot": "Mixing different kinds of days? Try small numbers for the tricky kind first.",
+"oops": "Forgetting the mixed days give both carrots AND a cabbage."
+},
+"b2014-29": {
+"ask": "Sunny days always come after 2 rainy days. 5 days after any rainy day it rains again. It's sunny today. How many days ahead can we be sure of the weather?",
+"steps": [
+"Today is sunny, so yesterday and the day before were rainy.",
+"Tomorrow: a sunny day needs 2 rainy days before it, but today is sunny. So tomorrow is rainy. Same for the day after: rainy.",
+"5 days after the two rainy days before today: days 3 and 4 from now are rainy.",
+"Day 5: it has 2 rainy days before it, so it could be sunny, but it could also rain. Not certain. So we're sure for 4 days."
+],
+"answer": "4 days (C).",
+"check": "Days 1, 2, 3, 4 must all be rainy, and day 5 could go either way. ✓",
+"spot": "Rules about patterns of days? Go day by day and ask: is this forced?",
+"oops": "Thinking you can predict forever. Day 5 has two possibilities."
+},
+"b2014-30": {
+"ask": "10 grandchildren, all different ages, adding to 180. Alice is the oldest. What's the youngest Alice can be?",
+"steps": [
+"To keep Alice young, make everyone else as OLD as possible, just under her, all different.",
+"If Alice is A, the oldest the others can be is A − 1, A − 2, ..., A − 9.",
+"Total: 10 × A − (1 + 2 + ... + 9) = 10A − 45. This must reach 180.",
+"10A − 45 ≥ 180 means 10A ≥ 225, so A is at least 22.5. Ages are whole numbers: 23."
+],
+"answer": "23 (E).",
+"check": "With A = 22 the most possible is 22 + 21 + ... + 13 = 175, short of 180. With A = 23 it works: 23, 22, 21, 20, 19, 18, 17, 16, 15 and 9 add to 180. ✓",
+"spot": "Smallest biggest? Squeeze everyone else as close to the top as allowed.",
+"oops": "Dividing 180 by 10 = 18. The ages must all be different."
+}
+}

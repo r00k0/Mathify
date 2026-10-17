@@ -1,0 +1,322 @@
+{
+"b2019-1": {
+"ask": "Carrie started a cat drawing and added more lines with her pen. Which picture could be her finished drawing?",
+"steps": [
+"She only ADDED lines. Everything in her first drawing must still be there, exactly the same.",
+"Check each picture: are the ears, the nose and everything she drew at the start still there unchanged?",
+"Cross out any picture where part of the start drawing is missing or changed.",
+"Only picture B keeps everything from the start drawing."
+],
+"answer": "B.",
+"check": "Lay the start drawing over B: every line matches, and B just has extras. ✓",
+"spot": "'Added to' a picture? Everything old must still be there.",
+"oops": "Picking the nicest-looking cat instead of checking the original parts."
+},
+"b2019-2": {
+"ask": "Mayans wrote numbers with dots (1) and bars (5). How did they write 17?",
+"steps": [
+"Use as many bars (5s) as fit: 3 bars = 15.",
+"17 − 15 = 2 left over: 2 dots.",
+"So 17 = 3 bars and 2 dots."
+],
+"answer": "C.",
+"check": "5 + 5 + 5 + 1 + 1 = 17. ✓",
+"spot": "Big pieces and small pieces? Use the big ones first, then fill in.",
+"oops": "Counting the bars as 1 each."
+},
+"b2019-3": {
+"ask": "The clock shows 20:19. What's the next time it shows the same four digits (2, 0, 1, 9)?",
+"steps": [
+"Times go forwards. After 20:19, try to rearrange the digits into the next time.",
+"Minutes can only go up to 59, and hours up to 23.",
+"20:91 isn't a real time (91 minutes). 21:09 is real, and it's the next one after 20:19.",
+"Times earlier than 20:19 (like 09:21) only come the next day, after 21:09."
+],
+"answer": "21:09 (C).",
+"check": "21:09 uses 2, 1, 0, 9 ✓, and no time between 20:19 and 21:09 uses those digits. ✓",
+"spot": "Clock puzzles? Remember minutes stop at 59 and hours at 23.",
+"oops": "Picking 20:91 without checking it's a real time."
+},
+"b2019-4": {
+"ask": "14 girls and 12 boys. Half the class goes for a walk. At least how many are girls?",
+"steps": [
+"Half of 26 children = 13 go.",
+"Unluckiest case: as many boys as possible go. All 12 boys could go.",
+"13 − 12 = 1 girl at least."
+],
+"answer": "1 (E).",
+"check": "12 boys + 1 girl = 13. ✓",
+"spot": "'At least'? Fill up with the other group as much as possible first.",
+"oops": "Thinking half the girls must go."
+},
+"b2019-5": {
+"ask": "On a real die, opposite faces add to 7. Which picture could be a real die?",
+"steps": [
+"Opposite pairs: 1 and 6, 2 and 5, 3 and 4.",
+"Faces you can see together are next to each other, never opposite.",
+"So in a real die, no two faces you can see add up to 7.",
+"Check each picture: only E has no two visible faces that add to 7."
+],
+"answer": "E.",
+"check": "In the other pictures you can find two visible faces like 2 and 5 or 3 and 4. ✓",
+"spot": "Dice? Opposite faces add to 7, so faces side by side never do.",
+"oops": "Only looking at one pair of faces."
+},
+"b2019-6": {
+"ask": "Which shape is NOT in the tiling design?",
+"steps": [
+"Look carefully at the design and find each shape.",
+"You can find triangles, squares, hexagons and big 12-sided shapes.",
+"Look for an 8-sided shape: there isn't one.",
+"So the octagon is the missing shape."
+],
+"answer": "Regular octagon (D).",
+"check": "Count the sides of each shape in the design: 3, 4, 6 and 12, never 8. ✓",
+"spot": "Finding shapes? Count the sides of each one.",
+"oops": "Mistaking a 12-sided shape for an octagon."
+},
+"b2019-7": {
+"ask": "How many 2 × 2 squares can Laura colour in this cross-like figure?",
+"steps": [
+"Look for every spot where a 2 × 2 block fits completely inside the figure.",
+"There's one in each of the 4 corner blocks.",
+"The middle part is a 3 × 3 square, and a 3 × 3 square holds 4 different 2 × 2 squares.",
+"4 + 4 = 8."
+],
+"answer": "8 (D).",
+"check": "List them: 4 corners and 4 overlapping in the middle. ✓",
+"spot": "Counting squares inside shapes? Count in groups: corners, then the middle.",
+"oops": "Forgetting that 2 × 2 squares can overlap in the middle."
+},
+"b2019-8": {
+"ask": "A die has 1, 3, 5, 7, 9, 11. Toni throws it 3 times and adds. Which sum is impossible?",
+"steps": [
+"Every face is odd.",
+"Odd + odd = even. Even + odd = odd. So three odd numbers always make an ODD sum.",
+"20 is even, so it can never be the sum."
+],
+"answer": "20 (C).",
+"check": "The others are odd: 21 = 7 + 7 + 7, 3 = 1 + 1 + 1, 19 = 9 + 9 + 1, 29 = 11 + 9 + 9. ✓",
+"spot": "All odd numbers? Think odd and even instead of exact sums.",
+"oops": "Trying to find 20 for a long time."
+},
+"b2019-9": {
+"ask": "A group of kangaroos' ages add to 36. In two years they'll add to 60. How many kangaroos?",
+"steps": [
+"In 2 years, the total grows by 60 − 36 = 24.",
+"That's 12 per year.",
+"Each kangaroo adds 1 year per year, so there are 12 kangaroos."
+],
+"answer": "12 (B).",
+"check": "12 kangaroos × 2 years = 24 more years. 36 + 24 = 60. ✓",
+"spot": "Ages added together? The total grows by the number of people each year.",
+"oops": "Answering 24 by forgetting it's 2 years."
+},
+"b2019-10": {
+"ask": "Solids are built from equal cubes, each with a base of 8 cubes. Which one needs the most paint?",
+"steps": [
+"Paint covers the outside. Count the little outside squares on each solid.",
+"From below, the left, the top and the right, every solid shows 8 squares each. Those don't help you choose.",
+"From the front and back, B shows only 3 squares each; the others show 4 each.",
+"Solid A also has 2 squares tucked inside a gap that you can't see from any direction. Totals: A 42, B 38, the rest 40. A needs the most paint."
+],
+"answer": "A.",
+"check": "A: 8 × 4 + 4 + 4 + 2 = 42. ✓",
+"spot": "Paint or surface area? Count every face that's on the outside.",
+"oops": "Thinking the solid with the most cubes needs the most paint."
+},
+"b2019-12": {
+"ask": "Riri usually eats 5 spiders a day, 10 when very hungry. She ate 60 in 9 days. How many very hungry days?",
+"steps": [
+"If every day were normal: 9 × 5 = 45 spiders.",
+"She ate 60, so 60 − 45 = 15 extra.",
+"Each hungry day adds 5 extra spiders: 15 ÷ 5 = 3 days."
+],
+"answer": "3 days (C).",
+"check": "3 × 10 + 6 × 5 = 30 + 30 = 60. ✓",
+"spot": "Two kinds of days? Pretend they're all the normal kind, then count the extras.",
+"oops": "Dividing 60 by 10."
+},
+"b2019-13": {
+"ask": "A folding yardstick has 10 parts joined in a line. Which shape can't be made with it?",
+"steps": [
+"The yardstick is one long chain with two ends. You can fold it at the joints but not branch it.",
+"Where three or four parts meet at a point, the chain must start or end there (it can't split).",
+"A chain has only 2 ends. Look at each shape and count the points where an odd number of parts meet.",
+"Shape C has too many of those points: it would need more than 2 ends."
+],
+"answer": "C.",
+"check": "Try tracing each shape in one line without lifting your finger or going over a part twice. C can't be done. ✓",
+"spot": "Can it be drawn in one line? Count the points where an odd number of lines meet.",
+"oops": "Only counting the parts (10) without checking how they join."
+},
+"b2019-15": {
+"ask": "A big triangle is divided into smaller equal-sided triangles. The small gray one has sides of 1 m. What's the big triangle's perimeter?",
+"steps": [
+"The big triangle's corners are corners of equilateral triangles, so the big triangle is equilateral too: all its sides are equal.",
+"Two equilateral triangles that share a side are the same size. So the small triangles touching the gray one all have 1 m sides.",
+"Two of those 1 m sides make one side of a bigger triangle: 2 m. Its neighbours that share sides are 2 m too.",
+"The bottom side is 1 + 2 + 2 = 5 m, so the perimeter is 3 × 5 = 15 m."
+],
+"answer": "15 m (A).",
+"check": "Check another side the same way: also 5 m. ✓",
+"spot": "Equilateral triangles? Every side is the same, so pass lengths from one triangle to the next.",
+"oops": "Guessing the sizes from the picture."
+},
+"b2019-16": {
+"ask": "30 animals: dogs, cats, mice. The witch turns 6 dogs into cats, then 5 cats into mice. Now there are equal numbers of each. How many cats were there at the start?",
+"steps": [
+"At the end: 30 ÷ 3 = 10 dogs, 10 cats, 10 mice.",
+"Rewind the last step: 5 mice go back to being cats. Cats 15, mice 5.",
+"Rewind the first step: 6 cats go back to being dogs. Cats 15 − 6 = 9, dogs 16.",
+"At the start: 9 cats."
+],
+"answer": "9 cats (C).",
+"check": "Start 16 dogs, 9 cats, 5 mice. 6 dogs → cats: 10, 15, 5. 5 cats → mice: 10, 10, 10. ✓",
+"spot": "Things change, and you know the end? Rewind.",
+"oops": "Undoing the steps in the wrong order."
+},
+"b2019-18": {
+"ask": "A square sheet is folded twice and then cut twice. How many pieces?",
+"steps": [
+"After folding twice there are 4 layers.",
+"Each cut goes through all 4 layers. Unfold one fold at a time and mirror the cuts.",
+"When you unfold, the two cuts become a grid of lines across the whole square.",
+"Those lines cut the square into 9 pieces."
+],
+"answer": "9 pieces (C).",
+"check": "Try it with paper! Fold twice, make the two cuts, unfold, count. ✓",
+"spot": "Folding and cutting? Unfold step by step and draw where the cuts land.",
+"oops": "Multiplying 4 layers × 2 cuts or similar without drawing it."
+},
+"b2019-19": {
+"ask": "If Alex has no hat, Bob wears one. If Bob has no hat, Carl wears one. Today Bob has no hat. Who's wearing a hat?",
+"steps": [
+"Bob has no hat. The second rule says: then Carl wears a hat.",
+"First rule: if Alex had no hat, Bob would wear one. But Bob doesn't.",
+"So Alex can't be hatless: Alex wears a hat.",
+"Both Alex and Carl wear hats."
+],
+"answer": "Both Alex and Carl (A).",
+"check": "Alex hat, Bob none, Carl hat: both rules are kept. ✓",
+"spot": "If-then rules? Also think backwards: if the 'then' part didn't happen, the 'if' part didn't either.",
+"oops": "Only using the second rule and missing what it says about Alex."
+},
+"b2019-20": {
+"ask": "Each net folds into a cube with a line drawn on it. On which cube does the line join up into a closed loop?",
+"steps": [
+"When a net folds into a cube, pairs of edges join up. Label each outside edge so that edges with the same label meet.",
+"The line on each net has two ends, each at the middle of an edge.",
+"The line closes only if both ends are on edges with the SAME label, so they meet when folded.",
+"Only in net D do both ends land on matching edges."
+],
+"answer": "D.",
+"check": "Copy net D on paper, fold it into a cube: the line is one closed loop. ✓",
+"spot": "Lines on nets? Mark which edges meet when folded.",
+"oops": "Checking the line looks connected on the flat net. It's the folded cube that matters."
+},
+"b2019-21": {
+"ask": "Each face of a cube has a positive whole number. Opposite faces multiply to the same product. You can see 10, 15 and 5. What's the smallest total of all six?",
+"steps": [
+"The product (same for every pair) must be a multiple of 10, 15 and 5, because each of those is one number in a pair.",
+"The smallest such product is 30.",
+"Opposite faces: 30 ÷ 10 = 3, 30 ÷ 15 = 2, 30 ÷ 5 = 6.",
+"Total: 10 + 15 + 5 + 3 + 2 + 6 = 41."
+],
+"answer": "41 (C).",
+"check": "10 × 3 = 15 × 2 = 5 × 6 = 30. ✓ A bigger product like 60 makes the hidden numbers bigger.",
+"spot": "Equal products? Find the smallest number that all the known ones divide into.",
+"oops": "Using product 150 (10 × 15) without trying smaller."
+},
+"b2019-22": {
+"ask": "Six black beads and three white beads are on two balance scales. What do all nine weigh?",
+"steps": [
+"Look at the second scale: 3 black + 1 white on one side, 1 black + 30 g on the other.",
+"Take one black bead off each side: 2 black + 1 white = 30 g.",
+"All the beads are 6 black + 3 white, which is three groups of (2 black + 1 white).",
+"3 × 30 = 90 g."
+],
+"answer": "90 g (E).",
+"check": "However much each bead weighs, three groups of 30 g is 90 g. ✓",
+"spot": "Balance scales? Take the same thing off both sides, then look for groups.",
+"oops": "Trying to find each bead's weight. You don't need it."
+},
+"b2019-23": {
+"ask": "Robert made 5 statements about his children. Exactly one is false. Which?",
+"steps": [
+"Basil has 3 sisters and Ann has 2 sisters: that fits 3 daughters (Ann + 2 others).",
+"Ann has 2 brothers means 2 sons. But then Basil (a son) would have only 1 brother, not 2.",
+"So 'Ann has 2 brothers' and 'Basil has 2 brothers' can't both be true. One of them is the false one.",
+"With 3 daughters and 2 sons he has 5 children, which matches statement E. So D is false."
+],
+"answer": "D: 'My son Basil has 2 brothers.'",
+"check": "3 daughters + 2 sons: A ✓, B ✓, C ✓, E ✓, D ✗. Exactly one false. ✓",
+"spot": "Exactly one false? Look for two statements that clash.",
+"oops": "Forgetting a person isn't their own brother or sister."
+},
+"b2019-25": {
+"ask": "A cardboard net folds into a 2 × 1 × 1 box. Which picture does NOT show this box?",
+"steps": [
+"Fold the net: keep the row with two black squares facing you, fold the row below it back, and the next row goes to the back.",
+"The two gray squares at the top become the box's top face. That's the box in picture A.",
+"Turn the box toward you to see C, D and E.",
+"B shows a long face made of two white squares, but no two white squares in the net can join into one face. So B is impossible."
+],
+"answer": "B.",
+"check": "The other four pictures each match the folded box from some side. ✓",
+"spot": "Which view is impossible? Look for neighbours that can't be neighbours.",
+"oops": "Checking only one face of each picture."
+},
+"b2019-26": {
+"ask": "Emily's 8 cousins each appear in 2 or 3 selfies. Every selfie has exactly 5 cousins. How many selfies?",
+"steps": [
+"Count 'cousin appearances'. Each cousin is in 2 or 3 pictures, so the total is between 8 × 2 = 16 and 8 × 3 = 24.",
+"Each selfie has 5 cousins, so the total is a multiple of 5.",
+"The only multiple of 5 between 16 and 24 is 20.",
+"20 ÷ 5 = 4 selfies."
+],
+"answer": "4 selfies (B).",
+"check": "4 pictures × 5 = 20 appearances. 4 cousins in 3 pictures + 4 cousins in 2 = 12 + 8 = 20. ✓",
+"spot": "Counting the same thing two ways? Count appearances by person and by picture.",
+"oops": "Dividing 8 by 5."
+},
+"b2019-27": {
+"ask": "Two identical pyramids of 15 numbered cans. Jette knocks down 6 cans worth 25 points. Willi knocks down 4 cans. How many points does Willi get?",
+"steps": [
+"Add up the cans still standing after Jette: 9 + 4 + 5 + 8 + 6 + 1 + 9 + 7 + 6 = 55.",
+"All 15 cans together: 55 + 25 = 80 points.",
+"Add up the cans still standing after Willi: 54.",
+"Willi knocked down 80 − 54 = 26 points."
+],
+"answer": "26 (D).",
+"check": "Both pyramids add to 80: 55 + 25 = 80 and 54 + 26 = 80. ✓",
+"spot": "Two pictures of the same thing? Use one to find the total, then compare.",
+"oops": "Trying to work out which cans Willi hit."
+},
+"b2019-28": {
+"ask": "Every digit on the clock has the same two segments broken. It shows a broken time. What will it show 3 hours 45 minutes later?",
+"steps": [
+"Compare the broken digits with the full digits 0 to 9. Find which two segments are always missing.",
+"Work out the real time now: with those segments added back, it reads 23:47.",
+"23:47 + 3 h 45 min = 3:32 the next morning: 03:32.",
+"Now remove the same two segments from 0, 3, 3, 2. That's picture A."
+],
+"answer": "A.",
+"check": "In A, each digit with the two segments put back gives 0 3 3 2. ✓",
+"spot": "Broken displays? First find the real numbers, then do the math.",
+"oops": "Adding time to the broken digits directly."
+},
+"b2019-30": {
+"ask": "Machines: 1 white → 4 red, or 1 red → 3 white. Zev starts with 4 white. After 11 exchanges he has 31 tokens. How many are red?",
+"steps": [
+"White → 4 red: 1 token becomes 4, so +3 tokens. Red → 3 white: +2 tokens.",
+"Start 4 tokens, end 31: that's 27 more from 11 exchanges.",
+"If all 11 were +2: 22. We need 5 more, and each white→red exchange gives 1 more than a red→white. So 5 white→red and 6 red→white.",
+"Red tokens: +4 for each of the 5 = 20, then −1 for each of the 6 = 14."
+],
+"answer": "14 red (C).",
+"check": "White: 4 − 5 + 18 = 17. 17 + 14 = 31. ✓",
+"spot": "Two kinds of swaps and a total? Pretend all were one kind, then count the extras.",
+"oops": "Forgetting each exchange also uses up a token."
+}
+}

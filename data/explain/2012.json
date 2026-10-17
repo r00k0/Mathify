@@ -1,0 +1,394 @@
+{
+"b2012-1": {
+"ask": "Basil paints a slogan. Same letters get the same colour, different letters get different colours. How many colours does he need?",
+"steps": [
+"The number of colours = the number of DIFFERENT letters. Repeats don't need new colours.",
+"Go through the letters in order and write each new one only once: V, I, A, T, K, N, G, R, O.",
+"V, A and O appear more than once, but each needs just one colour.",
+"Count the list: 9 different letters."
+],
+"answer": "He needs 9 colours (C).",
+"check": "Cross off each letter of the slogan as you find it in your list. Every letter is in the list, and nothing is listed twice. ✓",
+"spot": "Counting 'different' things? Make a neat list and write each new thing only once.",
+"oops": "Counting every letter (13), including the repeats."
+},
+"b2012-2": {
+"ask": "A board 6 m wide has a 3 m middle part and two equal side parts. How wide is one side part?",
+"steps": [
+"Take the middle part away: 6 − 3 = 3 m is left.",
+"Those 3 m are shared by the TWO side parts, equally.",
+"3 ÷ 2 = 1.5 m each."
+],
+"answer": "The right-hand part is 1.5 m wide (C).",
+"check": "1.5 + 3 + 1.5 = 6 m. ✓",
+"spot": "A whole split into pieces, some equal? Take away what you know, then share the rest.",
+"oops": "Answering 3 m. That's both side parts together."
+},
+"b2012-3": {
+"ask": "4 coins fit in a square made of 4 matches. How many matches make a square that holds 16 coins?",
+"steps": [
+"In the small square, 2 coins sit along each side, and one match covers that side. So one match = the length of 2 coins.",
+"16 coins in a square is 4 rows of 4. So each side is 4 coins long.",
+"4 coins long needs 2 matches per side.",
+"4 sides × 2 matches = 8 matches."
+],
+"answer": "8 matches (A).",
+"check": "Draw it: 4 × 4 coins with 2 matches on each side. The coins fit exactly. ✓",
+"spot": "Something gets bigger? Find how long ONE side is, measured in matches.",
+"oops": "Thinking 4 times more coins means 4 times more matches (16). The side only doubles."
+},
+"b2012-4": {
+"ask": "Rows are numbered 1 to 25, but there's no row 13. Row 15 has 4 seats, every other row has 6. How many seats?",
+"steps": [
+"Numbers 1 to 25 make 25 rows, but row 13 is missing: 24 rows.",
+"One of them (row 15) has 4 seats. The other 23 rows have 6.",
+"23 × 6 = 138.",
+"138 + 4 = 142."
+],
+"answer": "142 seats (C).",
+"check": "If all 24 rows had 6, that's 144. Row 15 has 2 fewer: 142. ✓",
+"spot": "Read every little detail. Puzzles hide traps like a missing row.",
+"oops": "Using 25 rows (gives 148) and forgetting row 13 doesn't exist."
+},
+"b2012-5": {
+"ask": "Using the time differences given, what time was it in Madrid when Ann went to bed at 9 pm yesterday in San Francisco?",
+"steps": [
+"Same moment: San Francisco 8 am, Madrid 5 pm.",
+"From 8 am to 5 pm is 9 hours. So Madrid is 9 hours AHEAD of San Francisco.",
+"Ann went to bed at 9 pm yesterday (San Francisco). Add 9 hours.",
+"9 pm + 3 hours = midnight. 6 more hours = 6 am, and it's now the next day: this morning."
+],
+"answer": "6 o'clock this morning (E).",
+"check": "From 6 am in Madrid, go back 9 hours: 9 pm the evening before. ✓",
+"spot": "Time zones? Find how many hours apart the two places are, then add or take away.",
+"oops": "Forgetting that going past midnight changes yesterday into today."
+},
+"b2012-6": {
+"ask": "Join the centres of every two touching hexagons in the picture. Which shape do the lines make?",
+"steps": [
+"Look at any three hexagons that all touch each other. Their centres make a small triangle.",
+"The hexagons in the picture are packed in a triangle-like pile, so the lines make lots of small triangles.",
+"The small triangles fit together into one big triangle, with one straight side where the hexagons line up.",
+"Only choice C is a big triangle filled with small triangles in that shape."
+],
+"answer": "C.",
+"check": "Every small triangle in C has one straight up-and-down side, just like three touching hexagons make. ✓",
+"spot": "Pictures that change step by step? Do a tiny part yourself first, like three hexagons.",
+"oops": "Picking D, which just redraws the hexagons."
+},
+"b2012-7": {
+"ask": "Add 3 to 6, multiply by 2, then add 1. Which calculation gives the same?",
+"steps": [
+"Write the steps in order: first 6 + 3.",
+"Brackets make something happen FIRST: (6 + 3).",
+"Then times 2: (6 + 3) × 2.",
+"Then add 1: (6 + 3) × 2 + 1. That's choice D."
+],
+"answer": "D: (6 + 3) × 2 + 1.",
+"check": "(6 + 3) × 2 + 1 = 9 × 2 + 1 = 19, and the steps give 9, 18, 19. ✓",
+"spot": "Steps in words? Brackets go around whatever must happen first.",
+"oops": "Choosing B. Without brackets, 3 × 2 happens before adding 6."
+},
+"b2012-8": {
+"ask": "One coin rolls halfway around another coin of the same size. Which way is the kangaroo on the rolling coin facing now?",
+"steps": [
+"Surprise fact: a coin rolling around a coin of the SAME size spins twice for one full trip around.",
+"Halfway around is half a trip, so it spins one full time.",
+"One full spin brings the kangaroo back to standing upright, facing the same way as at the start.",
+"Find the picture where the kangaroo on the moved coin looks exactly like it did at the start."
+],
+"answer": "A.",
+"check": "Try it with two real coins! Roll one halfway around the other and watch the picture. ✓",
+"spot": "Things turning and rolling? Act it out with real objects, step by step.",
+"oops": "Thinking the kangaroo ends upside down. That's what you'd guess, but the coin spins extra while rolling."
+},
+"b2012-9": {
+"ask": "One balloon lifts the basket plus 80 kg. Two balloons lift the basket plus 180 kg. How heavy is the basket?",
+"steps": [
+"One balloon lifts: basket + 80.",
+"Two balloons lift twice as much: (basket + 80) + (basket + 80) = 2 baskets + 160.",
+"But we're told two balloons lift: 1 basket + 180.",
+"So 2 baskets + 160 = 1 basket + 180. Take one basket off both sides: basket + 160 = 180. The basket is 20 kg."
+],
+"answer": "20 kg (B).",
+"check": "One balloon lifts 20 + 80 = 100 kg. Two lift 200 kg = 20 + 180. ✓",
+"spot": "Two ways of describing the same total? Set them side by side and take away what's the same.",
+"oops": "Saying 100 kg (180 − 80). The basket is lifted both times, so it's mixed in."
+},
+"b2012-10": {
+"ask": "25 fruits. On the way home they ate 4 apples and 5 pears. At home there were as many pears as apples. How many pears did grandma give?",
+"steps": [
+"Fruit eaten: 1 + 3 = 4 apples and 3 + 2 = 5 pears. That's 9 fruits.",
+"Fruit left at home: 25 − 9 = 16.",
+"Same number of pears and apples at home: 16 ÷ 2 = 8 pears.",
+"Grandma's pears = 8 at home + 5 eaten = 13."
+],
+"answer": "13 pears (B).",
+"check": "Apples: 8 + 4 = 12. Pears 13. 12 + 13 = 25. ✓",
+"spot": "Things get used up along the way? Work out what's left, then add back what was used.",
+"oops": "Answering 8. That's the pears at home, not what grandma gave."
+},
+"b2012-11": {
+"ask": "Which three puzzle pieces finish the square?",
+"steps": [
+"Look at the gaps: each gap has bumps sticking in and holes going out.",
+"A piece fits only if its bumps match the gap's holes and its holes match the gap's bumps.",
+"Start with the trickiest gap, the one in the middle, touching the most pieces. Only piece 2 has the right bumps and holes for it.",
+"With piece 2 in place, check which pieces fit beside it and in the corner: pieces 3 and 6."
+],
+"answer": "Pieces 2, 3 and 6 (D).",
+"check": "Every edge of the finished square is straight, and every bump goes into a hole. ✓",
+"spot": "Fitting pieces? Start with the place that has the most rules, usually the middle.",
+"oops": "Picking pieces that look right but have a bump where a straight edge must be."
+},
+"b2012-12": {
+"ask": "8 dice, each with one letter on all faces, make a 2 × 2 × 2 block. Touching dice always have different letters. What letter is on the die we can't see?",
+"steps": [
+"The hidden die sits in the back bottom corner. In a 2 × 2 × 2 block, it touches 3 other dice.",
+"Look at the picture: those 3 neighbours show A, C and D.",
+"The hidden die must be different from all three neighbours.",
+"The only letter left is B."
+],
+"answer": "B.",
+"check": "B touches A, C and D, all different. ✓",
+"spot": "Hidden pieces in 3D? Figure out which pieces it touches, then rule things out.",
+"oops": "Answering 'impossible to say'. The neighbours give it away."
+},
+"b2012-13": {
+"ask": "Every pair of 5 cities has one road, visible or invisible. 7 are visible. How many invisible roads?",
+"steps": [
+"First count ALL roads: one for each pair of cities.",
+"List pairs neatly. City 1 pairs with 2, 3, 4, 5 (4 roads). City 2 with 3, 4, 5 (3 more). City 3 with 4, 5 (2). City 4 with 5 (1).",
+"4 + 3 + 2 + 1 = 10 roads in total.",
+"10 − 7 visible = 3 invisible."
+],
+"answer": "3 invisible roads (D).",
+"check": "Draw 5 dots and join every pair: you'll draw 10 lines. ✓",
+"spot": "'Every pair' puzzles? Make a neat list: first with everyone after it, then the next.",
+"oops": "Counting each road twice (Amy–Ben and Ben–Amy), which gives 20."
+},
+"b2012-14": {
+"ask": "Numbers are coloured red, blue, green, red, blue, green... Add a red number and a blue number. What colour is the answer?",
+"steps": [
+"The colours repeat every 3: red = 1, 4, 7, ...; blue = 2, 5, 8, ...; green = 3, 6, 9, ... (the multiples of 3).",
+"Red numbers are 1 more than a multiple of 3. Blue numbers are 2 more than a multiple of 3.",
+"Red + blue = (multiple of 3) + 1 + (multiple of 3) + 2 = a multiple of 3 plus 3 = a multiple of 3.",
+"Multiples of 3 are green."
+],
+"answer": "Always green (C).",
+"check": "Try some: 1 + 2 = 3 green, 4 + 5 = 9 green, 7 + 2 = 9 green. ✓",
+"spot": "Things repeating in 3s? Only the leftover after dividing by 3 matters.",
+"oops": "Trying one example and guessing. Show it works for ALL by thinking about leftovers."
+},
+"b2012-15": {
+"ask": "A shape made of equal squares has perimeter 42 cm. What is its area?",
+"steps": [
+"Count the little square-sides around the outside of the shape: there are 14.",
+"14 sides make 42 cm, so one side is 42 ÷ 14 = 3 cm.",
+"Each square is 3 × 3 = 9 cm².",
+"Count the squares: 8. 8 × 9 = 72 cm²."
+],
+"answer": "72 cm² (D).",
+"check": "Perimeter 14 × 3 = 42. ✓ Area 8 × 9 = 72. ✓",
+"spot": "Shapes made of equal squares? Count the edges around the outside to find one side.",
+"oops": "Dividing 42 by 4, as if the shape were one big square."
+},
+"b2012-16": {
+"ask": "The same 5 pieces (a 5 × 10 rectangle and four quarter circles) make two shapes. How much longer is one perimeter than the other?",
+"steps": [
+"Both shapes use the same four quarter circles, and every curved edge is on the outside in both. So the curves are the same: cross them out.",
+"Only the straight edges can be different. Add up the straight edges you can see in each outline.",
+"In the first shape the straight edges are 5 + 10 + 5 + 10 = 30 cm. In the second, only one 10 cm edge shows.",
+"Difference: 30 − 10 = 20 cm."
+],
+"answer": "20 cm (D).",
+"check": "Everything else in the outlines matches piece for piece, so the difference is just the straight parts: 30 − 10 = 20. ✓",
+"spot": "Comparing two outlines made from the same pieces? Cross out what's the same in both.",
+"oops": "Trying to measure the curved parts. You don't need to: they're the same in both."
+},
+"b2012-17": {
+"ask": "Put 1 to 7 in the circles so every line of three has the same sum. What's at the top?",
+"steps": [
+"There are 5 lines of three circles. The top circle is on 3 lines; every other circle is on exactly 2 lines.",
+"Add up all 5 line sums. Each number is counted twice, and the top is counted once more.",
+"1 + 2 + ... + 7 = 28, counted twice is 56. So 5 lines together = 56 + top.",
+"56 + top must divide evenly by 5. Top = 4 gives 60, so each line sums to 12."
+],
+"answer": "4 is at the top (C).",
+"check": "An example: top 4. Lines through the top: 4 + 7 + 1, 4 + 2 + 6, 4 + 3 + 5. The middle line 7 + 3 + 2 and the bottom line 1 + 5 + 6. All 12. ✓",
+"spot": "Magic shapes with equal sums? Add up all the lines and see who's counted extra times.",
+"oops": "Guessing and trying lots of arrangements. Adding all the lines finds the top in one step."
+},
+"b2012-18": {
+"ask": "A ball drops from 10 m and bounces back to 4/5 of its height each time. How many times does it pass a window between 5 m and 6 m?",
+"steps": [
+"List the heights: 10 m, then 4/5 of 10 = 8 m, then 4/5 of 8 = 6.4 m, then 4/5 of 6.4 = 5.12 m, then 4.096 m.",
+"Falling from 10 m: passes the window once (down).",
+"Bounce to 8 m: up past the window, down past it again. 2 more.",
+"Bounce to 6.4 m: up and down again. 2 more.",
+"Bounce to 5.12 m: rises into the window and falls back. That's 1 more. After that it stays below 5 m."
+],
+"answer": "6 times (D).",
+"check": "1 + 2 + 2 + 1 = 6. ✓",
+"spot": "Something repeating and shrinking? Make a list of each step until it's too small.",
+"oops": "Counting each bounce only once instead of up AND down."
+},
+"b2012-19": {
+"ask": "Four gears in a row with 30, 15, 60 and 10 teeth. The first turns once. How many times does the last turn?",
+"steps": [
+"When gears touch, their teeth move past each other one for one.",
+"The first gear turning once moves 30 teeth. So EVERY gear in the chain moves 30 teeth.",
+"The middle gears don't matter.",
+"The last gear has 10 teeth: 30 teeth is 3 full turns."
+],
+"answer": "3 turns (A).",
+"check": "30 ÷ 10 = 3. ✓",
+"spot": "Gears? Count teeth, not turns. Every gear in the chain moves the same number of teeth.",
+"oops": "Working through every gear one by one and getting lost."
+},
+"b2012-20": {
+"ask": "An octagon is folded in half three times, the tip is cut off, then it's unfolded. What does it look like?",
+"steps": [
+"Unfold one step at a time, starting with the LAST fold.",
+"The cut is one straight line near the centre of the folded paper.",
+"Each unfold mirrors the cut across that fold line, so 1 cut line becomes 2, then 4, then 8 lines.",
+"The 8 mirrored pieces join up into the four sides of a square around the centre. That's picture C."
+],
+"answer": "C.",
+"check": "Try it with paper: fold a square in half three times and snip straight across the corner at the centre. Unfold: a square hole. ✓",
+"spot": "Folding and cutting? Unfold one fold at a time and mirror the cut each time.",
+"oops": "Picking a star or a turned square. Check which way the hole's sides face."
+},
+"b2012-21": {
+"ask": "Vinegar to wine is 1 to 2. Wine to water is 3 to 1. Which statement is true?",
+"steps": [
+"Make the wine number the same in both. Wine is 2 in the first and 3 in the second, so use 6.",
+"Vinegar : wine = 1 : 2 = 3 : 6.",
+"Wine : water = 3 : 1 = 6 : 2.",
+"So vinegar 3, wine 6, water 2. Wine (6) is more than vinegar + water (3 + 2 = 5)."
+],
+"answer": "B: more wine than vinegar and water together.",
+"check": "Test the others: A 3 > 6 no, C 3 > 8 no, D 2 > 9 no, E 3 < 2 no. Only B is true. ✓",
+"spot": "Two ratios sharing one thing? Make the shared thing the same number in both.",
+"oops": "Mixing 1 : 2 and 3 : 1 directly. The '2' and the '3' are different amounts of wine."
+},
+"b2012-22": {
+"ask": "Each jump goes over a stone and lands just as far on the other side. Hip jumps over the same three stones as Hop, starting somewhere else. Where does Hip land?",
+"steps": [
+"A jump over a stone is like a mirror flip through the stone: same distance, other side.",
+"Hip starts a little to the side of where Hop started.",
+"Each flip moves that 'side' to the opposite side. After 1 flip it's opposite, after 2 it's back, after 3 it's opposite again.",
+"So Hip ends the same distance from Hop's landing spot, but on the opposite side. Draw it on the grid: that's D."
+],
+"answer": "D.",
+"check": "Draw Hip's three jumps square by square on the grid: count across and up to each stone, then the same again past it. You land on D. ✓",
+"spot": "Jumping over points? Each jump is a mirror flip. Track the flips, or draw each jump carefully.",
+"oops": "Copying Hop's path shape instead of jumping through the stones."
+},
+"b2012-23": {
+"ask": "12 children aged 6 to 10, at least one of each age. Four are 6. Age 8 is the most common. What's the average age?",
+"steps": [
+"8 is the MOST common, so there are more 8-year-olds than 6-year-olds: at least 5.",
+"There must also be at least one 7, one 9 and one 10.",
+"4 + 5 + 1 + 1 + 1 = 12 children. That's everyone, so these numbers are exact.",
+"Add ages: 4 × 6 + 5 × 8 + 7 + 9 + 10 = 24 + 40 + 26 = 90.",
+"Average: 90 ÷ 12 = 7.5."
+],
+"answer": "7.5 (D).",
+"check": "12 × 7.5 = 90. ✓",
+"spot": "'At least' clues? Squeeze each group to its smallest, and see if it all fits exactly.",
+"oops": "Thinking 4 eight-year-olds is enough. It must be MORE than the 4 six-year-olds."
+},
+"b2012-24": {
+"ask": "A rectangle is cut into 4 smaller rectangles in a 2 × 2 grid. Three perimeters are 11, 16 and 19. The fourth is neither biggest nor smallest. What's the big perimeter?",
+"steps": [
+"Trick: two small rectangles in opposite corners together have the same perimeter as the big rectangle. Their sides together make the whole outline.",
+"So the opposite-corner pairs add up to the same total.",
+"Try pairing: 11 + 19 = 30, so the fourth is 30 − 16 = 14. That's between 11 and 19. ✓",
+"Other pairings give the fourth as 24 (biggest) or 8 (smallest), which aren't allowed. So the big perimeter is 30."
+],
+"answer": "30 (B).",
+"check": "11 + 19 = 16 + 14 = 30. ✓",
+"spot": "Rectangles cut in a grid? Slide sides around: opposite corners add up to the whole outline.",
+"oops": "Adding all four perimeters. That counts the inside cuts too."
+},
+"b2012-25": {
+"ask": "Put 1 to 12 in a circle so neighbours differ by 1 or 2. Which pair must be neighbours?",
+"steps": [
+"Look at 12. Its neighbours can only be 11 or 10 (differ by 1 or 2). It has two neighbours, so both: 11 and 10.",
+"Look at 1. Its neighbours must be 2 and 3.",
+"Fill outwards: one side goes 12, 10, 8, 6, 4, 2, 1; the other goes 12, 11, 9, 7, 5, 3, 1.",
+"So 8 and 10 are next to each other."
+],
+"answer": "8 and 10 (D).",
+"check": "Circle: 1, 2, 4, 6, 8, 10, 12, 11, 9, 7, 5, 3, back to 1. Every gap is 1 or 2. ✓",
+"spot": "Placing numbers with rules? Start with the most limited ones, like the biggest and smallest.",
+"oops": "Guessing 5 and 6 because they differ by 1. In the only working circle they aren't neighbours."
+},
+"b2012-26": {
+"ask": "Cut a 6 × 7 rectangle into whole-number squares. What's the fewest squares?",
+"steps": [
+"A 6 × 6 square leaves a 6 × 1 strip: 6 more squares, total 7. Not great.",
+"Try medium squares instead. Put a 4 × 4 in one corner and two 3 × 3 squares stacked on the right side (3 + 3 = 6 tall, 3 wide; 4 + 3 = 7 wide).",
+"What's left above the 4 × 4 is a 4 × 2 strip. Two 2 × 2 squares fill it.",
+"Total: 1 + 2 + 2 = 5 squares. (4 squares can't work: four squares in a rectangle always make a square.)"
+],
+"answer": "5 squares (B).",
+"check": "Areas: 16 + 9 + 9 + 4 + 4 = 42 = 6 × 7. ✓",
+"spot": "Fewest pieces? The biggest piece first isn't always best. Try medium ones that fit together.",
+"oops": "Starting with the 6 × 6 square, which leaves a thin strip."
+},
+"b2012-27": {
+"ask": "A 4 × 4 grid had red cells; the numbers say how many red cells in each row and column. Which set of numbers is possible?",
+"steps": [
+"Rule 1: the row numbers and column numbers count the same red cells, so their totals must match.",
+"B: rows 7, columns 8. Not equal, out.",
+"A: a row with 4 red cells needs a red cell in EVERY column, but one column has 0. Out.",
+"C: two rows have 3 each, but each column can get at most 2 from those rows. A column with 3? Impossible. Out. E has the same kind of problem (a column with 1 can't happen). Out.",
+"D: rows 2, 1, 2, 2 and columns 2, 1, 2, 2. Totals 7 and 7, and you can draw it."
+],
+"answer": "D.",
+"check": "Try drawing D: it works, and every number matches. ✓",
+"spot": "Several choices to test? Pretend each is true and look for one rule it breaks.",
+"oops": "Only checking that totals match. A and E also have equal totals but still can't happen."
+},
+"b2012-28": {
+"ask": "A square of paper with area 64 cm² is folded twice as shown. What do the shaded rectangles add up to?",
+"steps": [
+"The first fold line goes through the middle of side DA. The second fold is halfway between that line and corner C.",
+"Follow the folds: one side of each shaded rectangle is half the square's side, the other is a quarter of it.",
+"Half × a quarter = 1/8 of the square. 1/8 of 64 = 8 cm².",
+"There are two identical shaded rectangles: 8 + 8 = 16 cm²."
+],
+"answer": "16 cm² (D).",
+"check": "Fold a paper square the same way and colour the pieces: 8 of those pieces cover the square. ✓",
+"spot": "Folded paper areas? Find what fraction of the whole each piece is.",
+"oops": "Trying to measure lengths. Fractions of the square are much quicker."
+},
+"b2012-29": {
+"ask": "Abid's house number has 3 digits. Remove the first digit to get Ben's, remove another to get Chiara's. All three add to 912. What's the middle digit of Abid's number?",
+"steps": [
+"Call Abid's digits a, b, c. Abid = abc, Ben = bc, Chiara = c.",
+"Ones column: c + c + c = 3c, and the total ends in 2. 3 × 4 = 12, so c = 4, carry 1.",
+"Tens column: b + b + 1 (carry) must end in 1. So b + b ends in 0: b = 5 (10, carry 1). (b = 0 would make Ben's number start with 0.)",
+"Hundreds: a + 1 = 9, so a = 8. Abid is 854, and the middle digit is 5."
+],
+"answer": "5 (C).",
+"check": "854 + 54 + 4 = 912. ✓",
+"spot": "Hidden digits in a sum? Ones column first, and carry up.",
+"oops": "Forgetting that c appears in all three numbers, so the ones column has 3 of them."
+},
+"b2012-30": {
+"ask": "Ann and Bill have numbers next to each other (like 6 and 7). Ann: 'I don't know yours.' Bill: 'I don't know yours.' Ann: 'Now I know, and it divides 20.' What's Ann's number?",
+"steps": [
+"If Ann had 1, she'd know Bill has 2. She didn't know, so Ann isn't 1.",
+"If Bill had 1, he'd know Ann has 2. If Bill had 2, Ann is 1 or 3, but Ann isn't 1, so he'd know she has 3. Bill didn't know, so Bill isn't 1 or 2.",
+"Now Ann knows. Bill is just above or below her. If Ann is 3, Bill is 2 or 4, and 2 is ruled out, so Bill is 4.",
+"4 divides 20. ✓ That's Ann = 3. (If Ann were 2, Bill would be 3, which doesn't divide 20.)"
+],
+"answer": "Ann's number is 3 (B).",
+"check": "Ann = 3: she can't tell 2 or 4 at first. After Bill's answer she knows 4, a divisor of 20. ✓",
+"spot": "'I don't know' puzzles? Each 'I don't know' rules out the numbers where you WOULD know.",
+"oops": "Ignoring what each 'I don't know' tells you. Those sentences are the real clues."
+}
+}

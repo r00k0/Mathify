@@ -1,0 +1,323 @@
+{
+"b2017-1": {
+"ask": "Cards show 2 0 1 7. Which row can you NOT get by swapping just two cards?",
+"steps": [
+"One swap moves exactly two cards. Every other card stays in its spot.",
+"For each choice, count how many cards are in a different spot from 2 0 1 7.",
+"If exactly 2 cards moved (and they traded places), one swap works.",
+"0 1 2 7: the 2, 0 and 1 have all moved. That's 3 cards, so one swap can't do it."
+],
+"answer": "B (0 1 2 7).",
+"check": "The others: 2 7 1 0 swaps 0 and 7, 1 0 2 7 swaps 2 and 1, 0 2 1 7 swaps 2 and 0, 2 0 7 1 swaps 1 and 7. ✓",
+"spot": "Which one can't happen? Pretend each is possible and look for a broken rule.",
+"oops": "Only checking whether the same digits are used."
+},
+"b2017-2": {
+"ask": "3 flies (6 legs) and 2 spiders (8 legs) have as many legs as 9 chickens and how many cats?",
+"steps": [
+"Flies and spiders: 3 × 6 + 2 × 8 = 18 + 16 = 34 legs.",
+"9 chickens: 9 × 2 = 18 legs.",
+"Legs still needed: 34 − 18 = 16.",
+"Cats have 4 legs: 16 ÷ 4 = 4 cats."
+],
+"answer": "4 cats (C).",
+"check": "18 + 4 × 4 = 34. ✓",
+"spot": "Two sides that must balance? Work out both sides, then fill the gap.",
+"oops": "Giving chickens 4 legs."
+},
+"b2017-3": {
+"ask": "Alice has 4 straight pieces, each 3 squares long. Which picture can't she make?",
+"steps": [
+"Each picture uses 12 squares (4 × 3). Check each one can be cut into straight pieces of 3.",
+"Start at awkward spots: a square at the very end of a row can often be covered only one way.",
+"In picture E, the leftmost and rightmost squares can only be covered by pieces lying sideways.",
+"Once those two pieces are placed, the squares left over don't make a straight line of 3. So E is impossible."
+],
+"answer": "E.",
+"check": "For each of the other pictures you can draw the 4 straight pieces. ✓",
+"spot": "Covering with pieces? Start with the square that has only one way to be covered.",
+"oops": "Only checking that there are 12 squares."
+},
+"b2017-4": {
+"ask": "1111 × 1111 = 1234321. What is 1111 × 2222?",
+"steps": [
+"2222 is 2 × 1111.",
+"So 1111 × 2222 = 1111 × 1111 × 2.",
+"= 1234321 × 2 = 2468642."
+],
+"answer": "2468642 (D).",
+"check": "Double each digit of 1234321: 2, 4, 6, 8, 6, 4, 2. ✓ (No carrying needed.)",
+"spot": "A new problem close to one you know? Use the known answer.",
+"oops": "Multiplying everything out from scratch."
+},
+"b2017-5": {
+"ask": "Islands are joined by bridges. Fewest bridges to close so no one can travel from A to B?",
+"steps": [
+"Look for separate routes from A to B that don't share any bridge.",
+"Each separate route needs at least one closed bridge.",
+"There are 2 routes that don't share bridges, so at least 2 closures.",
+"And closing 2 well-chosen bridges does cut A off from B."
+],
+"answer": "2 bridges (B).",
+"check": "After closing those 2, try every path from A: none reaches B. ✓",
+"spot": "Cutting all paths? Count the routes that don't share anything.",
+"oops": "Closing bridges far away from where the routes come together."
+},
+"b2017-6": {
+"ask": "Jane walks in front, Kate in the middle, Lynn behind. Jane is 500 kg heavier than Kate. Kate is 1000 kg lighter than Lynn. Which picture is right?",
+"steps": [
+"Kate is the lightest (Jane and Lynn are both heavier than her).",
+"Lynn is 1000 kg more than Kate, Jane 500 kg more. So Lynn is the heaviest.",
+"Order: front (Jane) medium, middle (Kate) small, back (Lynn) big.",
+"Picture A shows medium, small, big."
+],
+"answer": "A.",
+"check": "Small Kate between them, biggest one at the back. ✓",
+"spot": "Who's heavier? Put them in order from the clues, then match.",
+"oops": "Reading 'Kate weighs 1000 kg less' as Kate being heavier."
+},
+"b2017-7": {
+"ask": "Opposite faces of a die all have the same sum. Five faces are 5, 6, 9, 11, 14. What's the sixth?",
+"steps": [
+"The three opposite pairs all have the same sum.",
+"Look for two pairs among the known numbers that match: 6 + 14 = 20 and 9 + 11 = 20.",
+"So the leftover, 5, must pair with the missing number to make 20 too.",
+"20 − 5 = 15."
+],
+"answer": "15 (E).",
+"check": "Pairs 5 + 15, 6 + 14, 9 + 11, all 20. ✓",
+"spot": "Equal pairs? Look for two pairs that match; the odd one out tells you the rest.",
+"oops": "Assuming the missing number is the smallest."
+},
+"b2017-8": {
+"ask": "A rectangle of 18 squares: 1/3 blue, 1/2 yellow, the rest red. How many red?",
+"steps": [
+"Blue: 1/3 of 18 = 6 squares.",
+"Yellow: 1/2 of 18 = 9 squares.",
+"Red: 18 − 6 − 9 = 3."
+],
+"answer": "3 (C).",
+"check": "6 + 9 + 3 = 18. ✓",
+"spot": "Fractions of a group? Turn each fraction into a number first.",
+"oops": "Counting the squares wrong. 3 rows of 6 = 18."
+},
+"b2017-9": {
+"ask": "Nick solves 3 problems while Peter solves 2. Together they solved 30. How many more did Nick solve?",
+"steps": [
+"Every 'round', Peter solves 2 and Nick solves 3: 5 problems.",
+"30 ÷ 5 = 6 rounds.",
+"Peter: 6 × 2 = 12. Nick: 6 × 3 = 18.",
+"18 − 12 = 6."
+],
+"answer": "6 more (B).",
+"check": "12 + 18 = 30, and 12 : 18 is 2 : 3. ✓",
+"spot": "'In the time it takes...'? Group them into rounds.",
+"oops": "Answering 18, which is Nick's total."
+},
+"b2017-10": {
+"ask": "Bob folded paper and punched one hole. Unfolded, it has holes in a diagonal line. Which fold lines did he use?",
+"steps": [
+"Each fold stacks layers on top of each other. One punch makes a hole through every layer.",
+"Unfolding mirrors the hole across each fold line. So the fold lines must cross the row of holes at right angles, like mirrors.",
+"Fold once across the middle of the row: 4 holes become 2. Fold again across the middle of what's left: 2 holes become 1.",
+"So the folds are lines that cut straight across the diagonal row of holes. That's picture D."
+],
+"answer": "D.",
+"check": "Fold paper along D's lines, punch once, unfold: holes in a diagonal row. ✓",
+"spot": "Punched holes? Unfold step by step, mirroring the hole each time.",
+"oops": "Picking folds that would put holes in a cross or a square pattern."
+},
+"b2017-11": {
+"ask": "A sofa (3 pieces + armrests) is 220 cm, a loveseat (2 pieces + armrests) is 160 cm. How wide is a chair (1 piece + armrests)?",
+"steps": [
+"Sofa and loveseat have the same armrests. The sofa has one extra middle piece.",
+"220 − 160 = 60 cm. So one piece is 60 cm.",
+"Loveseat: 2 pieces = 120 cm, so the armrests together are 160 − 120 = 40 cm.",
+"Chair: 60 + 40 = 100 cm."
+],
+"answer": "100 cm (D).",
+"check": "Sofa: 3 × 60 + 40 = 220 ✓. Loveseat: 2 × 60 + 40 = 160 ✓.",
+"spot": "Things built from the same parts? Compare two and the difference is one part.",
+"oops": "Forgetting the armrests."
+},
+"b2017-13": {
+"ask": "From 1234567891011121314151617181920, delete 24 digits so the remaining 7-digit number is as big as possible.",
+"steps": [
+"Keep 7 digits. The first digit matters most, so make it as big as possible: a 9.",
+"There's a 9 early (the single 9) and a 9 in 19. Take the first 9 to leave enough digits after it.",
+"After the 9, keep picking the biggest digit that still leaves enough digits to reach 7 in total: 7, then 8, then 1, 9, 2, 0.",
+"That gives 9781920."
+],
+"answer": "9781920 (C).",
+"check": "It's 7 digits, they appear in this order in the long number, and no bigger choice works at any step. ✓",
+"spot": "Biggest number from digits in order? Pick the biggest digit you can at each step, leaving enough digits for the rest.",
+"oops": "Grabbing a 9 too late, so there aren't enough digits left."
+},
+"b2017-15": {
+"ask": "In a 2 × 2 grid with a, b on top and c, d below, the rows add to 2 and 3, the columns to 1 and 4. Which is true?",
+"steps": [
+"Write the sums: a + b = 2 (top row) and b + d = 4 (right column).",
+"Both have b. Take it off both: d is 2 more than a.",
+"So a is less than d."
+],
+"answer": "D: a is less than d.",
+"check": "An example: a = 0, b = 2, c = 1, d = 2. Rows 2 and 3 ✓, columns 1 and 4 ✓, and a < d ✓.",
+"spot": "Two sums sharing a number? Take away what they share.",
+"oops": "Trying to find exact values. You only need to compare."
+},
+"b2017-16": {
+"ask": "Peter hiked 5 days, 2 km more each day, 70 km total. How far on Thursday?",
+"steps": [
+"Wednesday is the middle day. Monday is 4 less, Friday 4 more; Tuesday 2 less, Thursday 2 more. They balance out.",
+"So the total = 5 × Wednesday.",
+"70 ÷ 5 = 14 km on Wednesday.",
+"Thursday = 14 + 2 = 16 km."
+],
+"answer": "16 km (E).",
+"check": "10 + 12 + 14 + 16 + 18 = 70. ✓",
+"spot": "Numbers going up evenly? The middle one is the average.",
+"oops": "Answering 14, which is Wednesday."
+},
+"b2017-17": {
+"ask": "Each shared side between triangles is a mirror. A kangaroo picture gets reflected from triangle to triangle. What does it look like in the shaded triangle?",
+"steps": [
+"Each reflection flips the picture over the shared side.",
+"Two reflections in a row turn the picture around (no longer mirrored).",
+"Keep reflecting one triangle at a time until you reach the shaded one, drawing each step.",
+"The shaded triangle shows picture E."
+],
+"answer": "E.",
+"check": "Count the reflections: an odd number gives a mirrored kangaroo, and E is mirrored the right way. ✓",
+"spot": "Repeated reflections? Draw each one step by step.",
+"oops": "Skipping steps and losing track of which way it faces."
+},
+"b2017-18": {
+"ask": "Wands: +1 dollar, −1 dollar, ×2. Each used once. Which order gives the most money?",
+"steps": [
+"Doubling makes everything bigger, so double when you have the most.",
+"Add 1 BEFORE doubling: the extra dollar gets doubled too.",
+"Subtract 1 AFTER doubling: then you only lose 1 dollar, not 2.",
+"Order: +1, ×2, −1. You end with 2 × (money + 1) − 1 = 2 × money + 1."
+],
+"answer": "D.",
+"check": "Start with 5: +1, ×2, −1 → 6, 12, 11. Any other order gives less (like −1, ×2, +1 → 4, 8, 9). ✓",
+"spot": "Order of steps? Test with a small starting number.",
+"oops": "Doubling first, so the +1 doesn't get doubled."
+},
+"b2017-19": {
+"ask": "Three squares (sides 2, 4, 6) overlap, each corner at the centre of the one before. What's the total shaded area?",
+"steps": [
+"Areas: 2 × 2 = 4, 4 × 4 = 16, 6 × 6 = 36. Together 56.",
+"Where two squares overlap, that bit got counted twice.",
+"A corner at the centre of a square covers a quarter of it. First overlap: 1/4 of the small square = 1. Second: 1/4 of the middle square = 4.",
+"56 − 1 − 4 = 51."
+],
+"answer": "51 cm² (B).",
+"check": "4 + 16 + 36 − 1 − 4 = 51. ✓",
+"spot": "Overlapping shapes? Add them all, then take away the overlaps counted twice.",
+"oops": "Adding the three areas and stopping at 56."
+},
+"b2017-21": {
+"ask": "Each bar is 2 gray cubes + 1 white cube in a row. Which big cube can be built from 9 bars?",
+"steps": [
+"Every bar is 3 cubes in a straight line: gray, gray, white (white at one end). So no bar has white in the middle.",
+"In each picture, look for a cube that can't belong to ANY bar: in every direction its line of 3 has the wrong colours.",
+"In B, C and D you can find such a cube: every line through it has two or three white cubes, but a bar has only one.",
+"E fails a sneakier way: the centre of the front face and the centre of the right face would both need the big cube's centre. Only A works."
+],
+"answer": "A.",
+"check": "In A, lay all 9 bars side to side; each one shows its white or gray end on the right face. ✓",
+"spot": "Building from pieces? Look for one spot no piece could fill.",
+"oops": "Only counting gray and white cubes (18 and 9) without checking the arrangement."
+},
+"b2017-22": {
+"ask": "Put 1 to 5 in the cells so numbers below are bigger and numbers to the right are bigger. How many ways?",
+"steps": [
+"The top-left cell has cells below and to the right, so it must be the smallest: 1.",
+"5 is the biggest, so it can only go at an end: the far right cell or the bottom cell.",
+"If 5 is at the far right, there are 3 ways to place 2, 3 and 4 that follow the rules.",
+"If 5 is at the bottom, it's the same picture flipped: 3 more ways. 3 + 3 = 6."
+],
+"answer": "6 (D).",
+"check": "Each arrangement you listed obeys both rules, and none is repeated. ✓",
+"spot": "Placing numbers with 'bigger than' rules? Place the smallest and biggest first.",
+"oops": "Missing some arrangements by not listing in order."
+},
+"b2017-23": {
+"ask": "8 kangaroos face left or right. Two facing each other can swap by jumping. How many swaps happen until no more are possible?",
+"steps": [
+"Swaps only happen when a right-facing kangaroo is just left of a left-facing one.",
+"In the end, all left-facing kangaroos will have passed all right-facing ones that were in front of them.",
+"So each left-facing kangaroo jumps once for every right-facing kangaroo that started to its left.",
+"Count them for each left-facing kangaroo: 3 + 5 + 5 = 13."
+],
+"answer": "13 (D).",
+"check": "Each swap passes exactly one pair, and there are 13 pairs to pass. ✓",
+"spot": "Things passing each other? Count how many each one must pass.",
+"oops": "Trying to act out every jump and losing track."
+},
+"b2017-24": {
+"ask": "Monica picks 5 different numbers and multiplies each by 2 or 3. What's the fewest different results she can get?",
+"steps": [
+"To get the same result twice, one number × 2 must equal another number × 3. Example: 3 × 2 = 6 and 2 × 3 = 6.",
+"Each result can come from at most 2 of the numbers (one doubled, one tripled).",
+"So 5 numbers need at least 3 results: two matching pairs and one number on its own.",
+"And 3 is possible, as the check shows."
+],
+"answer": "3 (C).",
+"check": "Example: 2, 3, 4, 6, 9: 3 × 2 = 2 × 3 = 6, 6 × 2 = 4 × 3 = 12, 9 × 2 = 18. Results 6, 12, 18. ✓",
+"spot": "Making things equal? Find pairs that match, then pair up as many as you can.",
+"oops": "Thinking you can get 1 or 2 results. Each result can come from at most 2 of the numbers."
+},
+"b2017-25": {
+"ask": "A floor has gray and white tiles (triangles and squares). Fewest gray tiles to swap with white tiles so the floor looks the same from all four sides?",
+"steps": [
+"Swapping keeps the same number of gray tiles: 4 gray triangles and 4 gray squares (with 8 white of each).",
+"To look the same from all four sides, each edge must look the same. 4 gray triangles on 4 edges means 1 gray and 2 white triangles per edge, in the same order: gray, white, white.",
+"Swapping one white triangle on the right edge with the gray middle triangle on the bottom edge fixes the triangles.",
+"For the squares, one swap makes the middle all white and each edge white-then-gray. Total: one triangle and one square."
+],
+"answer": "1 triangle, 1 square (C).",
+"check": "After the two swaps, turn the picture a quarter turn: it looks the same. ✓",
+"spot": "Same from every side? Turn the picture in your head and compare.",
+"oops": "Recolouring tiles instead of swapping them. A swap keeps the number of gray tiles the same."
+},
+"b2017-27": {
+"ask": "Ala takes even numbers, Beata multiples of 3, Celina multiples of 5. Each takes all the balls she likes when it's her turn. Who went in what order?",
+"steps": [
+"Beata got 45. 45 is also a multiple of 5, so Celina would have taken it if she went first. So Beata went before Celina.",
+"Celina got 20. 20 is even, so Ala would have taken it if she went first. So Celina went before Ala.",
+"Order: Beata, Celina, Ala."
+],
+"answer": "Beata, Celina, Ala (D).",
+"check": "Beata takes 24, 33, 45. Celina takes 20, 25, 35. Ala takes 32, 52. ✓",
+"spot": "Who went first? Look at things that more than one person wanted.",
+"oops": "Ignoring that some balls fit two girls' rules."
+},
+"b2017-29": {
+"ask": "Julia colours a map of 4 countries with up to 4 colours. Touching countries must differ. How many ways?",
+"steps": [
+"Colour the country that touches the most others first: 4 choices.",
+"Its neighbour: 3 choices (anything but the first colour).",
+"The next country touches both: 2 choices.",
+"The last country doesn't touch one of the others, so it has 2 choices. 4 × 3 × 2 × 2 = 48."
+],
+"answer": "48 (E).",
+"check": "Multiply the choices at each step. ✓",
+"spot": "Colouring with choices? Colour the busiest country first and multiply the choices.",
+"oops": "Thinking every country touches every other (4 × 3 × 2 × 1 = 24)."
+},
+"b2017-30": {
+"ask": "On a 6 × 6 board, a lamp lights up when 2 lit neighbours share a corner with it. Fewest lamps to light at the start so eventually all light up?",
+"steps": [
+"A new lamp lights only when it sits in the corner between two lit lamps, like filling in an L-shape to make a square.",
+"Draw the outline around the lit lamps. When a new lamp lights up, the outline never gets longer (it stays the same or shrinks).",
+"A fully lit 6 × 6 board has an outline of 24. Each lamp lit at the start adds at most 4 to the outline.",
+"So you need at least 24 ÷ 4 = 6 lamps. And 6 lamps on a diagonal do light up everything."
+],
+"answer": "6 (C).",
+"check": "Start with the diagonal lit: the squares between neighbours fill in, step by step, until all 36 are lit. ✓",
+"spot": "Things spreading? Look for something that can never grow, then see what's the least you need.",
+"oops": "Guessing 4 corners will spread everywhere."
+}
+}

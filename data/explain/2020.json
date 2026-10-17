@@ -1,0 +1,324 @@
+{
+"b2020-1": {
+"ask": "Which tile completes the pattern?",
+"steps": [
+"Look at the tiles around the gap. Where tiles meet, their pieces join into full circles and long thin spikes.",
+"So the missing tile must finish those shapes at each of its corners.",
+"The gap needs a quarter circle in one corner and two narrow kite-shaped spikes in the two opposite corners.",
+"Only tile E has exactly that, and it also matches the fourth corner."
+],
+"answer": "E.",
+"check": "Put E in the gap: every circle and every star is complete. ✓",
+"spot": "Missing tiles? Look at what each edge and corner must connect to.",
+"oops": "Matching only one side of the gap."
+},
+"b2020-2": {
+"ask": "Amira walks from Atown to Betown past five signposts. One sign is wrong. Which?",
+"steps": [
+"Wherever you stand between the towns, (distance to Atown) + (distance to Betown) = the whole road.",
+"Add the two numbers on each sign: 2 + 9 = 11, 3 + 8 = 11, 5 + 6 = 11, 8 + 3 = 11.",
+"Sign E: 9 + 4 = 13. That doesn't match.",
+"So sign E is wrong."
+],
+"answer": "E.",
+"check": "The road is 11 km, and only E disagrees. ✓",
+"spot": "Points between two places? The two distances always add to the whole.",
+"oops": "Only checking that the numbers go up and down in order."
+},
+"b2020-3": {
+"ask": "Swap every white square with gray and every gray with white. What does the big square look like?",
+"steps": [
+"Go row by row. Write each row as W (white) and G (gray).",
+"Swap every letter: W becomes G, G becomes W.",
+"Compare the new rows with each answer, row by row.",
+"Picture D matches."
+],
+"answer": "D.",
+"check": "Lay D over the original: every square is the opposite colour. ✓",
+"spot": "Picture changes? Write it in letters so you can compare carefully.",
+"oops": "Turning or flipping the picture instead of just swapping colours."
+},
+"b2020-4": {
+"ask": "24 muffins. 6 muffins need 2 eggs. Eggs come in boxes of 6. How many boxes?",
+"steps": [
+"24 muffins is 4 batches of 6.",
+"Each batch needs 2 eggs: 4 × 2 = 8 eggs.",
+"One box has 6 eggs: not enough. 2 boxes have 12 eggs: enough."
+],
+"answer": "2 boxes (B).",
+"check": "8 eggs needed, 12 bought, 4 left over. 1 box (6) would be too few. ✓",
+"spot": "Buying in packs? Work out how many you need, then round UP to whole packs.",
+"oops": "Answering 1 because 8 is close to 6."
+},
+"b2020-5": {
+"ask": "Flora reflects the letter F over two lines. What do the reflections look like?",
+"steps": [
+"Reflecting over a vertical line swaps left and right, like a mirror next to you.",
+"Reflecting over a horizontal line swaps top and bottom, like a lake below you.",
+"Draw each reflection of F carefully, checking which way its arms point.",
+"Picture E shows both reflections correctly."
+],
+"answer": "E.",
+"check": "Fold the page along each line in your head: the F lands on its reflection. ✓",
+"spot": "Reflections? A side mirror swaps left-right; a floor mirror swaps up-down.",
+"oops": "Turning the F instead of reflecting it."
+},
+"b2020-6": {
+"ask": "Kim joins chains of length 5 and 7. Which length can't she make?",
+"steps": [
+"Possible lengths: 5, 7, 10 (5 + 5), 12 (5 + 7), 14 (7 + 7), 15 (5 + 5 + 5)...",
+"Can she make 13? 13 − 5 = 8 (not possible), 13 − 7 = 6 (not possible).",
+"So 13 can't be made."
+],
+"answer": "13 (C).",
+"check": "10, 12, 14, 15 are all on the list. ✓",
+"spot": "Building totals from fixed pieces? Try taking away one piece and see if the rest works.",
+"oops": "Thinking any number above 10 works."
+},
+"b2020-7": {
+"ask": "Maria cuts some of her 10 sheets into 5 pieces each and ends up with 22 pieces. How many sheets did she cut?",
+"steps": [
+"Cutting a sheet into 5 pieces turns 1 piece into 5: that's 4 extra pieces.",
+"She started with 10 and has 22: 12 extra pieces.",
+"12 ÷ 4 = 3 sheets cut."
+],
+"answer": "3 sheets (A).",
+"check": "7 uncut + 3 × 5 = 7 + 15 = 22. ✓",
+"spot": "Cutting things up? Count how many EXTRA pieces each cut makes.",
+"oops": "Dividing 22 by 5."
+},
+"b2020-8": {
+"ask": "Colour the regions red, blue or yellow so touching regions differ. The outside is blue. How many regions end up blue?",
+"steps": [
+"Where three regions meet at a point, they must be all three different colours. There are 6 such points.",
+"The outside is blue. Call the other two colours x and y.",
+"Work inwards point by point: at each meeting point, once two colours are known, the third is forced.",
+"Whether x is red or yellow, the pattern always ends with exactly 3 blue regions."
+],
+"answer": "3 (B).",
+"check": "If x = red you get 3 blue, 3 red, 2 yellow. If x = yellow: 3 blue, 2 red, 3 yellow. Blue is 3 either way. ✓",
+"spot": "Colouring with 3 colours? Where three regions meet, all three colours are used. Work outward from what you know.",
+"oops": "Guessing colours without checking every neighbour."
+},
+"b2020-9": {
+"ask": "Baskets have 1, 4, 6 and 9 apples. Fewest apples to move so every basket has the same?",
+"steps": [
+"Total: 1 + 4 + 6 + 9 = 20. Each basket should end with 20 ÷ 4 = 5.",
+"Baskets with too many must give away: 9 gives 4, 6 gives 1.",
+"Baskets with too few receive: 1 gets 4, 4 gets 1.",
+"Apples moved: 4 + 1 = 5."
+],
+"answer": "5 (C).",
+"check": "Every basket ends with 5. Only extra apples moved, so 5 is the fewest. ✓",
+"spot": "Evening things out? Find the target first, then move only the extras.",
+"oops": "Counting each apple twice (once leaving, once arriving)."
+},
+"b2020-10": {
+"ask": "A dog walks 3 times as fast as a cat. They start at opposite ends of the path and walk toward each other. Where do they meet?",
+"steps": [
+"Count the path in equal little segments. The dog is 3 times as fast, so it always goes 3 segments while the cat goes 1.",
+"While the dog walks the 12 straight segments from P to B, the cat walks 4 segments down the right edge.",
+"Now 4 diagonal segments separate them.",
+"Splitting those 4 as 3 for the dog and 1 for the cat, they meet at E."
+],
+"answer": "E.",
+"check": "From E, the dog's distance is 3 times the cat's. ✓",
+"spot": "Two things meeting at different speeds? Split the distance in the ratio of their speeds.",
+"oops": "Meeting in the middle, as if they had the same speed."
+},
+"b2020-11": {
+"ask": "1 to 10 go around a circle. Any two neighbours add to the same as the two opposite circles. What number goes in the circle with the question mark?",
+"steps": [
+"The rule: two neighbours add to the same as the two circles opposite them. So if you know three of the four, you can find the fourth.",
+"Opposite 1 and 10 are 5 and an empty circle: 10 + 1 = 5 + ?, so that circle is 6.",
+"Keep going: next to 1 goes 6 + 2 − 1 = 7, and next to 10 goes 5 + 9 − 10 = 4.",
+"The numbers left are 3 and 8. If ? were 8, its opposite would need 7 + 8 − 2 = 13, too big. So ? = 3."
+],
+"answer": "3 (A).",
+"check": "With 3 in place, the opposite circle gets 7 + 3 − 2 = 8, and every number 1 to 10 is used once. ✓",
+"spot": "Rules about neighbours and opposites? Compare pairs that share a circle.",
+"oops": "Trying random numbers without using the rule."
+},
+"b2020-12": {
+"ask": "When Elise leaves, the clock shows 20:20. When she returns, hanging upside down, she sees 20:20 again. How long was she gone?",
+"steps": [
+"Hanging upside down, she sees the clock turned around.",
+"Turn '20:20' upside down: the digits flip order and each turns over. It's really 02:02.",
+"She left at 20:20 and came back at 02:02 the next morning.",
+"20:20 to 00:00 is 3 h 40 min. Then to 02:02 is 2 h 2 min. Total 5 h 42 min."
+],
+"answer": "5 hours and 42 minutes (E).",
+"check": "20:20 + 5 h 42 min = 26:02 = 02:02. ✓",
+"spot": "Upside-down or mirrored clocks? Work out the REAL time first.",
+"oops": "Thinking no time passed because she saw the same numbers."
+},
+"b2020-14": {
+"ask": "Mary has 10 white, 9 light gray and 8 dark gray cubes. Which big cube did she build?",
+"steps": [
+"Mary has 10 white, 9 light gray and 8 dark gray: 27 cubes for a 3 × 3 × 3 cube.",
+"Count the visible cubes of each colour (a corner cube counts once, even though it shows on 3 faces).",
+"A and D show 9 dark gray (she has 8). C shows 11 white (she has 10). E shows 10 light gray (she has 9). All impossible.",
+"B shows 10 white and 9 light gray, and the 8 hidden cubes are exactly her 8 dark gray. So B."
+],
+"answer": "B.",
+"check": "B: 19 visible + 8 hidden = 27, matching 10 + 9 + 8. ✓",
+"spot": "Building with a limited supply? Count what you see and compare.",
+"oops": "Forgetting a corner cube shows on several faces but is only one cube."
+},
+"b2020-17": {
+"ask": "Giorgio has two identical bent wires. Which shape can't be made from them?",
+"steps": [
+"Each wire has 5 straight pieces: 4 short ones the same length, and 1 piece twice as long.",
+"So any shape made from two wires must have at least 2 long pieces.",
+"Count the long pieces in each shape. A, B, C and D each have two.",
+"Shape E has only one long piece, so it can't be made."
+],
+"answer": "E.",
+"check": "Each of the other shapes splits into two copies of the wire. ✓",
+"spot": "Building from pieces? Count what each piece has, then check the shape.",
+"oops": "Only checking the total length."
+},
+"b2020-18": {
+"ask": "Six stickers on a cube. Two pictures show the cube from different sides. Which sticker is opposite the mouse?",
+"steps": [
+"Faces you can see together are neighbours, never opposite.",
+"Write down every pair of stickers seen together in the pictures.",
+"The mouse's neighbours can't be its opposite. Cross them off.",
+"The one left is the dog."
+],
+"answer": "The dog (D).",
+"check": "The dog never appears next to the mouse in any picture. ✓",
+"spot": "Opposite faces? Cross off everything seen next to it.",
+"oops": "Guessing from just one picture."
+},
+"b2020-20": {
+"ask": "Three tanks look the same size from the front, hold the same amount of liquid, but the levels differ. What do they look like from above?",
+"steps": [
+"Same amount of liquid: a tank that's deeper (front to back) spreads the liquid out, so the level is lower.",
+"The lowest level means the deepest tank. The highest level means the shallowest tank.",
+"Order the tanks from lowest to highest liquid: that's deepest to shallowest.",
+"Picture A shows the tanks with matching depths."
+],
+"answer": "A.",
+"check": "In A, the tank with the lowest liquid is the deepest. ✓",
+"spot": "Same amount in different containers? Wider containers mean lower levels.",
+"oops": "Thinking the tank with more liquid showing is bigger."
+},
+"b2020-21": {
+"ask": "What does the frame shape look like from above?",
+"steps": [
+"The shape is a frame with 6 side faces, all the same trapezoid shape, with black and gray edges.",
+"Find the one special face: the only one whose two parallel edges are black and other two edges gray.",
+"C, D and E don't show that special face, so they're out. A has a trapezoid with 4 black edges, which the frame doesn't have.",
+"In B the special face is at the top, and going round from it, every face matches. So B."
+],
+"answer": "B.",
+"check": "Compare each bar's colour in B with the 3D picture. ✓",
+"spot": "Views from above? The top of the object is in the middle of the view.",
+"oops": "Mixing up the inner and outer rings."
+},
+"b2020-22": {
+"ask": "Three small squares sit inside a 28 cm big square. Lines of 22 cm and 15 cm are marked. How long is the line with the question mark?",
+"steps": [
+"The left small square sits on top of the 22 cm line: its side is 28 − 22 = 6 cm.",
+"The right small square sits on top of the 15 cm line: its side is 28 − 15 = 13 cm.",
+"Across the top, the three squares fill 28 cm: the middle square's side is 28 − 6 − 13 = 9 cm.",
+"The line under the middle square: 28 − 9 = 19 cm."
+],
+"answer": "19 cm (E).",
+"check": "6 + 9 + 13 = 28 ✓ and 22 + 6 = 28, 15 + 13 = 28 ✓.",
+"spot": "Squares in squares? A square's side is the same both ways. Write every length on the picture.",
+"oops": "Averaging 22 and 15."
+},
+"b2020-24": {
+"ask": "Two scales balance with triangles, squares, circles and house shapes. What definitely balances the third scale (house + square)?",
+"steps": [
+"Scale 1: triangle + house = square + 2 circles.",
+"Scale 2: 2 squares = circle + 2 triangles.",
+"Put both scales together: triangle + house + 2 squares = square + 3 circles + 2 triangles.",
+"Take one triangle and one square off both sides: house + square = 3 circles + triangle."
+],
+"answer": "One triangle and three circles (C).",
+"check": "It works whatever each shape weighs, because we only used the two scales. ✓",
+"spot": "Several scales? Add them together, then take the same things off both sides.",
+"oops": "Trying to find each shape's weight."
+},
+"b2020-25": {
+"ask": "10 scoops: 4 vanilla, 3 chocolate, 2 lemon, 1 mango. Toppings: 4 umbrellas, 3 cherries, 2 wafers, 1 chip. No two scoops are alike. Which combination is impossible?",
+"steps": [
+"Vanilla has 4 scoops, all different, so it needs all 4 kinds of topping: umbrella, cherry, wafer and the only chip.",
+"Chocolate has 3 scoops, all different, with no chip left: umbrella, cherry, wafer.",
+"That uses both wafers (one for vanilla, one for chocolate).",
+"So lemon can never get a wafer."
+],
+"answer": "Lemon with a wafer (D).",
+"check": "Lemon gets umbrella and cherry, mango gets the last umbrella. Everything is used, all different. ✓",
+"spot": "Matching with limits? Start with the biggest group; it has the fewest choices.",
+"oops": "Starting with mango (only 1 scoop), which doesn't tell you much."
+},
+"b2020-26": {
+"ask": "A 3-digit number is 'nice' if its middle digit is bigger than its first and last digits added. Most nice numbers in a row?",
+"steps": [
+"To get many in a row, the last digit changes (0, 1, 2, ...) while the others stay the same.",
+"Make the middle digit as big as possible (9) and the first digit as small as possible (1).",
+"Then 9 > 1 + last digit, so the last digit can be 0 to 7: 190, 191, ..., 197.",
+"That's 8 nice numbers in a row. 198 fails (9 is not bigger than 9), and 189 fails (8 > 10? no)."
+],
+"answer": "8 (D).",
+"check": "190 to 197 all work, and the numbers on either side don't. ✓",
+"spot": "Longest run? Make the rule as easy to keep as possible.",
+"oops": "Forgetting that going past 199 changes the first digit."
+},
+"b2020-27": {
+"ask": "Magnus plays 15 games. So far he's won 1/2, lost 1/3, and drawn 2. How many games are left?",
+"steps": [
+"Won + lost = 1/2 + 1/3 = 5/6 of the games played.",
+"So the 2 draws are the other 1/6.",
+"1/6 of the games = 2, so he's played 12.",
+"15 − 12 = 3 left."
+],
+"answer": "3 (B).",
+"check": "Won 6, lost 4, drew 2 = 12 played. ✓",
+"spot": "Fractions plus a number? The number fills the leftover fraction.",
+"oops": "Taking fractions of 15 instead of the games played so far."
+},
+"b2020-28": {
+"ask": "A 3 × 3 sheet is folded (columns, then rows) so the gray square ends on top. Number the cells so the folded stack goes 1 to 9 from top. What are a, b and c?",
+"steps": [
+"Follow the first fold: the columns fold over each other, so each row turns into a little stack of 3.",
+"Then the rows fold, stacking those little stacks.",
+"Track which cell ends up in which layer: 1 on top, then 2, 3, ... down to 9.",
+"Doing it carefully: a = 6, b = 4, c = 8."
+],
+"answer": "a = 6, b = 4, c = 8 (A).",
+"check": "Fold a paper square numbered this way: the layers read 1 to 9. ✓",
+"spot": "Folding a numbered grid? Fold one step at a time, tracking where each cell goes.",
+"oops": "Folding in the wrong direction."
+},
+"b2020-29": {
+"ask": "A pyramid of balls: 3 × 3 base, 2 × 2 middle, 1 on top. Touching balls are glued at one point. How many glue points?",
+"steps": [
+"Base layer (3 × 3): side-by-side touches: 3 rows × 2 = 6, and 3 columns × 2 = 6. That's 12.",
+"Middle layer (2 × 2): 4 touches.",
+"Each middle ball sits on 4 base balls: 4 × 4 = 16.",
+"The top ball sits on 4 middle balls: 4. Total: 12 + 4 + 16 + 4 = 36."
+],
+"answer": "36 (E).",
+"check": "Count layer by layer, then between layers. ✓",
+"spot": "Counting contacts? Go layer by layer, then count between layers.",
+"oops": "Forgetting the contacts between the layers."
+},
+"b2020-30": {
+"ask": "A postman visits every island exactly once, from start to finish. He's at the black centre island. Which way should he go?",
+"steps": [
+"Islands with only two bridges are tricky: if you pass through, you must use both bridges.",
+"Find those islands and mark the bridges you're forced to use.",
+"Those forced bridges show which way the path must go from the centre.",
+"From the centre, he must go east."
+],
+"answer": "East (B).",
+"check": "Draw the full path: it visits every island once and ends at finish. ✓",
+"spot": "Visit everything once? Start with the places that have the fewest options.",
+"oops": "Choosing a direction by guessing, then getting stuck."
+}
+}
