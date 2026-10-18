@@ -120,6 +120,8 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 .alert{background:var(--bad-soft);border-radius:12px;padding:14px 16px}
 .qgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px} @media (max-width:480px){.qgrid{grid-template-columns:repeat(6,1fr)}}
 .qb{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 14px var(--mono);cursor:pointer;max-width:100%}
+.qwrap{overflow-x:auto}.qimg.zoom{max-width:none;width:220%}
+.qimg{display:block;max-width:100%;cursor:zoom-in;height:auto;margin-top:10px;border:1px solid var(--line);border-radius:10px;background:#fff}
 .qb.ans{background:var(--accent-soft);border-color:var(--accent)} .qb.cur{outline:2px solid var(--ink)}
 .level{display:flex;gap:4px} .level i{width:22px;height:8px;border-radius:4px;background:var(--line)} .level i.on{background:var(--accent)}
 a{color:var(--blue)}
@@ -744,6 +746,35 @@ function item(p){ const a=latest(p.id);
   return `<button class="item" data-open="${p.id}"><span class="l"><span class="small muted">${srcLabel(p)}</span><br>${p.src==="own"?esc(p.text.slice(0,64))+"…":EXPLAIN[p.id]?esc(EXPLAIN[p.id].ask.slice(0,70))+(EXPLAIN[p.id].ask.length>70?"…":""):MOVES[p.move].n}</span>${chip}</button>` }
 function bindOpen(list){ app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>go({tab:view.tab,pid:b.dataset.open,list,from:view.move||view.from})) }
 
+/* ---------- family lock ----------
+   Book and sample questions are licensed to the family, so they ship encrypted (public/k/*.bin).
+   Only the family passcode opens them; it is remembered on this device after the first entry. */
+const LOCK={key:null}, QCACHE={};
+const KSALT=new TextEncoder().encode("mathify-kangaroo-v1-salt");
+async function deriveKey(pw){ const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt:KSALT,iterations:310000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]) }
+async function openBin(name,key){ const r=await fetch(`k/${name}.bin`); if(!r.ok) throw new Error("missing");
+  const b=new Uint8Array(await r.arrayBuffer()); const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12)},key,b.slice(12));
+  return JSON.parse(new TextDecoder().decode(pt)) }
+async function unlock(pw){ pw=String(pw||"").trim().toLowerCase().replace(/\s+/g,"-"); const k=await deriveKey(pw); await openBin("check",k); LOCK.key=k; lsSet("kmg_pass",pw) }
+let autoTried=false;
+async function bookQ(id){ if(QCACHE[id]) return QCACHE[id];
+  if(!LOCK.key&&!autoTried){ autoTried=true; const pw=lsGet("kmg_pass",null); if(pw){ try{ await unlock(pw) }catch(e){ lsSet("kmg_pass",null) } } }
+  if(!LOCK.key) return null; QCACHE[id]=await openBin(id,LOCK.key); return QCACHE[id] }
+function qHtml(Q){ const im=alt=>`<div class="qwrap"><img class="qimg" src="${Q.img}" alt="${alt}" title="Tap to zoom" onclick="this.classList.toggle('zoom')"></div>`;
+  const img=Q.img?(Q.fig?im("Picture for this question")+`<p class="small muted">Tap the picture to zoom.</p>`:`<details><summary class="small">See this question in the book</summary>${im("This question in the book")}</details>`):"";
+  return `<div class="ptext">${esc(Q.q)}</div>${img}` }
+function lockHtml(p){ return `<div class="book">${esc(p.text)}</div><div class="stack" style="gap:8px"><p class="small muted">Want the question right here? Enter your family passcode once on this device.</p>
+  <div class="row"><input id="pass" class="num" style="width:240px;font-size:16px" placeholder="Family passcode" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn dark" id="unlockBtn">Show questions</button></div><p class="small" id="passMsg" role="status"></p></div>` }
+async function fillQ(p,box,after){ if(p.src!=="book"&&p.src!=="sample") return;
+  let Q=null; try{ Q=await bookQ(p.id) }catch(e){}
+  if(!box.isConnected) return;
+  if(Q){ const first=p.qopts===undefined; p.qopts=Q.opts||null; box.innerHTML=qHtml(Q); if(after) after(Q,first); return }
+  box.innerHTML=lockHtml(p);
+  const b=box.querySelector("#unlockBtn"), i=box.querySelector("#pass"), m=box.querySelector("#passMsg");
+  const tryIt=async()=>{ m.textContent="Checking…"; try{ await unlock(i.value); fillQ(p,box,after) }catch(e){ m.textContent="That passcode didn't work. Check the spelling and try again." } };
+  b.onclick=tryIt; i.onkeydown=e=>{ if(e.key==="Enter") tryIt() } }
+
 /* ---------- explanations ---------- */
 function xpBody(p,withMove=true){ const X=EXPLAIN[p.id]; const M=MOVES[p.move];
   return `<div class="xp">
@@ -811,7 +842,7 @@ function renderProblem(){
       <span class="row" style="gap:6px"><span class="timer" id="timer" aria-live="off">${fmt(limit)}</span><button class="btn ghost" id="pause" style="padding:6px 10px">Pause</button></span></div>
     <div class="card stack">
       <div class="small muted">${srcLabel(p)}</div>
-      ${p.src==="own"?`<div class="ptext">${esc(p.text)}</div>${p.fig}`:`<div class="book">${esc(p.text)}</div>`}
+      ${p.src==="own"?`<div class="ptext">${esc(p.text)}</div>${p.fig}`:`<div id="qbox"><div class="book small muted">Loading the question…</div></div>`}
     </div>
     <div class="spot"><div><b><span>S</span>ay</b>What do they want?</div><div><b><span>P</span>redict</b>${p.type==="mc"?"Tap ✕ on choices that can't be":"Guess before you work"}</div><div><b><span>O</span>ne move</b>Which trick fits?</div><div><b><span>T</span>est</b>Fits every sentence?</div></div>
     ${p.type==="num"?`<div class="card stack" id="guessCard"><div class="eyebrow">Predict · your guess</div><div class="row"><input id="guess" class="num" style="width:150px" placeholder="Guess" autocomplete="off"><button class="btn dark" id="lock">Lock it in</button><button class="btn ghost" id="skip">Skip</button></div></div>`:""}
@@ -831,10 +862,11 @@ function renderProblem(){
     app.querySelector("#skip").onclick=start;
   } else draw();
   app.querySelector("#stuck").onclick=()=>{ if(st.done) return; if(st.hints<3){ st.hints++; drawHints() } else revealNow() };
+  const qbox=app.querySelector("#qbox"); if(qbox) fillQ(p,qbox,()=>{ if(p.type==="mc"&&app.querySelector("#area .opts")) draw() });
 
   function draw(){ const area=app.querySelector("#area");
     if(p.type==="mc"){
-      area.innerHTML=`<div class="opts">${p.opts.map((o,i)=>{const k="ABCDE"[i]; const lbl=p.src==="own"?`<span class="k">${k}</span>${esc(o)}`:`<span class="k">${k}</span>`;
+      area.innerHTML=`<div class="opts">${p.opts.map((o,i)=>{const k="ABCDE"[i]; const lbl=p.src==="own"?`<span class="k">${k}</span>${esc(o)}`:`<span class="k">${k}</span>${p.qopts?esc(p.qopts[i]):""}`;
         const cls=st.wrong.includes(k)?"wrong":st.done&&k===p.ans?"right":st.crossed.includes(k)?"x":"";
         return `<div class="optw"><button class="opt ${cls}" data-k="${k}" ${st.wrong.includes(k)||st.done?"disabled":""}>${lbl}</button>${st.done||st.wrong.includes(k)?"":`<button class="xbtn" data-x="${k}" aria-pressed="${st.crossed.includes(k)}" aria-label="Cross out ${k}">✕</button>`}</div>`}).join("")}</div>`;
       area.querySelectorAll(".opt").forEach(b=>b.onclick=()=>submit(b.dataset.k,b));
@@ -864,7 +896,7 @@ function renderProblem(){
     if(p.type==="mc") draw(); else { const i=app.querySelector("#ans"); if(i) i.disabled=true }
     const clean=correct&&st.hints===0&&!st.over;
     const title = !correct ? "Here's how Kip sees it" : clean ? "Yes! On your own and in time." : st.hints===0 ? "Yes! Now let's get faster." : "Yes! You got there.";
-    const ans = p.type==="mc" ? ((p.src==="own"||p.src==="learn")?`${p.ans} (${esc(p.opts["ABCDE".indexOf(p.ans)])})`:p.ans) : esc(p.show||p.ans);
+    const ans = p.type==="mc" ? ((p.src==="own"||p.src==="learn")?`${p.ans} (${esc(p.opts["ABCDE".indexOf(p.ans)])})`:p.qopts?`${p.ans} (${esc(p.qopts["ABCDE".indexOf(p.ans)])})`:p.ans) : esc(p.show||p.ans);
     const g = st.guess!==null ? `<p>Your guess was <b>${esc(st.guess)}</b>.${!isNaN(numVal(st.guess))?(isRight(p,st.guess)?" Spot on!":" Was it close? What would have made it closer?"):""}</p>`:"";
     const r=app.querySelector("#result");
     r.innerHTML=`<div class="result ${correct?"good":"bad"} stack pop">
@@ -888,7 +920,7 @@ function renderProblem(){
 function renderTests(){
   const years=[...new Set(BOOK.map(p=>p.year))];
   app.innerHTML=`<div class="stack">${kipSay("Test day practice",`<p>A test is just puzzles with a clock. No hints during the test. Afterwards we look at every miss together.</p>`)}
-   <div class="card stack"><div class="eyebrow">Team Level 5–6 sample</div><h3>60 minutes · 30 questions · 1000 points</h3><p class="small muted">Read each question from the printed sample. Questions 1–20 are 25 points, 21–30 are 50.</p><div><button class="btn" data-t="sample">Start the sample test</button></div></div>
+   <div class="card stack"><div class="eyebrow">Team Level 5–6 sample</div><h3>60 minutes · 30 questions · 1000 points</h3><p class="small muted">Questions show on screen after you enter the family passcode once. Questions 1–20 are 25 points, 21–30 are 50.</p><div><button class="btn" data-t="sample">Start the sample test</button></div></div>
    <div class="card stack"><div class="eyebrow">Practise one sample question at a time, with Kip</div><div class="list">${SAMPLE.map(item).join("")}</div></div>
    <div class="card stack"><div class="eyebrow">Book papers</div><p class="small muted">Some questions from each year are also in the sample, so those years have fewer than 30 here. 75 minutes per paper.</p>
      <div class="row">${years.map(y=>`<button class="btn ghost" data-t="${y}">${y}</button>`).join("")}</div></div>
@@ -907,12 +939,13 @@ function renderTest(){
   const grid=()=>{ app.querySelector("#qgrid").innerHTML=qs.map((p,i)=>`<button class="qb ${T.answers[p.id]?"ans":""} ${i===T.cur?"cur":""}" data-i="${i}" aria-label="Question ${p.n}">${p.n}</button>`).join("");
     app.querySelectorAll(".qb").forEach(b=>b.onclick=()=>{T.cur=+b.dataset.i;grid();card()}); app.querySelector("#cnt").textContent=Object.keys(T.answers).length+" of "+qs.length+" answered" };
   const card=()=>{ const p=qs[T.cur]; const c=app.querySelector("#qcard"); const cur=T.answers[p.id]||"";
-    c.innerHTML=`<div class="eyebrow">Question ${p.n} · ${testPts(T.paper,p)} points</div>${p.type==="mc"?`<div class="opts">${"ABCDE".split("").map(k=>`<button class="opt ${cur===k?"right":""}" data-k="${k}"><span class="k">${k}</span></button>`).join("")}</div>`:`<div class="row"><input class="num" id="tin" value="${esc(cur)}" placeholder="Answer" autocomplete="off"><button class="btn" id="ts">Save</button></div>`}
+    c.innerHTML=`<div class="eyebrow">Question ${p.n} · ${testPts(T.paper,p)} points</div><div id="tq"><div class="book small muted">Loading the question…</div></div>${p.type==="mc"?`<div class="opts">${"ABCDE".split("").map((k,i)=>`<button class="opt ${cur===k?"right":""}" data-k="${k}"><span class="k">${k}</span>${p.qopts?esc(p.qopts[i]):""}</button>`).join("")}</div>`:`<div class="row"><input class="num" id="tin" value="${esc(cur)}" placeholder="Answer" autocomplete="off"><button class="btn" id="ts">Save</button></div>`}
       <div class="row"><button class="btn ghost" id="pv" ${T.cur===0?"disabled":""}>← Previous</button><button class="btn ghost" id="nx" ${T.cur===qs.length-1?"disabled":""}>Next →</button></div>`;
     const adv=()=>{ if(T.cur<qs.length-1)T.cur++; grid(); card() };
     if(p.type==="mc") c.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{T.answers[p.id]=b.dataset.k; adv()});
     else { const inp=c.querySelector("#tin"); const sv=()=>{const v=inp.value.trim(); if(v)T.answers[p.id]=v; else delete T.answers[p.id]; adv()}; c.querySelector("#ts").onclick=sv; inp.onkeydown=e=>{if(e.key==="Enter")sv()} }
-    c.querySelector("#pv").onclick=()=>{T.cur--;grid();card()}; c.querySelector("#nx").onclick=()=>{T.cur++;grid();card()} };
+    c.querySelector("#pv").onclick=()=>{T.cur--;grid();card()}; c.querySelector("#nx").onclick=()=>{T.cur++;grid();card()};
+    fillQ(p,c.querySelector("#tq"),(Q,first)=>{ if(first&&Q.opts&&qs[T.cur]===p) card() }) };
   grid(); card(); app.querySelector("#fin").onclick=()=>{T.done=true; clearInterval(timerId); render()};
 }
 async function testResult(){

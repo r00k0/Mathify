@@ -27,3 +27,5 @@ Connected to Cloudflare Workers Builds: every push to `main` runs `npm run build
 
 ## Content rules
 All problems are original. Competition papers (Math Kangaroo, AoPS, etc.) are referenced by year and number only, never copied. Explanations for those problems start with a short own-words summary of what is being asked, not the original wording.
+
+The family's licensed copy of the book and sample questions (text + picture) is stored only in encrypted form in `public/k/*.bin` (AES-GCM, key derived from the family passcode with PBKDF2). The passcode is not in this repo; without it the files can't be read. To regenerate them you need the original PDFs and the passcode.
