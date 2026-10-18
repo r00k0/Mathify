@@ -749,14 +749,15 @@ function bindOpen(list){ app.querySelectorAll("[data-open]").forEach(b=>b.onclic
 /* ---------- family lock ----------
    Book and sample questions are licensed to the family, so they ship encrypted (public/k/*.bin).
    Only the family passcode opens them; it is remembered on this device after the first entry. */
-const LOCK={key:null}, QCACHE={};
+const LOCK={key:null,gate:""}, QCACHE={};
 const KSALT=new TextEncoder().encode("mathify-kangaroo-v1-salt");
 async function deriveKey(pw){ const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
   return crypto.subtle.deriveKey({name:"PBKDF2",salt:KSALT,iterations:310000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]) }
-async function openBin(name,key){ const r=await fetch(`k/${name}.bin`); if(!r.ok) throw new Error("missing");
+async function gateToken(pw){ const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("mathify-gate:"+pw)); return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,"0")).join("") }
+async function openBin(name,key,gate){ const r=await fetch(`k/${name}.bin`,{headers:{"x-family":gate||LOCK.gate}}); if(r.status===429) throw new Error("toomany"); if(!r.ok) throw new Error("locked");
   const b=new Uint8Array(await r.arrayBuffer()); const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12)},key,b.slice(12));
   return JSON.parse(new TextDecoder().decode(pt)) }
-async function unlock(pw){ pw=String(pw||"").trim().toLowerCase().replace(/\s+/g,"-"); const k=await deriveKey(pw); await openBin("check",k); LOCK.key=k; lsSet("kmg_pass",pw) }
+async function unlock(pw){ pw=String(pw||"").trim().toLowerCase().replace(/\s+/g,"-"); const k=await deriveKey(pw), g=await gateToken(pw); await openBin("check",k,g); LOCK.key=k; LOCK.gate=g; lsSet("kmg_pass",pw) }
 let autoTried=false;
 async function bookQ(id){ if(QCACHE[id]) return QCACHE[id];
   if(!LOCK.key&&!autoTried){ autoTried=true; const pw=lsGet("kmg_pass",null); if(pw){ try{ await unlock(pw) }catch(e){ lsSet("kmg_pass",null) } } }
@@ -765,14 +766,14 @@ function qHtml(Q){ const im=alt=>`<div class="qwrap"><img class="qimg" src="${Q.
   const img=Q.img?(Q.fig?im("Picture for this question")+`<p class="small muted">Tap the picture to zoom.</p>`:`<details><summary class="small">See this question in the book</summary>${im("This question in the book")}</details>`):"";
   return `<div class="ptext">${esc(Q.q)}</div>${img}` }
 function lockHtml(p){ return `<div class="book">${esc(p.text)}</div><div class="stack" style="gap:8px"><p class="small muted">Want the question right here? Enter your family passcode once on this device.</p>
-  <div class="row"><input id="pass" class="num" style="width:240px;font-size:16px" placeholder="Family passcode" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn dark" id="unlockBtn">Show questions</button></div><p class="small" id="passMsg" role="status"></p></div>` }
+  <div class="row"><input id="pass" class="num" style="width:240px;font-size:16px" placeholder="Family passcode" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn dark" id="unlockBtn">Show questions</button></div><p class="small" id="passMsg" role="status"></p></div>` }
 async function fillQ(p,box,after){ if(p.src!=="book"&&p.src!=="sample") return;
   let Q=null; try{ Q=await bookQ(p.id) }catch(e){}
   if(!box.isConnected) return;
   if(Q){ const first=p.qopts===undefined; p.qopts=Q.opts||null; box.innerHTML=qHtml(Q); if(after) after(Q,first); return }
   box.innerHTML=lockHtml(p);
   const b=box.querySelector("#unlockBtn"), i=box.querySelector("#pass"), m=box.querySelector("#passMsg");
-  const tryIt=async()=>{ m.textContent="Checking…"; try{ await unlock(i.value); fillQ(p,box,after) }catch(e){ m.textContent="That passcode didn't work. Check the spelling and try again." } };
+  const tryIt=async()=>{ m.textContent="Checking…"; try{ await unlock(i.value); fillQ(p,box,after) }catch(e){ m.textContent=e.message==="toomany"?"Too many tries. Please wait an hour and try again.":"That passcode didn't work. Try again." } };
   b.onclick=tryIt; i.onkeydown=e=>{ if(e.key==="Enter") tryIt() } }
 
 /* ---------- explanations ---------- */

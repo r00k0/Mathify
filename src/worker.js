@@ -5,9 +5,30 @@ const ID = /^[A-Za-z0-9_.:-]{1,80}$/;
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 
+// Family-only question files (/k/*.bin). They are encrypted with the family passcode, and on top of that
+// the server only hands them out when the request proves it knows the passcode. Wrong guesses are
+// limited to 20 per IP per hour so a short passcode can't be found by trying every number.
+const GATE = "f98416de631a217acc9646ffae6ae9977e0c3d9700badb25e5bf92d0c340a47a"; // SHA-256 of "mathify-gate:" + passcode
+async function gate(request, env) {
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
+  const hour = new Date().toISOString().slice(0, 13);
+  const fails = async () => {
+    try { return (await env.DB.prepare("SELECT n FROM gate_fail WHERE ip = ? AND hour = ?").bind(ip, hour).first())?.n || 0; }
+    catch { await env.DB.prepare("CREATE TABLE IF NOT EXISTS gate_fail (ip TEXT, hour TEXT, n INTEGER, PRIMARY KEY (ip, hour))").run(); return 0; }
+  };
+  if ((await fails()) >= 20) return new Response("Too many tries. Please wait an hour.", { status: 429 });
+  if ((request.headers.get("x-family") || "") !== GATE) {
+    await env.DB.prepare("INSERT INTO gate_fail (ip, hour, n) VALUES (?, ?, 1) ON CONFLICT(ip, hour) DO UPDATE SET n = n + 1").bind(ip, hour).run();
+    return new Response("Locked", { status: 403, headers: { "cache-control": "no-store" } });
+  }
+  const res = await env.ASSETS.fetch(request);
+  const out = new Response(res.body, res); out.headers.set("cache-control", "private, max-age=86400"); return out;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith("/k/")) return gate(request, env);
     if (!url.pathname.startsWith("/api/")) return env.ASSETS.fetch(request);
     if (url.pathname === "/api/health") return json({ ok: true });
 
